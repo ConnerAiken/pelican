@@ -21,7 +21,11 @@
                 document.getElementById('startLat').innerHTML = startPos.coords.latitude;
                 document.getElementById('startLon').innerHTML = startPos.coords.longitude;
             }, function(error) {
-                alert('Error occurred. Error code: ' + error.code);
+                if(error != 1) {
+                    alert('Error occurred. Error code: ' + error.code);
+                } else {
+                    alert("Please allow Pelican to view your location.");
+                }
                 // error.code can be:
                 //   0: unknown error
                 //   1: permission denied
