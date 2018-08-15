@@ -33,7 +33,7 @@
                     //   1: permission denied
                     //   2: position unavailable (error response from locaton provider)
                     //   3: timed out
-                });
+                }, {timeout: 30000, enableHighAccuracy: true, maximumAge: 75000});
                 navigator.geolocation.watchPosition(function(position) {
                     // same as above
                     document.getElementById('distance').innerHTML = calculateDistance(startPos.coords.latitude, startPos.coords.longitude, position.coords.latitude, position.coords.longitude);
