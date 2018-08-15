@@ -14,7 +14,21 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <p>React reporting in!</p>
+        <p>Pelican</p>
+        <div id="tripmeter">
+          <p>
+            Starting Location (lat, lon):<br/>
+            <span id="startLat">???</span>°, <span id="startLon">???</span>°
+          </p>
+          <p>
+            Current Location (lat, lon):<br/>
+            <span id="currentLat">???</span>°, <span id="currentLon">???</span>°
+          </p>
+          <p>
+            Distance from starting location:<br/>
+            <span id="distance">0</span> km
+          </p>
+        </div>
       </div>
     );
   }
