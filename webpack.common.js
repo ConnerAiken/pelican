@@ -59,11 +59,17 @@ module.exports = {
         }
       ]
     },
+    externals: {
+            "jquery": "jQuery"
+    },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
         new HtmlWebPackPlugin({
           template: paths.src,
           filename: paths.destHtml
+        }), 
+        new webpack.ProvidePlugin({
+                  $: "jquery"
         })
     ],
     performance: {
