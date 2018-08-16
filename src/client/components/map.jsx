@@ -2,15 +2,17 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
 
-const Gmap = withScriptjs(withGoogleMap((props) => {  
-    console.log(props);
+const Gmap = withScriptjs(withGoogleMap((props) => {   
+    const curLoc = Object.assign({}, props.curLoc);
+    const startLoc = Object.assign({}, props.startLoc);
+
     if(props.curLoc.coords.lat == 0 && props.curLoc.coords.lng == 0 && props.startLoc.coords.lat != 0 && props.startLoc.coords.lng != 0) {
-        props.curLoc.coords.lat = props.startLoc.coords.lat;
-        props.curLoc.coords.lng = props.startLoc.coords.lng;
+        curLoc.coords.lat = props.startLoc.coords.lat;
+        curLoc.coords.lng = props.startLoc.coords.lng;
     }
     if(props.curLoc.coords.lat != 0 && props.curLoc.coords.lng != 0 && props.startLoc.coords.lat == 0 && props.startLoc.coords.lng == 0) {
-        props.startLoc.coords.lat = props.curLoc.coords.lat;
-        props.startLoc.coords.lng = props.curLoc.coords.lng;
+        startLoc.coords.lat = props.curLoc.coords.lat;
+        startLoc.coords.lng = props.curLoc.coords.lng;
     }
     return ( 
         <GoogleMap 
