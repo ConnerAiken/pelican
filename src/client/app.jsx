@@ -3,6 +3,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import toastr from "toastr";
 import './../../node_modules/toastr/build/toastr.css';  
+import Gmap from "./components/map.jsx";
   
 class App extends React.Component {
 
@@ -23,6 +24,7 @@ class App extends React.Component {
           var startPos;
 
           navigator.geolocation.getCurrentPosition(function(position) {
+            console.log(position);
               startPos = position;
               document.getElementById('startLat').innerHTML = startPos.coords.latitude;
               document.getElementById('startLon').innerHTML = startPos.coords.longitude;
@@ -38,10 +40,8 @@ class App extends React.Component {
             } 
           }, {timeout: 30000, enableHighAccuracy: true, maximumAge: 75000});
 
-          navigator.geolocation.watchPosition(function(position) {
-            console.log(position, startPos);
-              toastr.info("Cur Pos: "+JSON.stringify(position));
-              if(startPos)
+          navigator.geolocation.watchPosition(function(position) {   
+            if(startPos)
                 document.getElementById('distance').innerHTML = calculateDistance(startPos.coords.latitude, startPos.coords.longitude, position.coords.latitude, position.coords.longitude);
           }, function(err) {
               toastr.error("Location tracking error occured. Error code: "+err);
@@ -81,8 +81,13 @@ class App extends React.Component {
             </p>
           </div>
         </div>
-        <div> 
-          <h2>Map</h2>
+        <div>  
+          <Gmap
+            googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
+            loadingElement={<div style={{ height: `100%` }} />}
+            containerElement={<div style={{ height: `100%` }} />}
+            mapElement={<div style={{ height: `100%` }} />}
+            />
         </div>
         <div>
           <h4>Cart Info</h4>
