@@ -2,12 +2,23 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
 
-const Gmap = withScriptjs(withGoogleMap((props) => {
+const Gmap = withScriptjs(withGoogleMap((props) => {  
+    console.log(props);
+    if(props.curLoc.coords.lat == 0 && props.curLoc.coords.lng == 0 && props.startLoc.coords.lat != 0 && props.startLoc.coords.lng != 0) {
+        props.curLoc.coords.lat = props.startLoc.coords.lat;
+        props.curLoc.coords.lng = props.startLoc.coords.lng;
+    }
+    if(props.curLoc.coords.lat != 0 && props.curLoc.coords.lng != 0 && props.startLoc.coords.lat == 0 && props.startLoc.coords.lng == 0) {
+        props.startLoc.coords.lat = props.curLoc.coords.lat;
+        props.startLoc.coords.lng = props.curLoc.coords.lng;
+    }
     return ( 
-        <GoogleMap
-        defaultZoom={8}
-        defaultCenter={{ lat: props.lat || 0, lng: props.lng || 0 }}
-        style={{width: '100%', height: '100%'}}/>  
+        <GoogleMap 
+        defaultZoom={20}
+        defaultCenter={{ lat: props.startLoc.coords ? props.startLoc.coords.lat : 0, lng: props.startLoc.coords ?  props.startLoc.coords.lng : 0 }}
+        style={{width: '100%', height: '100%'}}>
+            <Marker position={{ lat: props.curLoc.coords ? props.curLoc.coords.lat : 0, lng: props.curLoc.coords ? props.curLoc.coords.lng : 0}} />
+        </GoogleMap>  
     );
 }));
 
