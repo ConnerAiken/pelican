@@ -104,7 +104,7 @@ class App extends React.Component {
             />
             : null }
         </div>
-        <div>
+        <div style={{display: 'none'}}>
           <h4>Cart Info</h4>
         </div>
       </div>
