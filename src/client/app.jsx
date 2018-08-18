@@ -4,6 +4,7 @@ import ReactDOM from "react-dom";
 import toastr from "toastr";
 import './../../node_modules/toastr/build/toastr.css';  
 import Gmap from "./components/map.jsx";
+import Directions from "./components/directions.jsx";
   
 class App extends React.Component {
 

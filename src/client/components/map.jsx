@@ -19,8 +19,8 @@ const Gmap = withScriptjs(withGoogleMap((props) => {
         defaultZoom={20}
         defaultCenter={{ lat: props.startLoc.coords ? props.startLoc.coords.lat : 0, lng: props.startLoc.coords ?  props.startLoc.coords.lng : 0 }}
         style={{width: '100%', height: '100%'}}>
-            <Marker position={{ lat: curLoc.coords ? curLoc.coords.lat : 0, lng: curLoc.coords ? curLoc.coords.lng : 0}} />
-            <Marker position={{ lat: startLoc.coords ? startLoc.coords.lat : 0, lng: startLoc.coords ? startLoc.coords.lng : 0}} />
+            <Marker title="Current Location" position={{ lat: curLoc.coords ? curLoc.coords.lat : 0, lng: curLoc.coords ? curLoc.coords.lng : 0}} />
+            <Marker title="Start Location" position={{ lat: startLoc.coords ? startLoc.coords.lat : 0, lng: startLoc.coords ? startLoc.coords.lng : 0}} />
         </GoogleMap>  
     );
 }));
