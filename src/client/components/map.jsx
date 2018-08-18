@@ -20,6 +20,7 @@ const Gmap = withScriptjs(withGoogleMap((props) => {
         defaultCenter={{ lat: props.startLoc.coords ? props.startLoc.coords.lat : 0, lng: props.startLoc.coords ?  props.startLoc.coords.lng : 0 }}
         style={{width: '100%', height: '100%'}}>
             <Marker position={{ lat: props.curLoc.coords ? props.curLoc.coords.lat : 0, lng: props.curLoc.coords ? props.curLoc.coords.lng : 0}} />
+            <Marker position={{ lat: props.startLoc.coords ? props.startLoc.coords.lat : 0, lng: props.startLoc.coords ? props.startLoc.coords.lng : 0}} />
         </GoogleMap>  
     );
 }));

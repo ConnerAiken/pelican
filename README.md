@@ -1,5 +1,7 @@
 # Work log
 
-- 8/13/2018 -> .5h -> Staging servers/boilerplate
-- 8/14/2018 -> 2h -> Creating sample google maps /w location tracking and ssl certs
-- 8/15/2018 -> .25h -> Hooking up api key and start on pwa meta tags
+.5h -> Discussions about implementation/your vision
+.5h -> Setting up staging server, code repository and "web server" to handle server request
+.5h -> Setting up SSL certificates on the staging server so the API works correctly (Geolocation has unique requirements for security) and the site is secure.
+.5h -> Configuring the app to work as a PWA (Progressive Web App) and researching best options for libraries/google map's api
+2h -> Creating sample google maps component /w location tracking
