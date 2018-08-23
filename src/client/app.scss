@@ -26,16 +26,16 @@ body {
     display: grid;
     height: 100%;
     grid-template-columns: 1fr;
-    grid-template-rows: .5fr 8fr 0fr;
+    grid-template-rows: .5fr 5fr;
     grid-gap: 1px;
-    grid-template-areas: "." "." ".";
+    grid-template-areas: "." ".";
 
     & > div:first-child {  
         display: grid;
         height: 100%;
-        grid-template-columns: 1fr 5fr; 
+        grid-template-columns: 1fr 5fr 2fr; 
         grid-gap: 1px;
-        grid-template-areas: ". .";
+        grid-template-areas: ". . . ";
     
         & > div:last-child {  
             text-align: right;

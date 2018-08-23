@@ -1,14 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom";
-const { compose, withProps, lifecycle } = require("recompose"); 
-let {
+const { compose, withProps, lifecycle } = require("recompose");
+const {
   withScriptjs,
   withGoogleMap,
   GoogleMap,
   DirectionsRenderer,
+  Marker
 } = require("react-google-maps");
 
-DirectionsRenderer = compose(
+const MapWithADirectionsRenderer = compose(
   withProps({
     googleMapURL: "https://maps.googleapis.com/maps/api/js?key=***REMOVED***-o&v=3.exp&libraries=geometry,drawing,places",
     loadingElement: <div style={{ height: `100%` }} />,
@@ -18,12 +19,12 @@ DirectionsRenderer = compose(
   withScriptjs,
   withGoogleMap,
   lifecycle({
-    componentDidMount() {
+    componentDidMount() { 
       const DirectionsService = new google.maps.DirectionsService();
 
       DirectionsService.route({
-        origin: new google.maps.LatLng(41.8507300, -87.6512600),
-        destination: new google.maps.LatLng(41.8525800, -87.6514100),
+        origin: new google.maps.LatLng(this.props.curLoc.coords.lat, this.props.curLoc.coords.lng),
+        destination: new google.maps.LatLng(47.441509, -122.218819),
         travelMode: google.maps.TravelMode.DRIVING,
       }, (result, status) => {
         if (status === google.maps.DirectionsStatus.OK) {
@@ -34,14 +35,17 @@ DirectionsRenderer = compose(
           console.error(`error fetching directions ${result}`);
         }
       });
+
     }
   })
-)(props =>
+)(props => 
   <GoogleMap
-    defaultZoom={20}
-    defaultCenter={new google.maps.LatLng(props.startLoc ? props.startLoc.coords.lat : 47.6101, props.startLoc ? props.startLoc.coords.lng : 122.3421)}>
-    {props.directions && <DirectionsRenderer directions={props.directions} startLoc={props.startLoc ? props.startLoc : 47.6101} curLoc={props.curLoc ? props.curLoc : 122.3421}/>}
-  </GoogleMap>
+    defaultZoom={7}
+    defaultCenter={new google.maps.LatLng(props.curLoc.coords.lat, props.curLoc.coords.lng)}>
+    {props.directions && <DirectionsRenderer directions={props.directions} />}
+    <Marker title="Current Location" position={{ lat: props.curLoc.coords.lat, lng: props.curLoc.coords.lng}} />
+    <Marker title="Start Location" position={{ lat:  props.startLoc.coords.lat, lng: props.startLoc.coords.lng}} />
+  </GoogleMap> 
 );
 
-export default DirectionsRenderer;
+module.exports = MapWithADirectionsRenderer;

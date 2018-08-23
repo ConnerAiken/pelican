@@ -13,14 +13,8 @@ class App extends React.Component {
     console.log("Initializing <App> Component");
     this.state = {
       locationLoaded: false,
-      startLoc: { coords: {
-        lat: 0,
-        lng: 0
-      }},
-      curLoc: { coords: {
-        lat: 0,
-        lng: 0
-      }}
+      startLoc: false,
+      curLoc: false
     };
     this.initializeGMap();  
   }
@@ -35,6 +29,7 @@ class App extends React.Component {
           toastr.error('Geolocation is not supported for this Browser/OS version yet.');
       }  
       
+
       navigator.geolocation.getCurrentPosition((position) => {  
           this.setState({locationLoaded: true, startLoc: { coords:{ lat: position.coords.latitude, lng: position.coords.longitude }}}, () => { 
             document.getElementById('startLat').innerHTML = this.state.startLoc.coords.lat;
@@ -78,6 +73,11 @@ class App extends React.Component {
       return d;
   } 
 
+  handleDestinationChange() {
+    const requestUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=***REMOVED***-o';
+
+  }
+
   render() {
     return (
       <div id="main">
@@ -93,6 +93,7 @@ class App extends React.Component {
             </p>
           </div>
         </div>
+        { true == false ? 
         <div>  
           { this.state.locationLoaded ? 
           <Gmap
@@ -105,6 +106,13 @@ class App extends React.Component {
             />
             : null }
         </div>
+        :
+        <div>
+          {this.state.curLoc && this.state.startLoc ? <Directions
+            curLoc={this.state.curLoc}
+            startLoc={this.state.startLoc}/> : <p>Please wait while location is loaded..</p>}
+        </div>
+        }
         <div style={{display: 'none'}}>
           <h4>Cart Info</h4>
         </div>
