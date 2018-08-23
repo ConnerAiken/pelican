@@ -33,9 +33,9 @@ body {
     & > div:first-child {  
         display: grid;
         height: 100%;
-        grid-template-columns: 1fr 5fr; 
+        grid-template-columns: 1fr 3fr 6fr; 
         grid-gap: 1px;
-        grid-template-areas: ". .  ";
+        grid-template-areas: ". . .";
     
         & > div:last-child {  
             text-align: right;

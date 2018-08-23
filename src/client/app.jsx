@@ -5,18 +5,29 @@ import toastr from "toastr";
 import './../../node_modules/toastr/build/toastr.css';  
 import Gmap from "./components/map.jsx";
 import Directions from "./components/directions.jsx";
+import axios from 'axios';
   
 class App extends React.Component {
 
   constructor(props) {
-    super(props);
-    console.log("Initializing <App> Component");
+    super(props); 
     this.state = {
       locationLoaded: false,
       startLoc: false,
-      curLoc: false
+      curLoc: false,
+      destination: {
+        input: '85 Pike Street, Room 500 Seattle, WA 98101',
+        coords: {
+          lat: 47.6084444,
+          lng: -122.3405493
+        }
+      }
     };
-    this.initializeGMap();  
+    this.initializeGMap();   
+  }
+
+  componentDidUpdate() {
+    console.log(this.state);
   }
 
   initializeGMap() {   
@@ -72,12 +83,12 @@ class App extends React.Component {
       d = d * 0.62137119; 
       return d;
   } 
-
-  handleDestinationChange() {
-    const requestUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=***REMOVED***-o';
-
+  handleInputChange(e){
+    const destination= this.state.destination;
+    destination.input = e.target.value;
+    this.setState({destination}); 
   }
-
+ 
   render() {
     return (
       <div id="main">
@@ -86,33 +97,25 @@ class App extends React.Component {
             <h1>Pelican</h1>
           </div>
           <div>
+            <b>Destination</b><br/>
+            <input value={this.state.destination.input} onChange={this.handleInputChange.bind(this)}/> 
+          </div>
+          <div>
             <p>
               Starting Location (lat, lon): <span id="startLat">???</span>°, <span id="startLon">???</span>°<br/> 
               Current Location (lat, lon): <span id="currentLat">???</span>°, <span id="currentLon">???</span>° <br/> 
               Distance from starting location: <span id="distance">0</span> miles<br/> 
             </p>
           </div>
-        </div>
-        { true == false ? 
-        <div>  
-          { this.state.locationLoaded ? 
-          <Gmap
-            googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=***REMOVED***-o"
-            loadingElement={<div style={{ height: `100%` }} />}
-            containerElement={<div style={{ height: `100%` }} />}
-            mapElement={<div style={{ height: `100%` }} />}
-            curLoc={this.state.curLoc}
-            startLoc={this.state.startLoc}
-            />
-            : null }
-        </div>
-        :
-        <div>
-          {this.state.curLoc && this.state.startLoc ? <Directions
-            curLoc={this.state.curLoc}
-            startLoc={this.state.startLoc}/> : <p>Please wait while location is loaded..</p>}
-        </div>
-        }
+        </div> 
+        <div>   
+          {this.state.curLoc && this.state.startLoc ?
+          <Directions
+              curLoc={this.state.curLoc}
+              startLoc={this.state.startLoc}  
+              input={this.state.destination.input}/>
+          : null }
+        </div> 
         <div style={{display: 'none'}}>
           <h4>Cart Info</h4>
         </div>
