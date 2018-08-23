@@ -9,3 +9,4 @@
 
 # Week 2
 1h -> Creating sample google maps component /w destination and directions
+.5h -> Setting up dynamic destination updates
