@@ -1,6 +1,18 @@
 language: node_js
 sudo: false
+notifications:
+  email:
+    onfailure: change
+    onsuccess: change
+addons:
+  sshknownhosts:
+  - 142.93.19.150
+branches:
+  only:
+  - master
 node_js:
- - "9.8"
+ - "10.9"
 install:
   - npm install
+script:
+- npm run build
