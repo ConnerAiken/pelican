@@ -11,4 +11,4 @@
 1h -> Creating sample google maps component /w destination and directions
 .5h -> Setting up dynamic destination updates
 .5h -> Location lookup translation to address
-1.5h -> Setting up matomo analytics
+3h -> Setting up analytics, css frameworks, React Router and middlware functions

@@ -1,0 +1,25 @@
+.home { 
+    & > div { 
+        padding: 0;
+        height: 100%;
+    }
+    & > div > div:nth-child(1) { 
+        height: 5%;
+    }
+    & > div > div:nth-child(2) { 
+        height: 55%;
+        img {
+            height: 100%;
+            width: 100%;    
+        }
+    }
+    & > div > div:nth-child(3) { 
+        height: 30%;
+        padding-top: 5%;
+        padding-bottom: 5%;
+    }
+    & > div > div:nth-child(4) { 
+        height: 10%;
+        background-color: white;
+    } 
+}

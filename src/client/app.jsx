@@ -1,12 +1,10 @@
 // Node.JS
-import React from "react";
-import ReactDOM from "react-dom";
+import React from "react"; 
 import toastr from "toastr";
-import './../../node_modules/toastr/build/toastr.css';  
-import Gmap from "./components/map.jsx";
-import Directions from "./components/directions.jsx";
-import axios from 'axios';
-  
+import './../../node_modules/toastr/build/toastr.css';   
+import Directions from "./components/directions.jsx";  
+import "./app.scss";
+
 class App extends React.Component {
 
   constructor(props) {
@@ -91,7 +89,7 @@ class App extends React.Component {
  
   render() {
     return (
-      <div id="main">
+      <div id="main" className="map">
         <div>
           <div>
             <h1>Pelican</h1>
@@ -125,8 +123,4 @@ class App extends React.Component {
 };
 
 export default App;
-
-ReactDOM.render(<App />, document.getElementById("app"));
-
-
-module.hot.accept();
+ 
