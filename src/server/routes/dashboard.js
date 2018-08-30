@@ -1,6 +1,6 @@
 import express from 'express'
 
-import { verifyJWT_MW } from '../middlewares'
+import { verifyJWT_MW } from '../libs/middlewares'
 
 const router = express.Router()
 

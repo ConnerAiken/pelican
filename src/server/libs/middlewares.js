@@ -1,4 +1,4 @@
-import { verifyJWTToken } from './libs/auth'
+import { verifyJWTToken } from './auth'
 
 export function verifyJWT_MW(req, res, next)
 {

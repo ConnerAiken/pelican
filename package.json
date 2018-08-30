@@ -1,5 +1,5 @@
 {
-  "name": "react-node-webpack-boilerplate",
+  "name": "pelican-delivers",
   "version": "0.0.0-0",
   "description": "React/Nodejs + Webpack",
   "main": "build/bundle.js",
@@ -32,7 +32,6 @@
     "boilerplate"
   ],
   "author": "Conner Aiken",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/FittedTech/react-node-webpack/issues"
   },

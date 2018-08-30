@@ -1,7 +1,7 @@
 import express from 'express' 
  
 import { createJWToken } from '../libs/auth'
-import { paramCheck } from '../middlewares'
+import { paramCheck } from '../libs/middlewares'
 
 const router = express.Router() 
 /*
