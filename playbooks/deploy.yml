@@ -67,10 +67,13 @@
           
   - name: DOCKER | Stop and remove any running containers
     shell: docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q)
+    ignore_errors: always
 
   - name: DOCKER | Create the container
     docker_container:
       name: pelican-app
       image: pelican
       state: started
-      published_ports: 80:8080
+      published_ports: 443:443
+      domainname: pelican.fittedtech.com
+      restart_policy: always

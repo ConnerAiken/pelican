@@ -13,7 +13,7 @@
 .5h -> Location lookup translation to address 
 3h -> Setting up analytics, css frameworks, React Router and middlware functions 
 
-# Week 3 - 1 hour banked (8/28~ish)
+# Week 3 - 1 hour banked/total of 6 available (8/28~ish)
 .25h -> Phone call /w Trulioo 
 1.75h (9:00am-10:45am - 8/30/18) -> Setting up ansible deployment scripts  
 .5h (10:45am-11:15am - 8/30/18) -> Setup mysql db 
@@ -21,6 +21,18 @@
 x (1:15pm-x - 8/30/18) -> Setup user authentication against mysql using JWT
 
 Remaining = 3h
+
+## SSL Certificates
+
+### Usage
+
+Generate SSL certificates by installed `certbot` (google letsencrypt). Next, run `certbot certonly --standalone --email admin@example.com -d example.com` from the server. Once the certificates are generated (usually in `/etc/letsencrypt/live/example.com/`), ensure they are in the same path or symlinked to the path in server/index.js
+
+## Playbooks
+
+### Deploy
+
+The deployment playbook assumes that there is a mysql db already running on the host or on another host and the application environmental variables have been updated to reflect that. This playbook does not set any env variables but can be run against a fresh LAMP stack droplet from DigitalOcean. The playbook does not currently setup SSL certificates so those will need to be manually added as well. See SSL Certificates->Usage above.
 
 ## Trulioo API
 
