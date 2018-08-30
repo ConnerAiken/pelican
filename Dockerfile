@@ -8,7 +8,7 @@ WORKDIR ${DIR}
 # You may be wondering why we copied package.json first.
 # it is so we utilize docker's cached layers properly
 COPY package.json /app
-COPY ~/pelican.env /app
+COPY ../pelican.env /app
 RUN npm install
 COPY . ${DIR} 
 RUN chmod +x boot.sh
