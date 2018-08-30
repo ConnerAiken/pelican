@@ -95,7 +95,7 @@ module.exports = {
     devServer: {
       proxy: { 
         // proxy URLs to backend development server
-        '/api': 'http://localhost:3000'
+        '/api': 'http://localhost:8080/api'
       },
       contentBase: paths.contentBase,  
       compress: true, // enable gzip compression
