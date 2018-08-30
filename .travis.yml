@@ -11,7 +11,7 @@ branches:
   only:
      - master
 node_js:
-   - "10.9"
+   - "9"
 install:
   - npm install
 script:

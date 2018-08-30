@@ -1,9 +1,0 @@
-version: "3.6"
-services:
-  boilerplate:
-    container_name: boilerplate
-    restart: always
-    build: .
-    ports:
-      - "8080:8080"
- 
