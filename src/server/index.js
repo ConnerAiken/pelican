@@ -15,7 +15,11 @@ const httpsApp = express();
 const httpApp = express();
 const connection = utils.connectToMySQL();
 console.log(connection);
-  
+connection.query('SHOW DATABASES', function (error, results) {
+    if (error) throw error;
+    console.log(results);
+});
+
 httpsApp.use(express.static(path.resolve(process.cwd(), 'public')))
 httpApp.use(express.static(path.resolve(process.cwd(), 'public')))
 
@@ -60,3 +64,7 @@ if(process.env.NODE_ENV != "development") {
         
 }
  
+
+process.on('exit', function() {
+    connection.close();
+});
