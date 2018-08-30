@@ -33,5 +33,32 @@ export default {
         });
 
         return connection;
+    },
+    exitHandler(options, exitCode) {
+        console.log("Intercepting process exit..");
+
+        if (options.cleanup) {
+            this.log("Gracefully closing mysql connection as process is exiting."); 
+            options.connection.end();
+            process.exit();
+        }
+
+        if (exitCode || exitCode === 0) console.log(exitCode);
+        
+        if (options.exit) process.exit();
+    },
+    setExitHandlers() {   
+        //do something when app is closing
+        process.on('exit', this.exitHandler.bind(this,{cleanup:true, connection}));
+
+        //catches ctrl+c event
+        process.on('SIGINT', this.exitHandler.bind(null, {exit:true}));
+
+        // catches "kill pid" (for example: nodemon restart)
+        process.on('SIGUSR1', this.exitHandler.bind(null, {exit:true}));
+        process.on('SIGUSR2', this.exitHandler.bind(null, {exit:true}));
+
+        //catches uncaught exceptions
+        process.on('uncaughtException', this.exitHandler.bind(null, {exit:true}));
     }
 }

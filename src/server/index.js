@@ -1,3 +1,4 @@
+process.stdin.resume();
 import fs from "fs";
 import http from "http";
 import https from "https";
@@ -10,10 +11,11 @@ import _ from "lodash";
 global.path = path;
 global.dotenv = dotenv;
 
-utils.loadENV();  
+utils.loadENV();   
 const httpsApp = express(); 
 const httpApp = express();
 const connection = utils.connectToMySQL();
+utils.setExitHandlers(connection);
 console.log(connection);
 connection.query('SHOW DATABASES', function (error, results) {
     if (error) throw error;
@@ -63,9 +65,4 @@ if(process.env.NODE_ENV != "development") {
     });
         
 }
- 
-
-process.on('exit', function() {
-    utils.log("Gracefully closing mysql connection as process is exiting.");
-    connection.close();
-});
+  
