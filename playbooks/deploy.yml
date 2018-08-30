@@ -38,7 +38,7 @@
       state: absent
       path: "/var/www/pelican" 
 
-  - name: NODE | Clone/Pull repo
+  - name: SERVER | Clone/Pull repo
     git:
       repo: "git@github.com:ConnerAiken/pelican.git"
       dest: /var/www/pelican
@@ -77,3 +77,4 @@
       published_ports: 443:443
       domainname: pelican.fittedtech.com
       restart_policy: always
+      env_file: ~/pelican.env
