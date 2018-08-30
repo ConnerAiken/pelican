@@ -66,6 +66,7 @@
     copy:
       src: ~/pelican.env
       dest: /var/www/pelican/.env
+      remote_src: yes
 
   - name: DOCKER | Build the image
     docker_image: >
