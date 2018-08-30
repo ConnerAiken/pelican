@@ -30,6 +30,17 @@ Remaining = 2h
 
 Generate SSL certificates by installed `certbot` (google letsencrypt). Next, run `certbot certonly --standalone --email admin@example.com -d example.com` from the server. Once the certificates are generated (usually in `/etc/letsencrypt/live/example.com/`), ensure they are in the same path or symlinked to the path in server/index.js
 
+## Docker
+
+### Monitoring
+
+There are a few docker commands to know. 
+
+1) `docker container ls -a` -> List all running and stopped containers 
+2) `docker container start pelican-app` -> Starts a stopped docker container 
+3) `docker container logs pelican-app -f` -> Emits log and follows (like the linux command `tail`). 
+
+
 ## Playbooks
 
 ### Deploy

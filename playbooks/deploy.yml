@@ -38,6 +38,10 @@
       state: absent
       path: "/var/www/pelican" 
 
+  - name: DOCKER | Stop and remove any running containers
+    shell: docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q)
+    ignore_errors: true
+
   - name: SERVER | Clone/Pull repo
     git:
       repo: "git@github.com:ConnerAiken/pelican.git"
@@ -64,10 +68,9 @@
       tag=latest
       path=/var/www/pelican
       state=present
-          
-  - name: DOCKER | Stop and remove any running containers
-    shell: docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q)
-    ignore_errors: always
+      force=yes
+      nocache=yes
+           
 
   - name: DOCKER | Create the container
     docker_container:
