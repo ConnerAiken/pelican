@@ -66,5 +66,6 @@ if(process.env.NODE_ENV != "development") {
  
 
 process.on('exit', function() {
+    utils.log("Gracefully closing mysql connection as process is exiting.");
     connection.close();
 });

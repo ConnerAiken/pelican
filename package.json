@@ -70,6 +70,7 @@
     "jsonwebtoken": "^8.3.0",
     "lodash": "^4.17.10",
     "mdbreact": "^4.7.0",
+    "mysql": "^2.16.0",
     "react-google-maps": "^9.4.5",
     "react-piwik": "^1.5.0",
     "react-router-dom": "^4.3.1",
