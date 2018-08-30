@@ -12,8 +12,7 @@ global.path = path;
 global.dotenv = dotenv;
 
 utils.loadENV();   
-const httpsApp = express(); 
-const httpApp = express();
+const app = express();  
 const connection = utils.connectToMySQL();
 utils.setExitHandlers(connection); 
 
