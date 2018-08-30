@@ -6,13 +6,13 @@ notifications:
     onsuccess: change
 addons:
   sshknownhosts:
-  - 142.93.19.150
+     - 142.93.19.150
 branches:
   only:
-  - master
+     - master
 node_js:
- - "10.9"
+   - "10.9"
 install:
   - npm install
 script:
-- npm run build
+  - npm run build

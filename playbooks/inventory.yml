@@ -1,0 +1,7 @@
+---
+  pelican:
+    hosts:
+      pelican.fittedtech.com:
+        ansible_port: 22
+        ansible_user: root
+  vars:

@@ -1,0 +1,47 @@
+---  
+- name: SERVER
+  hosts: all
+  remote_user: root
+  gather_facts: true
+  pre_tasks:
+    - name: Update apt cache.
+      apt: update_cache=yes cache_valid_time=600 
+  roles:
+    - role: geerlingguy.nodejs 
+      nodejs_version: "9.x"
+      nodejs_install_npm_user: root
+      npm_config_prefix: /root/.npm-global
+      npm_config_unsafe_perm: "true" 
+
+  tasks:
+
+  - name: SERVER | Wait for port 22 to become available.
+    local_action: "wait_for port=22 host={{ inventory_hostname }}"  
+
+  - name: SERVER | Clean artifact path
+    file:
+      state: absent
+    args:
+      state: absent
+      path: "/var/www/pelican" 
+
+  - name: NODE | Clone/Pull repo
+    git:
+      repo: "git@github.com:ConnerAiken/pelican.git"
+      dest: /var/www/pelican
+    register: git_finished
+
+  - name: NODE | Install npm deps
+    npm:
+      path: /var/www/pelican 
+    register: npm_finished
+    when: git_finished.changed  
+
+  - name: NODE | Bundle and build
+    shell: npm run build
+    register: npm_built
+    failed_when: '"ERR!" in npm_built.stderr'
+    when: npm_finished.changed
+    args:
+      chdir: /var/www/pelican  
+          

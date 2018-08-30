@@ -13,8 +13,9 @@
 .5h -> Location lookup translation to address
 3h -> Setting up analytics, css frameworks, React Router and middlware functionsn
 
-# Week 3 - 1 hour banked
+# Week 3 - 1 hour banked (8/28~ish)
 .25h -> Phone call /w Trulioo
+1.5h (9:00am-10:30am - 8/30/18) -> Setting up ansible deployment scripts 
 
 
 ## Trulioo API
