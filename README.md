@@ -17,12 +17,11 @@
 .25h -> Phone call /w Trulioo 
 1.75h (9:00am-10:45am - 8/30/18) -> Setting up ansible deployment scripts  
 .5h (10:45am-11:15am - 8/30/18) -> Setup mysql db 
-.5h (11:15am-11:45am - 8/30/18) -> Refining ansible deployment scripts to use docker technology
-2h (1:15pm-3:15pm - 8/30/18) -> Setting up SSL certificates /w express (not automatically renewing at this point)
+.5h (11:15am-11:45am - 8/30/18) -> Refining ansible deployment scripts to use docker technology pt 1
+3h (1:15pm-4:15pm - 8/30/18) -> Refining ansible deploy scripts pt 2, start of JWT authentication and setting up SSL certificates /w express (not automatically renewing at this point)
 
 -> Setup basic user authentication against mysql using JWT
 
-Remaining = 1h
 
 ## SSL Certificates
 

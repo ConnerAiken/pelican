@@ -33,17 +33,18 @@ if(process.env.NODE_ENV != "development") {
         cert: certificate,
         ca: ca
     };
-
-    app.get('*', function(req, res) {  
-        if(process.env.development != "development") { 
-            res.redirect('https://' + req.headers.host + req.url);
-        } 
-    })
-    const httpServer = http.createServer(app).listen(80, '0.0.0.0', () => {
-        utils.log(`Server has started and is listening on port 80!`); 
-    });
+      
     const httpsServer = https.createServer(credentials, app).listen(443, '0.0.0.0', () => {
         utils.log(`Server has started and is listening on port 443!`)
+    });
+
+    
+    app.get('*', function(req, res) {   
+        res.redirect('https://' + req.headers.host + req.url); 
+    });
+
+    const httpServer = http.createServer(app).listen(80, '0.0.0.0', () => {
+        utils.log(`Server has started and is listening on port 80!`); 
     });
 } else {
 
