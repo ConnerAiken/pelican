@@ -31,10 +31,10 @@ app.get('/api', (req, res) => {
     res.send('Express to the rescue!');
 });
 
-const httpServer = http.createServer(app).listen(8080, '0.0.0.0', () => {
-    utils.log(`Server has started and is listening on port ${process.env.port}!`)
+const httpServer = http.createServer(app).listen(80, '0.0.0.0', () => {
+    utils.log(`Server has started and is listening on port 80!`)
 });
 
 const httpsServer = https.createServer(credentials, app).listen(443, '0.0.0.0', () => {
-    utils.log(`Server has started and is listening on port ${process.env.port}!`)
+    utils.log(`Server has started and is listening on port 443!`)
 });

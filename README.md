@@ -40,7 +40,6 @@ There are a few docker commands to know.
 2) `docker container start pelican-app` -> Starts a stopped docker container 
 3) `docker container logs pelican-app -f` -> Emits log and follows (like the linux command `tail`). 
 
-
 ## Playbooks
 
 ### Deploy
