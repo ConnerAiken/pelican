@@ -9,7 +9,7 @@
   "scripts": {
     "build": "webpack --config webpack.common.js --mode production",
     "dev": "webpack-dev-server --config webpack.common.js --mode development --open --watch",
-    "deploy": "ansible-galaxy install geerlingguy.nodejs && ansible-playbook playbooks/deploy.yml -i playbooks/inventory.yml",
+    "deploy": "ansible-galaxy install -r requirements.yml && ansible-playbook playbooks/deploy.yml -i playbooks/inventory.yml",
     "test": "echo \"Error: no test specified but lets exit with success so travis builds\" && exit 0",
     "prestart": "npm run build",
     "start": "babel-node src/server/index.js  --presets=env,stage-0",
@@ -70,6 +70,7 @@
     "react-piwik": "^1.5.0",
     "react-router-dom": "^4.3.1",
     "reactstrap": "^6.4.0",
+    "simple-oauth2": "^2.2.1",
     "toastr": "^2.1.4"
   }
 }
