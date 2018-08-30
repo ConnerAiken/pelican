@@ -18,11 +18,11 @@
 1.75h (9:00am-10:45am - 8/30/18) -> Setting up ansible deployment scripts  
 .5h (10:45am-11:15am - 8/30/18) -> Setup mysql db 
 .5h (11:15am-11:45am - 8/30/18) -> Refining ansible deployment scripts to use docker technology
-1.5h (1:15pm-2:45pm - 8/30/18) -> Setting up SSL certificates /w express (not automatically renewing at this point)
+1.75h (1:15pm-3:00pm - 8/30/18) -> Setting up SSL certificates /w express (not automatically renewing at this point)
 
 -> Setup basic user authentication against mysql using JWT
 
-Remaining = 1.5h
+Remaining = 1.25h
 
 ## SSL Certificates
 
