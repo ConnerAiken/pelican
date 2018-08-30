@@ -14,6 +14,7 @@ utils.loadENV();
 const httpsApp = express(); 
 const httpApp = express();
 const connection = utils.connectToMySQL();
+console.log(connection);
   
 httpsApp.use(express.static(path.resolve(process.cwd(), 'public')))
 httpApp.use(express.static(path.resolve(process.cwd(), 'public')))
