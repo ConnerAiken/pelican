@@ -71,13 +71,17 @@
       force=yes
       nocache=yes
            
-
   - name: DOCKER | Create the container
     docker_container:
       name: pelican-app
       image: pelican
       state: started
-      published_ports: 443:443
+      published_ports: 
+        - 443:443
+        - 80:80
       domainname: pelican.fittedtech.com
       restart_policy: always
       env_file: ~/pelican.env
+      keep_volumes : yes
+      volumes:
+        - /etc/letsencrypt:/etc/letsencrypt

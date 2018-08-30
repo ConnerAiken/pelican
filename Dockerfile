@@ -13,5 +13,6 @@ COPY . ${DIR}
 RUN chmod +x boot.sh
  
 
-EXPOSE 8080
+EXPOSE 80
+EXPOSE 443
 ENTRYPOINT [ "./boot.sh" ]
