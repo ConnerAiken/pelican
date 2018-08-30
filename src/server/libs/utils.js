@@ -34,9 +34,7 @@ export default {
 
         return connection;
     },
-    exitHandler(options, exitCode) {
-        console.log("Intercepting process exit..");
-
+    exitHandler(options, exitCode) { 
         if (options.cleanup) {
             this.log("Gracefully closing mysql connection as process is exiting."); 
             options.connection.end();

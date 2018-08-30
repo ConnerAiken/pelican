@@ -15,23 +15,11 @@ utils.loadENV();
 const httpsApp = express(); 
 const httpApp = express();
 const connection = utils.connectToMySQL();
-utils.setExitHandlers(connection);
-console.log(connection);
-connection.query('SHOW DATABASES', function (error, results) {
-    if (error) throw error;
-    console.log(results);
-});
+utils.setExitHandlers(connection); 
 
-httpsApp.use(express.static(path.resolve(process.cwd(), 'public')))
-httpApp.use(express.static(path.resolve(process.cwd(), 'public')))
-
-httpsApp.get('/health-check', (req, res) => res.sendStatus(200));
-httpApp.get('/health-check', (req, res) => res.sendStatus(200));
-
-httpsApp.get('/api', (req, res) => {
-    res.send('Express to the rescue!');
-});
-httpApp.get('/api', (req, res) => {
+app.use(express.static(path.resolve(process.cwd(), 'public')))
+app.get('/health-check', (req, res) => res.sendStatus(200));
+app.get('/api', (req, res) => {
     res.send('Express to the rescue!');
 });
  
@@ -47,20 +35,20 @@ if(process.env.NODE_ENV != "development") {
         ca: ca
     };
 
-    httpApp.get('*', function(req, res) {  
+    app.get('*', function(req, res) {  
         if(process.env.development != "development") { 
             res.redirect('https://' + req.headers.host + req.url);
         } 
     })
-    const httpServer = http.createServer(httpApp).listen(80, '0.0.0.0', () => {
+    const httpServer = http.createServer(app).listen(80, '0.0.0.0', () => {
         utils.log(`Server has started and is listening on port 80!`); 
     });
-    const httpsServer = https.createServer(credentials, httpsApp).listen(443, '0.0.0.0', () => {
+    const httpsServer = https.createServer(credentials, app).listen(443, '0.0.0.0', () => {
         utils.log(`Server has started and is listening on port 443!`)
     });
 } else {
 
-    const httpServer = http.createServer(httpApp).listen(8080, '0.0.0.0', () => {
+    const httpServer = http.createServer(app).listen(8080, '0.0.0.0', () => {
         utils.log(`Server has started and is listening on port 8080!`); 
     });
         
