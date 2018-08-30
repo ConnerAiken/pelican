@@ -1,3 +1,6 @@
+let connection;
+import mysql from "mysql";
+
 export default {
     log(msg, type = 0) {
         if(type === 1) {
@@ -21,5 +24,15 @@ export default {
         }else {
             this.log("Successfully loaded .env variables..");
         }
+    },
+    connectToMySQL() { 
+        connection = mysql.createConnection({
+            host     : process.env.mysqlHost,
+            user     : process.env.mysqlUser,
+            password : process.env.mysqlPassword,
+            database : process.env.mysqlDB
+        });
+
+        return connection;
     }
 }

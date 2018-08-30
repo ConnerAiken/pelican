@@ -1,15 +1,14 @@
-import express from 'express'
-
-import db from '../models'
+import express from 'express' 
+ 
 import { createJWToken } from '../libs/auth'
 import { paramCheck } from '../middlewares'
 
-const router = express.Router()
-
+const router = express.Router() 
 /*
   See: https://medium.com/@patrykcieszkowski/jwt-authentication-in-express-js-ee898b87a60
   ROUTES
-*/
+*/  
+ 
 
 router.post('*', paramCheck(['email', 'password']))
 

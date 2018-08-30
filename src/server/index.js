@@ -12,7 +12,8 @@ global.dotenv = dotenv;
 
 utils.loadENV();  
 const httpsApp = express(); 
-const httpApp = express(); 
+const httpApp = express();
+const connection = utils.connectToMySQL();
   
 httpsApp.use(express.static(path.resolve(process.cwd(), 'public')))
 httpApp.use(express.static(path.resolve(process.cwd(), 'public')))
