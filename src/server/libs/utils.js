@@ -11,21 +11,20 @@ export default {
             console.log(`[${process.env.appName}] ${msg}`);
         }
     },
-    loadENV() {
-        const defaultConfig = dotenv.config({
-            path: path.resolve(process.cwd(), '.env.default')
-        });
-        const config = dotenv.config(); 
-
-        if (config.error && !defaultConfig.error) {
+    loadENV() { 
+        const config = dotenv.config({
+            path: path.resolve(process.cwd(), '.env')
+        });  
+        if (config.error) {
             this.log("Could not find .env file, using default env file..");
-        }else if(config.error && defaultConfig.error) {
-            this.log("Could not find any .env files, please set one up!", 1);
+            const defaultConfig = dotenv.config({
+                path: path.resolve(process.cwd(), '.env.default')
+            });
         }else {
             this.log("Successfully loaded .env variables..");
         }
     },
-    connectToMySQL() { 
+    connectToMySQL() {  
         connection = mysql.createConnection({
             host     : process.env.mysqlHost,
             user     : process.env.mysqlUser,
