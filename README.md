@@ -11,7 +11,7 @@
 1h -> Creating sample google maps component /w destination and directions 
 .5h -> Setting up dynamic destination updates 
 .5h -> Location lookup translation to address 
-3h -> Setting up analytics, css frameworks, React Router and middlware functions 
+3h -> Setting up analytics, css frameworks, React Router and middleware functions 
 
 # Week 3 - 1 hour banked/total of 6 available (8/28~ish)
 .25h -> Phone call /w Trulioo 

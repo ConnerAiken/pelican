@@ -12,17 +12,18 @@ global.path = path;
 global.dotenv = dotenv;
 
 utils.loadENV();   
-const app = express();  
+const app = express();   
+const httpApp = express();  
 const connection = utils.connectToMySQL();
-utils.setExitHandlers(connection); 
-
-app.use(express.static(path.resolve(process.cwd(), 'public')))
-app.get('/health-check', (req, res) => res.sendStatus(200));
-app.get('/api', (req, res) => {
-    res.send('Express to the rescue!');
-});
+utils.setExitHandlers(connection);   
  
 if(process.env.NODE_ENV != "development") { 
+    app.use(express.static(path.resolve(process.cwd(), 'public')))
+    app.get('/health-check', (req, res) => res.sendStatus(200));
+    app.get('/api', (req, res) => {
+        res.send('Express to the rescue!');
+    });
+
     // Certificate
     const privateKey = fs.readFileSync('/etc/letsencrypt/live/pelican.fittedtech.com/privkey.pem', 'utf8');
     const certificate = fs.readFileSync('/etc/letsencrypt/live/pelican.fittedtech.com/cert.pem', 'utf8');
@@ -37,8 +38,7 @@ if(process.env.NODE_ENV != "development") {
     const httpsServer = https.createServer(credentials, app).listen(443, '0.0.0.0', () => {
         utils.log(`Server has started and is listening on port 443!`)
     });
-
-    const httpApp = _.cloneDeep(app);
+ 
     httpApp.get('*', function(req, res) {   
         console.log("Redirecting from http to https");
         res.redirect('https://' + req.headers.host + req.url); 
@@ -48,8 +48,13 @@ if(process.env.NODE_ENV != "development") {
         utils.log(`Server has started and is listening on port 80!`); 
     });
 } else {
-
-    const httpServer = http.createServer(app).listen(8080, '0.0.0.0', () => {
+    httpApp.use(express.static(path.resolve(process.cwd(), 'public')))
+    httpApp.get('/health-check', (req, res) => res.sendStatus(200));
+    httpApp.get('/api', (req, res) => {
+        res.send('Express to the rescue!');
+    });
+ 
+    const httpServer = http.createServer(httpApp).listen(8080, '0.0.0.0', () => {
         utils.log(`Server has started and is listening on port 8080!`); 
     });
         
