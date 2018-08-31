@@ -38,12 +38,13 @@ if(process.env.NODE_ENV != "development") {
         utils.log(`Server has started and is listening on port 443!`)
     });
 
-    
-    app.get('*', function(req, res) {   
+    const httpApp = _.cloneDeep(app);
+    httpApp.get('*', function(req, res) {   
+        console.log("Redirecting from http to https");
         res.redirect('https://' + req.headers.host + req.url); 
     });
 
-    const httpServer = http.createServer(app).listen(80, '0.0.0.0', () => {
+    const httpServer = http.createServer(httpApp).listen(80, '0.0.0.0', () => {
         utils.log(`Server has started and is listening on port 80!`); 
     });
 } else {
