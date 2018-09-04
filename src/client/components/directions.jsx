@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import toastr from "toastr";
-import axios from "axios";
+import axios from "axios"; 
 
 const { compose, withProps, lifecycle } = require("recompose");
 const {

@@ -1,9 +1,10 @@
 // Node.JS
 import React from "react"; 
 import toastr from "toastr";
-import './../../node_modules/toastr/build/toastr.css';   
-import Directions from "./components/directions.jsx";  
-import "./app.scss";
+import './../../../node_modules/toastr/build/toastr.css';   
+import Directions from "./directions.jsx";  
+import { Container, Row, Col, Input, Button } from 'reactstrap';
+import "./dashboard.scss";
 
 class App extends React.Component {
 
@@ -89,35 +90,31 @@ class App extends React.Component {
  
   render() {
     return (
-      <div id="main" className="map">
-        <div>
-          <div>
-            <h1>Pelican</h1>
-          </div>
-          <div>
-            <b>Destination</b><br/>
-            <input value={this.state.destination.input} onChange={this.handleInputChange.bind(this)}/> 
-          </div>
-          <div>
-            <p>
-              Starting Location (lat, lon): <span id="startLat">???</span>°, <span id="startLon">???</span>°<br/> 
-              Current Location (lat, lon): <span id="currentLat">???</span>°, <span id="currentLon">???</span>° <br/> 
-              Distance from starting location: <span id="distance">0</span> miles<br/> 
-            </p>
-          </div>
-        </div> 
-        <div>   
-          {this.state.curLoc && this.state.startLoc ?
-          <Directions
-              curLoc={this.state.curLoc}
-              startLoc={this.state.startLoc}  
-              input={this.state.destination.input}/>
-          : null }
-        </div> 
-        <div style={{display: 'none'}}>
-          <h4>Cart Info</h4>
-        </div>
-      </div>
+      <Container id="main" className="container home" fluid={true}>
+          <Row fluid={true}>
+            <Col xs={{size: 4}} sm={{size: 4}} md={{size: 4}} lg={{size: 4}}> 
+                <h1>Pelican</h1>
+            </Col>
+            <Col xs={{size: 4}} sm={{size: 4}} md={{size: 4}} lg={{size: 4}}></Col>
+            <Col xs={{size: 4}} sm={{size: 4}} md={{size: 4}} lg={{size: 4}}> 
+                <p>
+                  Start: <span id="startLat">???</span>°, <span id="startLon">???</span>°<br/> 
+                  Current: <span id="currentLat">???</span>°, <span id="currentLon">???</span>° <br/> 
+                  Distance: <span id="distance">0</span> miles<br/> 
+                </p>
+            </Col>
+          </Row>
+          <Row fluid={true}>
+            <Col xs={{size: 12}} sm={{size: 12}} md={{size: 8, offset: 2}} lg={{size: 8, offset: 2}}>
+                {this.state.curLoc && this.state.startLoc ?
+                <Directions
+                    curLoc={this.state.curLoc}
+                    startLoc={this.state.startLoc}  
+                    input={this.state.destination.input}/>
+                : null }
+            </Col>
+          </Row>
+      </Container> 
     );
   }
 };

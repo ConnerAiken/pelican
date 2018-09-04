@@ -7,7 +7,7 @@ import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
  
-import App from "./app.jsx"; 
+import Dash from "./components/dashboard.jsx"; 
 import Signup from "./components/signup.jsx"; 
 import Home from "./components/home.jsx"; 
  
@@ -23,10 +23,10 @@ ReactDOM.render(
         <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/signup" component={Signup} />
-            <Route path="/map" component={App} />
+            <Route path="/map" component={Dash} />
         </Switch> 
     </Router>
-,document.querySelector("body"));
+, document.querySelector("body"));
 
 module.hot.accept(); 
  

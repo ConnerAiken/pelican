@@ -1,3 +1,22 @@
-.signup {
-    
+.signup {  
+}
+
+#top-toolbar {
+    padding-top: 5%;
+    .fa:hover {
+        cursor: pointer;
+    }
+}
+
+.input-row {
+    margin-top: 2.5%;
+}
+
+#map-link {
+    color: white;
+    text-decoration: underline;
+
+    &:hover {
+        font-style: bold;
+    }
 }

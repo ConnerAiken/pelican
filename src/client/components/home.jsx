@@ -8,12 +8,12 @@ import { Container, Row, Col, Input, Button } from 'reactstrap';
 import './home.scss';
 
 const LgnBtn = withRouter(({ history }) => (
-  <Button className="btn-deep-orange" onClick={() => { history.push('/map'); return <Redirect to="/map"/>; }}>
+  <Button className="btn-deep-orange btn-block" id="login-btn" onClick={() => { history.push('/map'); return <Redirect to="/map"/>; }}>
     LOGIN
   </Button>
 ))
 const SignBtn = withRouter(({ history }) => ( 
-    <a onClick={() => { history.push('/signup'); return <Redirect to="/signup"/>; }} className="align-middle"  style={{display: 'inline-block', color: 'black', width: '100%', height: '100%', textAlign: 'center'}}>
+    <a onClick={() => { history.push('/signup'); return <Redirect to="/signup"/>; }}>
       CREATE NEW ACCOUNT
     </a> 
 ))
@@ -47,15 +47,15 @@ class Signup extends React.Component {
  
   render() {
     return (
-      <Container id="main" className="container home">
-          <Row>
-            <Col xs={{size: 10, offset: 1}} sm={{size: 10, offset: 1}} md={{size: 8, offset: 2}} lg={{size: 8, offset: 2}}>
+      <Container id="main" className="container home" fluid={true}>
+          <Row fluid={true}>
+            <Col xs={{size: 12}} sm={{size: 12}} md={{size: 8, offset: 2}} lg={{size: 8, offset: 2}}>
               &nbsp;
             </Col>
-            <Col xs={{size: 10, offset: 1}} sm={{size: 10, offset: 1}} md={{size: 8, offset: 2}} lg={{size: 8, offset: 2}}>
+            <Col xs={{size: 12}} sm={{size: 12}} md={{size: 8, offset: 2}} lg={{size: 8, offset: 2}}>
                 <img src={header}/>
             </Col>
-            <Col xs={{size: 10, offset: 1}} sm={{size: 10, offset: 1}} md={{size: 8, offset: 2}} lg={{size: 8, offset: 2}}> 
+            <Col xs={{size: 12}} sm={{size: 12}} md={{size: 8, offset: 2}} lg={{size: 8, offset: 2}} id="form-col"> 
                 <form> 
                   <Input icon="envelope" type="email" error="wrong" success="right" value={this.state.email}/><br/>
                   <Input label="Type your password" icon="lock" type="password" value={this.state.password}/>
@@ -66,12 +66,12 @@ class Signup extends React.Component {
                     </Col>
                     <Col xs={{size: 6, offset: 0}} sm={{size: 6, offset: 0}} md={{size: 6, offset: 0}} lg={{size: 6, offset: 0}} style={{textAlign: 'right', divor: 'white'}}>
                       <br/>
-                      <a href="#">Forgot Password?</a>
+                      <a id="forgot-link" href="#">Forgot Password?</a>
                     </Col>
                   </Row> 
                 </form> 
             </Col>
-            <Col xs={{size: 10, offset: 1}} sm={{size: 10, offset: 1}} md={{size: 8, offset: 2}} lg={{size: 8, offset: 2}}>
+            <Col xs={{size: 12}} sm={{size: 12}} md={{size: 8, offset: 2}} lg={{size: 8, offset: 2}} id="footer-col">
                 <SignBtn/>
             </Col>
           </Row>
