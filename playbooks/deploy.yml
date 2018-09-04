@@ -46,6 +46,7 @@
     git:
       repo: "git@github.com:ConnerAiken/pelican.git"
       dest: /var/www/pelican
+      force: yes
     register: git_finished
 
   - name: NODE | Install npm deps
