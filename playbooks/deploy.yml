@@ -52,8 +52,7 @@
   - name: NODE | Install npm deps
     npm:
       path: /var/www/pelican 
-    register: npm_finished
-    when: git_finished.changed  
+    register: npm_finished 
 
   - name: NODE | Bundle and build
     shell: npm run build

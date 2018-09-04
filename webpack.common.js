@@ -23,7 +23,8 @@ module.exports = {
     ],
     output: {
       path: paths.dest,
-      filename: "bundle.js",
+      filename: '[name].js?t=' + new Date().getTime(),
+      chunkFilename: '[name]-chunk.js?t=' + new Date().getTime(),
       publicPath: "/", 
       libraryTarget: "umd" 
     },

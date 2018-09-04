@@ -8,17 +8,14 @@ html, body, #main {
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
     background-color: #3d5e4c;
+    -webkit-box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.75); 
 } 
  
 body, div {
     box-sizing: border-box;
-}
-
-html { 
-    -webkit-box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.75);
-    box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.75); 
-}
+} 
 
 body {
     font-size: 12px;
