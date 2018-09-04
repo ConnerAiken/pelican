@@ -23,8 +23,8 @@
 -> Setup basic user authentication against mysql using JWT
 
 
-# Week 4 - 49 hours? banked - (9/4/2018)
-1.5h -> Upgrading babel, researching on iOS html/css requirements and making scroll viewport work correctly in iphone
+# Week 4 - 76 hours banked for 4 weeks - (9/4/2018)
+2h -> Upgrading babel, researching on iOS html/css requirements and making scroll viewport work correctly in iphone, build process changes for docker
 
 
 ## SSL Certificates

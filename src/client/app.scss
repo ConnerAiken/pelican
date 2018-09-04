@@ -1,16 +1,7 @@
 html, body, #main {
     height: 100%;
-    width: 100%; 
-    position: absolute;
-    top: 0;
-    left: 0;
-    overflow: hidden;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior: contain;
-    background-color: #3d5e4c;
-    -webkit-box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.75);
-    box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.75); 
+    width: 100%;  
+    background-color: #3d5e4c; 
 } 
  
 body, div {
@@ -22,7 +13,13 @@ body {
     color: white; 
     padding: 0;
     margin: 0; 
-    position:relative; 
+    position:relative;  
+    overflow: hidden;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    -webkit-box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.75); 
 }
    
 #main.map { 
