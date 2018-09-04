@@ -63,7 +63,7 @@
     args:
       chdir: /var/www/pelican   
 
-  - name: Copy env from home 
+  - name: SERVER | Copy env from home 
     copy:
       src: ~/pelican.env
       dest: /var/www/pelican/.env

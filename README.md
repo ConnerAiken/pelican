@@ -24,7 +24,7 @@
 
 
 # Week 4 - 49 hours? banked - (9/4/2018)
-.5h -> Upgrading babel and making scroll viewport work correctly in iphone
+1.5h -> Upgrading babel, researching on iOS html/css requirements and making scroll viewport work correctly in iphone
 
 
 ## SSL Certificates
@@ -73,3 +73,9 @@ The deployment playbook assumes that there is a mysql db already running on the 
 Tasks
 - [ ] We need to setup a privacy policy
  
+
+## System Specifics
+
+### Authentication - JWT
+Overview image: https://appdividend.com/wp-content/uploads/2018/02/Node-js-API-JWT-Authentication-Tutorial.jpg
+See: https://appdividend.com/2018/02/07/node-js-jwt-authentication-tutorial-scratch/

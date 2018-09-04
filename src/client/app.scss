@@ -2,6 +2,8 @@ html, body, #main {
     height: 100%;
     width: 100%; 
     overflow: hidden;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
 } 
  
 body, div {

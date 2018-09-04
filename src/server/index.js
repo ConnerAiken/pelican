@@ -19,6 +19,7 @@ utils.setExitHandlers(connection);
  
 if(process.env.NODE_ENV != "development") { 
     app.use(express.static(path.resolve(process.cwd(), 'public')))
+    app.use('/user', require('./routes/user'));
     app.get('/health-check', (req, res) => res.sendStatus(200));
     app.get('/api', (req, res) => {
         res.send('Express to the rescue!');
@@ -49,6 +50,7 @@ if(process.env.NODE_ENV != "development") {
     });
 } else {
     httpApp.use(express.static(path.resolve(process.cwd(), 'public')))
+    app.use('/user', require('./routes/user'));
     httpApp.get('/health-check', (req, res) => res.sendStatus(200));
     httpApp.get('/api', (req, res) => {
         res.send('Express to the rescue!');

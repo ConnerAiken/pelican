@@ -1,7 +1,5 @@
-import dashRouter from "./dashboard";
-import authRouter from "./auth";
+import userRouter from "./user";
 
 export default {
-    dashRouter,
-    authRouter
+    userRouter
 }
