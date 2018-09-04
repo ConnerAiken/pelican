@@ -59,7 +59,6 @@
     shell: npm run build
     register: npm_built
     failed_when: '"ERR!" in npm_built.stderr'
-    when: npm_finished.changed
     args:
       chdir: /var/www/pelican   
 
