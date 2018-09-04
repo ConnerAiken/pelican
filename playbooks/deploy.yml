@@ -52,12 +52,14 @@
   - name: NODE | Install npm deps
     npm:
       path: /var/www/pelican 
-    register: npm_finished 
+    register: npm_finished
+    when: git_finished.changed  
 
   - name: NODE | Bundle and build
     shell: npm run build
     register: npm_built
     failed_when: '"ERR!" in npm_built.stderr'
+    when: git_finished.changed
     args:
       chdir: /var/www/pelican   
 
