@@ -114,6 +114,19 @@ class Signup extends React.Component {
           </Row>
           <Row fluid={true} className="input-row"> 
             <Col xs={{size: 1, offset: 1}} sm={{size: 1, offset: 1}} md={{size: 1, offset: 1}} lg={{size: 1, offset: 1}} className="d-flex justify-content-center" >
+                <i className="fa fa-address-card-o fa-2x"/>
+            </Col>  
+            <Col xs={{size: 9}} sm={{size: 9}} md={{size: 9}} lg={{size: 9}}>
+                <p>Account Type</p> 
+                <Input type="select" name="accountType" id="accountType">
+                  <option value="seller">Store</option>
+                  <option value="shipper">Driver</option> 
+                  <option value="client">Customer</option> 
+                </Input>
+            </Col>  
+          </Row>
+          <Row fluid={true} className="input-row"> 
+            <Col xs={{size: 1, offset: 1}} sm={{size: 1, offset: 1}} md={{size: 1, offset: 1}} lg={{size: 1, offset: 1}} className="d-flex justify-content-center" >
                 <i class="fa fa-user fa-2x"></i>
             </Col>  
             <Col xs={{size: 9}} sm={{size: 9}} md={{size: 9}} lg={{size: 9}}>

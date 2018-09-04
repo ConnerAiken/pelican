@@ -91,29 +91,28 @@ class App extends React.Component {
   render() {
     return (
       <Container id="main" className="container home" fluid={true}>
-          <Row fluid={true}>
-            <Col xs={{size: 4}} sm={{size: 4}} md={{size: 4}} lg={{size: 4}}> 
-                <h1>Pelican</h1>
-            </Col>
-            <Col xs={{size: 4}} sm={{size: 4}} md={{size: 4}} lg={{size: 4}}></Col>
-            <Col xs={{size: 4}} sm={{size: 4}} md={{size: 4}} lg={{size: 4}}> 
-                <p>
-                  Start: <span id="startLat">???</span>°, <span id="startLon">???</span>°<br/> 
-                  Current: <span id="currentLat">???</span>°, <span id="currentLon">???</span>° <br/> 
-                  Distance: <span id="distance">0</span> miles<br/> 
-                </p>
-            </Col>
-          </Row>
-          <Row fluid={true}>
-            <Col xs={{size: 12}} sm={{size: 12}} md={{size: 8, offset: 2}} lg={{size: 8, offset: 2}}>
-                {this.state.curLoc && this.state.startLoc ?
-                <Directions
-                    curLoc={this.state.curLoc}
-                    startLoc={this.state.startLoc}  
-                    input={this.state.destination.input}/>
-                : null }
-            </Col>
-          </Row>
+        <Row fluid={true}>
+          <Col xs={{size: 4}} sm={{size: 4}} md={{size: 4}} lg={{size: 4}} className="d-flex justify-content-start align-items-center"> 
+              <h1>Pelican</h1>
+          </Col> 
+          <Col xs={{size: 7}} sm={{size: 7}} md={{size: 7}} lg={{size: 7}} className="d-flex justify-content-start align-items-center"> 
+              <p>
+                Start: <span id="startLat">???</span>°, <span id="startLon">???</span>°<br/> 
+                Current: <span id="currentLat">???</span>°, <span id="currentLon">???</span>° <br/> 
+                Distance: <span id="distance">0</span> miles<br/> 
+              </p>
+          </Col>
+        </Row>
+        <Row fluid={true} id="map">
+          <Col xs={{size: 12}} sm={{size: 12}} md={{size: 8, offset: 2}} lg={{size: 8, offset: 2}}>
+              {this.state.curLoc && this.state.startLoc ?
+              <Directions
+                  curLoc={this.state.curLoc}
+                  startLoc={this.state.startLoc}  
+                  input={this.state.destination.input}/>
+              : null }
+          </Col>
+        </Row>
       </Container> 
     );
   }
