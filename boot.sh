@@ -1,4 +1,4 @@
 #!/bin/bash
-npm i
+npm_config_loglevel=silent npm i
 npm run build
 npm start
