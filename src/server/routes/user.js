@@ -25,7 +25,8 @@ router.post('/register', function(req, res) {
    });
 });
 
-router.post('/login', function(req, res){
+router.post('/login', function(req, res) { 
+
   db.findUser(req.body.email).then(function(users) { 
     if(users.length == 0) {
        return res.status(401).json({

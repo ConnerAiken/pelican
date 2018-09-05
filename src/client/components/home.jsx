@@ -2,31 +2,58 @@
 import React from "react"; 
 import toastr from "toastr";
 import './../../../node_modules/toastr/build/toastr.css';    
-import header from "./../assets/img/header.png"; 
+import header from "./../assets/img/header.png";  
 import { withRouter, Redirect } from 'react-router-dom';
 import { Container, Row, Col, Input, Button } from 'reactstrap';
+import axios from "axios";
 import './home.scss';
-
-const LgnBtn = withRouter(({ history }) => (
-  <Button className="btn-deep-orange btn-block" id="login-btn" onClick={() => { history.push('/map'); return <Redirect to="/map"/>; }}>
-    LOGIN
-  </Button>
-))
-const SignBtn = withRouter(({ history }) => ( 
-    <a onClick={() => { history.push('/signup'); return <Redirect to="/signup"/>; }}>
-      CREATE NEW ACCOUNT
-    </a> 
-))
-
+  
 class Signup extends React.Component {
 
   constructor(props) {
     super(props); 
     this.handleChange = this.handleChange.bind(this); 
+    this.handleLogin = this.handleLogin.bind(this);
+    this.handleRegister = this.handleRegister.bind(this);
+    this.handleEmailChange = this.handleEmailChange.bind(this);
+    this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.state = {
       email: 'john.smith@gmail.com',
       password: 'testpass'
     };
+  }
+
+  handleEmailChange(e) {
+    this.setState({email: e.target.value});
+  }
+
+  handlePasswordChange(e) {
+    this.setState({password: e.target.value});
+  }
+
+  handleRegister(e) {
+    console.log(e); 
+    this.props.history.push('/signup'); 
+    return <Redirect to="/signup"/>;
+  }
+
+  handleLogin(e) {
+    const userObj = JSON.stringify({
+      email: this.state.email,
+      password: this.state.password
+    });
+    const history = this.props.history;
+
+    axios.post('/user/login', userObj)
+    .then(function(response) {  
+      toastr.success("Successfully logged in..");
+      history.push("/map"); 
+      return <Redirect to="/map"/>;
+    }).catch(err => {
+      toastr.error(err.message);
+      history.push("/map"); 
+      return <Redirect to="/map"/>;
+    })
   }
 
   getValidationState() {
@@ -57,12 +84,14 @@ class Signup extends React.Component {
             </Col>
             <Col xs={{size: 12}} sm={{size: 12}} md={{size: 8, offset: 2}} lg={{size: 8, offset: 2}} id="form-col"> 
                 <form> 
-                  <Input icon="envelope" type="email" error="wrong" success="right" value={this.state.email}/><br/>
-                  <Input label="Type your password" icon="lock" type="password" value={this.state.password}/>
+                  <Input icon="envelope" type="email" error="wrong" success="right" value={this.state.email} onChange={this.handleEmailChange}/><br/>
+                  <Input label="Type your password" icon="lock" type="password" value={this.state.password} onChange={this.handlePasswordChange}/>
                   <Row>  
                     <Col xs={{size: 6, offset: 0}} sm={{size: 6, offset: 0}} md={{size: 6, offset: 0}} lg={{size: 6, offset: 0}}>
                       <br/>
-                      <LgnBtn/> 
+                      <Button className="btn-deep-orange btn-block" id="login-btn" onClick={this.handleLogin}>
+                        LOGIN
+                      </Button>
                     </Col>
                     <Col xs={{size: 6, offset: 0}} sm={{size: 6, offset: 0}} md={{size: 6, offset: 0}} lg={{size: 6, offset: 0}} style={{textAlign: 'right', divor: 'white'}}>
                       <br/>
@@ -71,8 +100,10 @@ class Signup extends React.Component {
                   </Row> 
                 </form> 
             </Col>
-            <Col xs={{size: 12}} sm={{size: 12}} md={{size: 8, offset: 2}} lg={{size: 8, offset: 2}} id="footer-col">
-                <SignBtn/>
+            <Col xs={{size: 12}} sm={{size: 12}} md={{size: 8, offset: 2}} lg={{size: 8, offset: 2}} id="footer-col"> 
+                <a onClick={this.handleRegister}>
+                  CREATE NEW ACCOUNT
+                </a> 
             </Col>
           </Row>
       </Container>
@@ -80,5 +111,5 @@ class Signup extends React.Component {
   }
 };
 
-export default Signup;
+export default withRouter(Signup);
  
