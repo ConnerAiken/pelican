@@ -1,29 +1,28 @@
-process.stdin.resume();
 import fs from "fs";
 import http from "http";
 import https from "https";
 import express from 'express';
+import bodyParser from "body-parser";
 import utils from "./libs/utils.js";
-import path from "path";
-import dotenv from "dotenv";
+import path from "path"; 
 import _ from "lodash";
-
-global.path = path;
-global.dotenv = dotenv;
+import userRoutes from "./routes/user"; 
+ 
 
 utils.loadENV();   
+
 const app = express();   
-const httpApp = express();  
-const connection = utils.connectToMySQL();
-utils.setExitHandlers(connection);   
+const httpApp = express();   
+ 
+app.use(bodyParser.json());
+httpApp.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true})); 
+httpApp.use(bodyParser.urlencoded({extended: true}));
  
 if(process.env.NODE_ENV != "development") { 
     app.use(express.static(path.resolve(process.cwd(), 'public')))
-    app.use('/user', require('./routes/user'));
-    app.get('/health-check', (req, res) => res.sendStatus(200));
-    app.get('/api', (req, res) => {
-        res.send('Express to the rescue!');
-    });
+    app.use('/user', userRoutes);
+    app.get('/health-check', (req, res) => res.sendStatus(200)); 
 
     // Certificate
     const privateKey = fs.readFileSync('/etc/letsencrypt/live/pelican.fittedtech.com/privkey.pem', 'utf8');
@@ -50,11 +49,8 @@ if(process.env.NODE_ENV != "development") {
     });
 } else {
     httpApp.use(express.static(path.resolve(process.cwd(), 'public')))
-    app.use('/user', require('./routes/user'));
-    httpApp.get('/health-check', (req, res) => res.sendStatus(200));
-    httpApp.get('/api', (req, res) => {
-        res.send('Express to the rescue!');
-    });
+    httpApp.use('/user', userRoutes);
+    httpApp.get('/health-check', (req, res) => res.sendStatus(200)); 
  
     const httpServer = http.createServer(httpApp).listen(8080, '0.0.0.0', () => {
         utils.log(`Server has started and is listening on port 8080!`); 
