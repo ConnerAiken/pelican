@@ -32,19 +32,20 @@ class Signup extends React.Component {
   }
 
   handleRegister(e) {
-    console.log(e); 
     this.props.history.push('/signup'); 
     return <Redirect to="/signup"/>;
   }
 
   handleLogin(e) {
-    const userObj = JSON.stringify({
-      email: this.state.email,
-      password: this.state.password
-    });
+    const headers = {
+      'Content-Type': 'application/json;charset=UTF-8'
+    }; 
     const history = this.props.history;
 
-    axios.post('/user/login', userObj)
+    return axios.post('/api/v1/user/login', {
+      email: this.state.email,
+      password: this.state.password
+    }, headers)
     .then(function(response) {  
       toastr.success("Successfully logged in..");
       history.push("/map"); 
@@ -66,11 +67,7 @@ class Signup extends React.Component {
 
   handleChange(e) {
     this.setState({ value: e.target.value });
-  }
-
-  componentDidUpdate() {
-    console.log(this.state);
-  }
+  } 
  
   render() {
     return (

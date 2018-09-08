@@ -24,10 +24,13 @@
 
 
 # Week 4 - 76 hours banked for 4 weeks - (9/4/2018)
+Remaining: 65 hours
+
 1.5h (Mon - 11am-12:30pm) -> Upgrading babel, researching on iOS html/css requirements.
 1h (Mon - 1:45pm-2:45pm -> attempting to make scroll viewport work correctly in iphone, build process changes for docker
 1.5h (Mon - 2:45pm-4:15pm) -> Starting on registration wireframe, layout done but no validation
 1.75h (Mon - 4:15pm-6pm) -> /register server endpoint, creates user account and logs in user account. Front end login request but force success redirect.
+2.25h (Saturday - 10:00am-12:15pm) -> Improving landing page css by adding flexbox, adding login validation using regex and hook registration form into server-side endpoint
 
 ## SSL Certificates
 

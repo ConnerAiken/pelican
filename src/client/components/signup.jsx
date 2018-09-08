@@ -1,19 +1,21 @@
 // Node.JS
 import React from "react"; 
 import toastr from "toastr";
+import axios from "axios";
 import { withRouter, Redirect } from 'react-router-dom';
-import { Container, Row, Col, Button, Input } from 'reactstrap';
+import { Container, Row, Col, Button, Input } from 'reactstrap'; 
 import './../../../node_modules/toastr/build/toastr.css';    
 import "./signup.scss";
+ 
 
 const BackBtn = withRouter(({ history }) => (
   <i className="fa fa-chevron-left fa-2x" onClick={() => { history.push('/'); return <Redirect to="/"/>; }}/> 
 ));
 
 const BrowseBtn = () => (
-  <Button className="btn-deep-orange" id="browse-btn">
-    BROWSE
-  </Button>
+  <Button type="button" className="btn-deep-orange" id="browse-btn">
+    BROWSE 
+  </Button> 
 );
 
 class Signup extends React.Component {
@@ -22,20 +24,61 @@ class Signup extends React.Component {
     super(props); 
     this.handleSave = this.handleSave.bind(this); 
     this.handleBrowse = this.handleBrowse.bind(this);
-    this.state = { 
-      userType: false
+    
+    this.regex = {  
+      firstName: /(.*[a-z]){3}/i,
+      lastName: /(.*[a-z]){3}/i, 
+      address: /(.*[a-z]){3}/i,
+      email:  	
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+      phone: /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/, 
+      password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/, 
+    };
+
+    this.state = {  
+      form: {
+        accountType: 'store',
+        firstName: '',
+        lastName: '',
+        phone: '',
+        address: '',
+        password: '',
+        description: '', 
+        vehicleType: '',
+        vehiclePlate: ''
+      }
     };  
+
+    this.handleFormChange = this.handleFormChange.bind(this);
+  } 
+
+  handleFormChange(e) {
+    const form = Object.assign({}, this.state.form);  
+    if ((this.regex[e.target.name] && this.regex[e.target.name].test(e.target.value)) || !this.regex[e.target.name]) { 
+       form[e.target.name] = e.target.value;
+       this.setState({form});
+    }else { 
+        form[e.target.name] = false;
+        this.setState({form}); 
+    }         
   }
 
-  componentDidUpdate() {
-    console.log(this.state);
-  }
+  handleSave(e) {    
+    const history = this.props.history; 
+    const headers = {
+      'Content-Type': 'application/json;charset=UTF-8'
+    };
+     
+    axios.post('/api/v1/user/register', this.state.form, headers)
+    .then(response => { 
+      toastr.success("Please sign in.");
+      history.push('/'); 
+      return <Redirect to="/"/>; 
+    }).catch(err => {
+      toastr.error(err.message); 
+    });
+  } 
 
-  handleSave(e) {
-    console.log(e);
-    toastr.info("Thanks, saving!");
-  }
-  
   handleBrowse(e) {
     console.log(e);
   }
@@ -43,52 +86,42 @@ class Signup extends React.Component {
   render() {
     let accountSpecifics = null;
 
-    if(this.state.userType == "seller") {
-
-      accountSpecifics = () => ( 
-        <Row fluid={true}> 
-          <Col xs={{size: 2}} sm={{size: 2}} md={{size: 2}} lg={{size: 2}}>
-              <i class="fa fa-house fa-3x"></i>
+    if(this.state.form.accountType == "seller") { 
+      accountSpecifics = () => (  
+        <Row className="input-row"> 
+          <Col xs={{size: 1, offset: 1}} sm={{size: 1, offset: 1}} md={{size: 1, offset: 1}} lg={{size: 1, offset: 1}} className="d-flex justify-content-center" >
+              <i className="fa fa-info-circle fa-2x"></i>
           </Col>  
-          <Col xs={{size: 10}} sm={{size: 10}} md={{size: 10}} lg={{size: 10}}> 
-              <p>Store Images</p>
-              <b>Click Here</b>
+          <Col xs={{size: 9}} sm={{size: 9}} md={{size: 9}} lg={{size: 9}}>
+              <p>Description</p>
+              <Input invalid={this.state.form.description === false} onChange={this.handleFormChange} name="description" id="description" type="textarea"/> 
+              {this.state.form.description === false ? <p>Please enter a description of your company.</p> : null}
           </Col>   
         </Row>
       );
-    }else if(this.state.userType == "shipper") {
+    }else if(this.state.form.accountType == "shipper") {
       accountSpecifics = () => ( 
-          <Row fluid={true}> 
+          <Row> 
             <Col xs={{size: 1, offset: 1}} sm={{size: 1, offset: 1}} md={{size: 1, offset: 1}} lg={{size: 1, offset: 1}}>
-                <i class="fa fa-car fa-3x"></i>
+                <i className="fa fa-car fa-3x"></i>
             </Col>  
             <Col xs={{size: 9}} sm={{size: 9}} md={{size: 9}} lg={{size: 9}}>
                 <p>Vehicle Info</p>
-                <Input name="vehicleType" id="vehicleType" type="text" placeholder="Type of vehicle"/> 
-                <Input name="vehiclePlate" id="vehiclePlate" type="text" placeholder="Vehicle plate"/> 
+                <Input onChange={this.handleFormChange} name="vehicleType" id="vehicleType" type="text" placeholder="Type of vehicle"/> 
+                <Input onChange={this.handleFormChange} name="vehiclePlate" id="vehiclePlate" type="text" placeholder="Vehicle plate"/> 
                 <p>Vehicle Image</p>
                 <b>Click Here</b>
             </Col>   
           </Row>
         );
-    }else if(this.state.userType == "client") {
-      accountSpecifics = () => ( 
-          <Row fluid={true}> 
-            <Col xs={{size: 2}} sm={{size: 2}} md={{size: 2}} lg={{size: 2}}>
-                <i class="fa fa-info-circle fa-3x"></i>
-            </Col>  
-            <Col xs={{size: 9}} sm={{size: 9}} md={{size: 9}} lg={{size: 9}}>
-                <p>Description</p>
-                <Input name="description" id="description" type="text"/> 
-            </Col>   
-          </Row>
-        );
+    }else if(this.state.form.accountType == "client") {
+      accountSpecifics = () => null;
     }
 
     return (
       <Container id="main" className="container signup" fluid={true}>
       <form> 
-      <Row fluid={true} id="top-toolbar">
+      <Row id="top-toolbar">
         <Col xs={{size: 3, offset: 1}} sm={{size: 3, offset: 1}} md={{size: 3, offset: 1}} lg={{size: 3, offset: 1}} className="d-flex justify-content-start align-items-center">
           <BackBtn/> 
         </Col> 
@@ -99,85 +132,105 @@ class Signup extends React.Component {
           <i className="fa fa-floppy-o fa-2x" onClick={this.handleSave}/>
         </Col> 
       </Row>
-          <Row fluid={true} className="input-row">
+          <Row className="input-row">
             <Col xs={{size: 10, offset: 1}} sm={{size: 10, offset: 1}} md={{size: 10, offset: 1}} lg={{size: 10, offset: 1}} className="d-flex justify-content-center align-items-center">
-              <span class="fa-stack fa-5x">
-                <i class="fa fa-circle fa-stack-2x"></i>
-                <i class="fa fa-user-o fa-stack-1x" style={{color: 'grey'}}></i>
-              </span>
+              { this.state.imageUploaded ? <img id='imgUpload'/> : (<span className="fa-stack fa-5x">
+                <i className="fa fa-circle fa-stack-2x"></i>
+                <i className="fa fa-user-o fa-stack-1x" style={{color: 'grey'}}></i>
+              </span>) }
             </Col>   
           </Row>
-          <Row fluid={true}> 
+          <Row> 
             <Col xs={{size: 10, offset: 1}} sm={{size: 10, offset: 1}} md={{size: 10, offset: 1}} lg={{size: 10, offset: 1}} className="d-flex justify-content-center align-items-center">
-              <BrowseBtn onClick={this.handleBrowse}/>
+                <BrowseBtn onClick={this.handleBrowse}/>
             </Col>  
           </Row>
-          <Row fluid={true} className="input-row"> 
+          <Row className="input-row"> 
+            <Col xs={{size: 1, offset: 1}} sm={{size: 1, offset: 1}} md={{size: 1, offset: 1}} lg={{size: 1, offset: 1}} className="d-flex justify-content-center" >
+                <i className="fa fa-envelope fa-2x"></i>
+            </Col>  
+            <Col xs={{size: 9}} sm={{size: 9}} md={{size: 9}} lg={{size: 9}}>
+                <p>Email</p>
+                <Input invalid={this.state.form.email === false} valid={this.state.form.email  != false} required onChange={this.handleFormChange} name="email" id="email" type="text" placeholder="john.smith@gmail.com"/>
+                {this.state.form.email === false ? <p>Please enter a valid email.</p> : null}
+            </Col>   
+          </Row>
+          <Row className="input-row"> 
+            <Col xs={{size: 1, offset: 1}} sm={{size: 1, offset: 1}} md={{size: 1, offset: 1}} lg={{size: 1, offset: 1}} className="d-flex justify-content-center" >
+                <i className="fa fa-key fa-2x"></i>
+            </Col>  
+            <Col xs={{size: 9}} sm={{size: 9}} md={{size: 9}} lg={{size: 9}}>
+                <p>Password</p>
+                <Input invalid={this.state.form.password === false} valid={this.state.form.password  != false}  required onChange={this.handleFormChange} name="password" id="password" type="password" placeholder="*********"/>
+                {this.state.form.password === false ? <p>Passwords must have atleast one digit, symbol, upper/lowercase, and contain 8 or more characters.</p> : null}
+            </Col>   
+          </Row>
+          <Row className="input-row"> 
             <Col xs={{size: 1, offset: 1}} sm={{size: 1, offset: 1}} md={{size: 1, offset: 1}} lg={{size: 1, offset: 1}} className="d-flex justify-content-center" >
                 <i className="fa fa-address-card-o fa-2x"/>
             </Col>  
             <Col xs={{size: 9}} sm={{size: 9}} md={{size: 9}} lg={{size: 9}}>
                 <p>Account Type</p> 
-                <Input type="select" name="accountType" id="accountType">
+                <Input required onChange={this.handleFormChange} type="select" name="accountType" id="accountType">
                   <option value="seller">Store</option>
                   <option value="shipper">Driver</option> 
                   <option value="client">Customer</option> 
                 </Input>
             </Col>  
           </Row>
-          <Row fluid={true} className="input-row"> 
+          <Row className="input-row"> 
             <Col xs={{size: 1, offset: 1}} sm={{size: 1, offset: 1}} md={{size: 1, offset: 1}} lg={{size: 1, offset: 1}} className="d-flex justify-content-center" >
-                <i class="fa fa-user fa-2x"></i>
+                <i className="fa fa-user fa-2x"></i>
             </Col>  
             <Col xs={{size: 9}} sm={{size: 9}} md={{size: 9}} lg={{size: 9}}>
-                <p>Name</p>
-                <Input name="name" id="name" type="text"/>
+              <Row>
+                <Col xs={{size: 12}} sm={{size: 12}} md={{size: 5}} lg={{size: 5}}> 
+                    <p>First Name</p>
+                    <Input invalid={this.state.form.firstName === false} valid={this.state.form.firstName != false} required onChange={this.handleFormChange} name="firstName" id="firstName" type="text" placeholder="John"/>
+                    {this.state.form.firstName === false ? <p>Please enter a first name.</p> : null}
+                </Col>
+                <Col xs={{size: 12}} sm={{size: 12}} md={{size: 5, offset: 2}} lg={{size: 5, offset: 2}}> 
+                    <p>Last Name</p>
+                    <Input invalid={this.state.form.lastName === false} valid={this.state.form.lastName != false} required onChange={this.handleFormChange} name="lastName" id="lastName" type="text" placeholder="Smith"/>
+                    {this.state.form.lastName === false ? <p>Please enter a last name.</p> : null}
+                </Col>
+              </Row> 
             </Col>  
           </Row>
-          <Row fluid={true} className="input-row"> 
+          <Row className="input-row"> 
             <Col xs={{size: 1, offset: 1}} sm={{size: 1, offset: 1}} md={{size: 1, offset: 1}} lg={{size: 1, offset: 1}} className="d-flex justify-content-center" >
-                <i class="fa fa-phone fa-2x"></i>
+                <i className="fa fa-phone fa-2x"></i>
             </Col>  
             <Col xs={{size: 9}} sm={{size: 9}} md={{size: 9}} lg={{size: 9}}>
                 <p>Phone Number</p>
-                <Input name="phone" id="phone" type="text"/>
+                <Input invalid={this.state.form.phone === false} valid={this.state.form.phone != false}  required onChange={this.handleFormChange}  name="phone" id="phone" type="text" placeholder="999-888-7777"/>
+                {this.state.form.phone === false ? <p>Phone numbers should be 9 digits long and includes dashes and the area code.</p> : null}
             </Col>  
-          </Row> 
-          <Row fluid={true} className="input-row"> 
+          </Row>  
+          <Row className="input-row"> 
             <Col xs={{size: 1, offset: 1}} sm={{size: 1, offset: 1}} md={{size: 1, offset: 1}} lg={{size: 1, offset: 1}} className="d-flex justify-content-center" >
-                <i class="fa fa-envelope fa-2x"></i>
-            </Col>  
-            <Col xs={{size: 9}} sm={{size: 9}} md={{size: 9}} lg={{size: 9}}>
-                <p>Email</p>
-                <Input name="email" id="email" type="text"/>
-            </Col>   
-          </Row>
-          <Row fluid={true} className="input-row"> 
-            <Col xs={{size: 1, offset: 1}} sm={{size: 1, offset: 1}} md={{size: 1, offset: 1}} lg={{size: 1, offset: 1}} className="d-flex justify-content-center" >
-                <i class="fa fa-map-marker fa-2x"></i>
+                <i className="fa fa-map-marker fa-2x"></i>
             </Col>  
             <Col xs={{size: 9}} sm={{size: 9}} md={{size: 9}} lg={{size: 9}}>
                 <p>Address</p>
-                <Input name="address" id="address" type="text"/>
+                <Input valid={this.state.form.address  != false} invalid={this.state.form.address === false}  required onChange={this.handleFormChange} name="address" id="address" type="text" placeholder="1234 easy street, tukwila wa 98031"/>
                 <a href="#" id="map-link">Pick to map</a>
+                {this.state.form.address === false ? <p>Please enter your full address including city, state and zipcode.</p> : null}
             </Col>   
-          </Row>
-          <Row fluid={true} className="input-row"> 
-            <Col xs={{size: 1, offset: 1}} sm={{size: 1, offset: 1}} md={{size: 1, offset: 1}} lg={{size: 1, offset: 1}} className="d-flex justify-content-center" >
-                <i class="fa fa-info-circle fa-2x"></i>
-            </Col>  
-            <Col xs={{size: 9}} sm={{size: 9}} md={{size: 9}} lg={{size: 9}}>
-                <p>Description</p>
-                <Input name="description" id="description" type="textarea"/> 
-            </Col>   
-          </Row>
+          </Row> 
           {accountSpecifics}
-          </form>
+          <Row className="input-row">  
+            <Col xs={{size: 1, offset: 1}} sm={{size: 1, offset: 1}} md={{size: 1, offset: 1}} lg={{size: 1, offset: 1}} className="d-flex justify-content-center"></Col>  
+            <Col xs={{size: 9}} sm={{size: 9}} md={{size: 9}} lg={{size: 9}}>
+                <Button onClick={this.handleSave} color="success" block={true}>Register</Button>
+            </Col>   
+          </Row>
+          </form> 
           <br/>
       </Container> 
     ); 
   }
 };
 
-export default Signup;
+export default withRouter(Signup);
  

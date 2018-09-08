@@ -5,23 +5,40 @@ const db = require('./../libs/db');
 const router = express.Router(); 
   
 router.post('/register', function(req, res) { 
+
+  console.log(req.body);
+  
+  if(Object.keys(req.body).length < 5) {
+    return res.status(500).json({
+      error: 'The form submission was manipulated.'
+   });
+  }
+    
    bcrypt.hash(req.body.password, 10, function(err, hash){
       if(err) {
+         console.log("Caught an error in hashing function");
+         console.log(err);
          return res.status(500).json({
             error: err
          });
       }
-      else {
+         
         const user = {
             email: req.body.email,
+            accountType: req.body.accountType,
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            phone: req.body.phone.replace(/[\s()-.+]+/gi, ''),
+            address: req.body.address,
+            description: req.body.description, 
             password: hash
         };
  
         // Save to DB
         return db.saveUser(user)
                 .then(result => res.json(result))
-                .catch(err => res.json(err));
-      }
+                .catch(err => console.log("Caught error!!!") && console.log(err) && res.json(err));
+
    });
 });
 

@@ -22,9 +22,7 @@ export default {
             const defaultConfig = dotenv.config({
                 path: path.resolve(process.cwd(), '.env.default')
             });
-        }else {
-            this.log("Successfully loaded .env variables..");
-        }
+        } 
     }, 
     exitHandler(options, exitCode) { 
         if (options.cleanup) {

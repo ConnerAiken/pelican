@@ -3,6 +3,9 @@
 
 #top-toolbar {
     padding-top: 5%;
+    .fa {
+        margin-top: 10px;
+    }
     .fa:hover {
         cursor: pointer;
     }
