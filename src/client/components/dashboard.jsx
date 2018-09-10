@@ -3,6 +3,7 @@ import React from "react";
 import toastr from "toastr";
 import './../../../node_modules/toastr/build/toastr.css';   
 import Directions from "./directions.jsx";  
+import Map from "./map.jsx";  
 import { Container, Row, Col, Input, Button } from 'reactstrap';
 import "./dashboard.scss";
 
@@ -55,7 +56,7 @@ class App extends React.Component {
         } else {
           toastr.error('Unknown error occurred. Error code: ' + error.code);
         } 
-      }, {timeout: 30000, enableHighAccuracy: true, maximumAge: 75000});
+      }, {timeout: 2500, enableHighAccuracy: true, maximumAge: 75000});
 
       navigator.geolocation.watchPosition((position) => {   
         this.setState({locationLoaded: true, curLoc: { coords: {lat: position.coords.latitude, lng: position.coords.longitude}}}, () => { 
@@ -64,7 +65,7 @@ class App extends React.Component {
         });
       }, (err) => {
           toastr.error("Location tracking error occured. Error code: "+err);
-      }, {timeout: 30000, enableHighAccuracy: true, maximumAge: 75000});
+      }, {timeout: 2500, enableHighAccuracy: true, maximumAge: 75000});
 
   }
 
@@ -107,10 +108,14 @@ class App extends React.Component {
       <Row>
         <Col xs={{size: 12}} sm={{size: 12}} md={{size: 8, offset: 2}} lg={{size: 8, offset: 2}}>
             {this.state.curLoc && this.state.startLoc ?
-            <Directions
+            //<Directions
+            //    curLoc={this.state.curLoc}
+            //    startLoc={this.state.startLoc}  
+            //    input={this.state.destination.input}/>
+            <Map
                 curLoc={this.state.curLoc}
                 startLoc={this.state.startLoc}  
-                input={this.state.destination.input}/>
+            />
             : null }
         </Col>
       </Row>
