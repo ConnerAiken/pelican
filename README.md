@@ -18,9 +18,7 @@
 1.75h (9:00am-10:45am - 8/30/18) -> Setting up ansible deployment scripts  
 .5h (10:45am-11:15am - 8/30/18) -> Setup mysql db 
 .5h (11:15am-11:45am - 8/30/18) -> Refining ansible deployment scripts to use docker technology pt 1
-3h (1:15pm-4:15pm - 8/30/18) -> Refining ansible deploy scripts pt 2, start of JWT authentication and setting up SSL certificates /w express (not automatically renewing at this point)
-
--> Setup basic user authentication against mysql using JWT
+3h (1:15pm-4:15pm - 8/30/18) -> Refining ansible deploy scripts pt 2, start of JWT authentication and setting up SSL certificates /w express (not automatically renewing at this point) 
 
 
 # Week 4 - 76 hours banked for 4 weeks - (9/4/2018)
@@ -32,6 +30,7 @@ Remaining: 65 hours
 1.75h (Mon - 4:15pm-6pm) -> /register server endpoint, creates user account and logs in user account. Front end login request but force success redirect.
 2.25h (Saturday - 10:00am-12:15pm) -> Improving landing page css by adding flexbox, adding login validation using regex and hook registration form into server-side endpoint
 
+1.5h (Monday - 10:15am-11:45am) -> Breaking up address into parts: city, zip, line1, line2, state, country, etc. Adding further validation (message on bad login, duplicate user)
 ## SSL Certificates
 
 ### Usage

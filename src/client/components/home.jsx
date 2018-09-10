@@ -47,14 +47,20 @@ class Signup extends React.Component {
       password: this.state.password
     }, headers)
     .then(function(response) {  
-      toastr.success("Successfully logged in..");
+      toastr.success("Successfully logged in.."); 
       history.push("/map"); 
       return <Redirect to="/map"/>;
-    }).catch(err => {
-      toastr.error(err.message);
-      history.push("/map"); 
-      return <Redirect to="/map"/>;
-    })
+    }).catch(request => {   
+      if(request.response && request.response.data && request.response.data.failed) {  
+        if(request.response.data.failed == "No relevant user") { 
+          history.push('/signup'); 
+          return <Redirect to="/signup"/>; 
+        }
+        toastr.error(request.response.data.failed); 
+      }else {
+        console.log(request);
+      }
+    });
   }
 
   getValidationState() {
@@ -72,7 +78,7 @@ class Signup extends React.Component {
   render() {
     return (
       <Container id="main" className="container home" fluid={true}>
-          <Row fluid={true}>
+          <Row>
             <Col xs={{size: 12}} sm={{size: 12}} md={{size: 8, offset: 2}} lg={{size: 8, offset: 2}}>
               &nbsp;
             </Col>

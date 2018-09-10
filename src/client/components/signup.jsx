@@ -28,7 +28,10 @@ class Signup extends React.Component {
     this.regex = {  
       firstName: /(.*[a-z]){3}/i,
       lastName: /(.*[a-z]){3}/i, 
-      address: /(.*[a-z]){3}/i,
+      addressLine1: /(.*[a-z]){3}/i, 
+      city: /(.*[a-z]){3}/i,
+      state: /(.*[a-z]){2}/i,
+      zipCode: /(.*[0-9]){3}/i,
       email:  	
       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
       phone: /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/, 
@@ -45,7 +48,14 @@ class Signup extends React.Component {
         password: '',
         description: '', 
         vehicleType: '',
-        vehiclePlate: ''
+        vehiclePlate: '',
+        vehicleColor: '',
+        addressLine1: '',
+        addressLine2: '',
+        city: '',
+        state: '',
+        country: '',
+        zipCode: ''
       }
     };  
 
@@ -68,14 +78,19 @@ class Signup extends React.Component {
     const headers = {
       'Content-Type': 'application/json;charset=UTF-8'
     };
-     
+    
+    console.log("Sending registration request");
     axios.post('/api/v1/user/register', this.state.form, headers)
-    .then(response => { 
+    .then(response => {  
       toastr.success("Please sign in.");
       history.push('/'); 
       return <Redirect to="/"/>; 
-    }).catch(err => {
-      toastr.error(err.message); 
+    }).catch(request => { 
+      if(request.response && request.response.data && request.response.data.error) {  
+        toastr.error(request.response.data.error); 
+      }else {
+        console.log(request);
+      }
     });
   } 
 
@@ -84,7 +99,7 @@ class Signup extends React.Component {
   }
  
   render() {
-    let accountSpecifics = null;
+    let accountSpecifics = () => null;
 
     if(this.state.form.accountType == "seller") { 
       accountSpecifics = () => (  
@@ -101,16 +116,37 @@ class Signup extends React.Component {
       );
     }else if(this.state.form.accountType == "shipper") {
       accountSpecifics = () => ( 
-          <Row> 
+          <Row clsasName="input-row"> 
             <Col xs={{size: 1, offset: 1}} sm={{size: 1, offset: 1}} md={{size: 1, offset: 1}} lg={{size: 1, offset: 1}}>
-                <i className="fa fa-car fa-3x"></i>
+                <i className="fa fa-car fa-2x"></i>
             </Col>  
             <Col xs={{size: 9}} sm={{size: 9}} md={{size: 9}} lg={{size: 9}}>
-                <p>Vehicle Info</p>
-                <Input onChange={this.handleFormChange} name="vehicleType" id="vehicleType" type="text" placeholder="Type of vehicle"/> 
-                <Input onChange={this.handleFormChange} name="vehiclePlate" id="vehiclePlate" type="text" placeholder="Vehicle plate"/> 
-                <p>Vehicle Image</p>
-                <b>Click Here</b>
+              <Row className="vehicleRow">
+                <Col xs={12} sm={12} md={12} lg={12}> 
+                  <p>Vehicle Model and Make</p>
+                  <Input onChange={this.handleFormChange} name="vehicleType" id="vehicleType" type="text" placeholder="Toyota Prius"/>  
+                </Col>
+                <Col xs={12} sm={12} md={12} lg={12}> 
+                  <p>Vehicle Color</p>
+                  <Input onChange={this.handleFormChange} name="vehicleColor" id="vehicleColor" type="select" defaultValue="red">   
+                    <option value="black">Black</option>
+                    <option value="blue">Blue</option>
+                    <option value="green">Green</option> 
+                    <option value="grey">Grey/Silver</option> 
+                    <option value="red">Red</option>
+                    <option value="white">White</option>
+                    <option value="yellow">Yellow</option>
+                  </Input>
+                </Col>
+                <Col xs={12} sm={12} md={12} lg={12}>  
+                  <p>Vehicle Plate</p>
+                  <Input onChange={this.handleFormChange} name="vehiclePlate" id="vehiclePlate" type="text" placeholder="Vehicle plate"/> 
+                </Col>
+                <Col xs={12} sm={12} md={12} lg={12}>  
+                    <p>Vehicle Image</p>
+                    <a href="#"><img src="https://via.placeholder.com/140x100"/></a>
+                </Col>
+              </Row>  
             </Col>   
           </Row>
         );
@@ -171,7 +207,7 @@ class Signup extends React.Component {
             </Col>  
             <Col xs={{size: 9}} sm={{size: 9}} md={{size: 9}} lg={{size: 9}}>
                 <p>Account Type</p> 
-                <Input required onChange={this.handleFormChange} type="select" name="accountType" id="accountType">
+                <Input required onChange={this.handleFormChange} type="select" name="accountType" id="accountType" defaultValue="client">
                   <option value="seller">Store</option>
                   <option value="shipper">Driver</option> 
                   <option value="client">Customer</option> 
@@ -212,13 +248,100 @@ class Signup extends React.Component {
                 <i className="fa fa-map-marker fa-2x"></i>
             </Col>  
             <Col xs={{size: 9}} sm={{size: 9}} md={{size: 9}} lg={{size: 9}}>
-                <p>Address</p>
-                <Input valid={this.state.form.address  != false} invalid={this.state.form.address === false}  required onChange={this.handleFormChange} name="address" id="address" type="text" placeholder="1234 easy street, tukwila wa 98031"/>
-                <a href="#" id="map-link">Pick to map</a>
-                {this.state.form.address === false ? <p>Please enter your full address including city, state and zipcode.</p> : null}
+                <Row className="addressRow">
+                  <Col xs={12} sm={12} md={12} lg={12}> 
+                    <p>Address Line 1</p>
+                    <Input valid={this.state.form.addressLine1  != false} invalid={this.state.form.addressLine1 === false}  required onChange={this.handleFormChange} name="addressLine1" id="addressLine1" type="text" placeholder="1234 easy street"/>
+                    <a href="#" id="map-link">Pick to map</a>
+                    {this.state.form.addressLine1 === false ? <p>Street address, P.O. box, company name</p> : null}
+                  </Col>
+                  <Col xs={12} sm={12} md={12} lg={12}> 
+                    <p>Address Line 2</p>
+                    <Input valid={this.state.form.addressLine2  != false} invalid={this.state.form.addressLine2 === false}  required onChange={this.handleFormChange} name="addressLine2" id="addressLine2" type="text" placeholder="1234 easy street, tukwila wa 98031"/>
+                  </Col>
+                  <Col xs={6} sm={6} md={6} lg={6}> 
+                    <p>City</p>
+                    <Input valid={this.state.form.city  != false} invalid={this.state.form.city === false}  required onChange={this.handleFormChange} name="city" id="city" type="text" placeholder="Tukwila"/>
+                  </Col>
+                  <Col xs={6} sm={6} md={6} lg={6}> 
+                    <p>State</p>
+                    <Input valid={this.state.form.state  != false} invalid={this.state.form.state === false}  required onChange={this.handleFormChange} name="state" id="state" type="select" defaultValue="WA">
+                      <option value="AL">Alabama</option>
+                      <option value="AK">Alaska</option>
+                      <option value="AZ">Arizona</option>
+                      <option value="AR">Arkansas</option>
+                      <option value="CA">California</option>
+                      <option value="CO">Colorado</option>
+                      <option value="CT">Connecticut</option>
+                      <option value="DE">Delaware</option>
+                      <option value="DC">District Of Columbia</option>
+                      <option value="FL">Florida</option>
+                      <option value="GA">Georgia</option>
+                      <option value="HI">Hawaii</option>
+                      <option value="ID">Idaho</option>
+                      <option value="IL">Illinois</option>
+                      <option value="IN">Indiana</option>
+                      <option value="IA">Iowa</option>
+                      <option value="KS">Kansas</option>
+                      <option value="KY">Kentucky</option>
+                      <option value="LA">Louisiana</option>
+                      <option value="ME">Maine</option>
+                      <option value="MD">Maryland</option>
+                      <option value="MA">Massachusetts</option>
+                      <option value="MI">Michigan</option>
+                      <option value="MN">Minnesota</option>
+                      <option value="MS">Mississippi</option>
+                      <option value="MO">Missouri</option>
+                      <option value="MT">Montana</option>
+                      <option value="NE">Nebraska</option>
+                      <option value="NV">Nevada</option>
+                      <option value="NH">New Hampshire</option>
+                      <option value="NJ">New Jersey</option>
+                      <option value="NM">New Mexico</option>
+                      <option value="NY">New York</option>
+                      <option value="NC">North Carolina</option>
+                      <option value="ND">North Dakota</option>
+                      <option value="OH">Ohio</option>
+                      <option value="OK">Oklahoma</option>
+                      <option value="OR">Oregon</option>
+                      <option value="PA">Pennsylvania</option>
+                      <option value="RI">Rhode Island</option>
+                      <option value="SC">South Carolina</option>
+                      <option value="SD">South Dakota</option>
+                      <option value="TN">Tennessee</option>
+                      <option value="TX">Texas</option>
+                      <option value="UT">Utah</option>
+                      <option value="VT">Vermont</option>
+                      <option value="VA">Virginia</option>
+                      <option value="WA">Washington</option>
+                      <option value="WV">West Virginia</option>
+                      <option value="WI">Wisconsin</option>
+                      <option value="WY">Wyoming</option>
+                    </Input>
+                  </Col>
+                  <Col xs={6} sm={6} md={4} lg={4}> 
+                    <p>ZipCode</p>
+                    <Input valid={this.state.form.zipCode  != false} invalid={this.state.form.zipCode === false}  required onChange={this.handleFormChange} name="zipCode" id="zipCode" type="text" placeholder="98035"/>
+                  </Col>
+                  <Col xs={6} sm={6} md={{size: 6, offset: 2}} lg={{size: 6, offset: 2}}> 
+                    <p>Country</p>
+                    <Input valid={this.state.form.country  != false} invalid={this.state.form.country === false}  required onChange={this.handleFormChange} name="country" id="country" type="select" defaultValue="United States">
+                        <option value="United States">United States</option>
+                    </Input>
+                  </Col>
+                </Row>  
             </Col>   
           </Row> 
-          {accountSpecifics}
+          {accountSpecifics()}
+          <Row className="input-row"> 
+            <Col xs={{size: 1, offset: 1}} sm={{size: 1, offset: 1}} md={{size: 1, offset: 1}} lg={{size: 1, offset: 1}} className="d-flex justify-content-center" >
+                <i className="fa fa-id-card fa-2x"></i>
+            </Col>  
+            <Col xs={{size: 9}} sm={{size: 9}} md={{size: 9}} lg={{size: 9}}>
+                <p>License Image</p>
+                <a href="#"><img src="https://via.placeholder.com/300x150"/></a>
+            </Col>  
+          </Row>  
           <Row className="input-row">  
             <Col xs={{size: 1, offset: 1}} sm={{size: 1, offset: 1}} md={{size: 1, offset: 1}} lg={{size: 1, offset: 1}} className="d-flex justify-content-center"></Col>  
             <Col xs={{size: 9}} sm={{size: 9}} md={{size: 9}} lg={{size: 9}}>
