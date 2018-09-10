@@ -31,6 +31,7 @@ Remaining: 65 hours
 2.25h (Saturday - 10:00am-12:15pm) -> Improving landing page css by adding flexbox, adding login validation using regex and hook registration form into server-side endpoint
 
 1.5h (Monday - 10:15am-11:45am) -> Breaking up address into parts: city, zip, line1, line2, state, country, etc. Adding further validation (message on bad login, duplicate user)
+
 ## SSL Certificates
 
 ### Usage
@@ -83,3 +84,17 @@ Tasks
 ### Authentication - JWT
 Overview image: https://appdividend.com/wp-content/uploads/2018/02/Node-js-API-JWT-Authentication-Tutorial.jpg
 See: https://appdividend.com/2018/02/07/node-js-jwt-authentication-tutorial-scratch/
+
+### Usage
+
+#### Making Changes
+
+Making changes are simple! Follow these steps..
+
+1) `git clone <this_url> && cd <repo_name>`  
+2) `npm install` 
+3) `npm run dev` 
+4) Access the dev environment via `http://localhost:8080` 
+5) Front end changes are shown instantly, server-side changes currently require restart 
+6) Commit your changes and push to the remote repo 
+7) `npm run deploy` (requires ansible to be installed) 
