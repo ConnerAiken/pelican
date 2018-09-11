@@ -1,32 +1,43 @@
 // Node.JS
 import React from "react"; 
 import toastr from "toastr";
+import axios from "axios";
 import './../../../node_modules/toastr/build/toastr.css';   
-import Directions from "./directions.jsx";  
-import Map from "./map.jsx";  
-import { Container, Row, Col, Input, Button } from 'reactstrap';
+import Directions from "./directions.jsx";   
+import Requestor from "./requestor.jsx";
+import { Container, Row, Col } from 'reactstrap';
 import "./dashboard.scss";
 
 class App extends React.Component {
 
   constructor(props) {
     super(props); 
+
+    this.handleRequestorUpdate = this.handleRequestorUpdate.bind(this);
     this.state = {
       locationLoaded: false,
       startLoc: false,
       curLoc: false,
-      destination: {
-        input: '85 Pike Street, Room 500 Seattle, WA 98101',
-        coords: {
-          lat: 47.6084444,
-          lng: -122.3405493
-        }
-      }
+      destination: null
     };
-    this.initializeGMap();   
+    this.initializeGMap();
+    
+    setInterval(this.checkToken(), 5000);
   }
 
-  componentDidUpdate() {
+  checkToken() {  
+    axios.get('/api/v1/user/health-check', {}, {
+      'Content-Type': 'application/json;charset=UTF-8',
+      'token': localStorage.getItem('token')
+    })
+    .then(function(response) {   
+      console.log(response);
+    }).catch(request => {   
+      console.log(request);
+    });
+  }
+  
+  componentDidUpdate() { 
     console.log(this.state);
   }
 
@@ -63,8 +74,8 @@ class App extends React.Component {
           document.getElementById('currentLat').innerHTML = this.state.curLoc.coords.lat;
           document.getElementById('currentLon').innerHTML = this.state.curLoc.coords.lng;
         });
-      }, (err) => {
-          toastr.error("Location tracking error occured. Error code: "+err);
+      }, (err) => { 
+          console.log(err);
       }, {timeout: 2500, enableHighAccuracy: true, maximumAge: 75000});
 
   }
@@ -82,17 +93,27 @@ class App extends React.Component {
       // Convert KM to Miles
       d = d * 0.62137119; 
       return d;
-  } 
-  handleInputChange(e){
-    const destination= this.state.destination;
-    destination.input = e.target.value;
-    this.setState({destination}); 
+  }  
+
+  handleRequestorUpdate(e) { 
+    this.setState({destination: e}); 
+  }
+
+  showRelevantMap() {
+    console.log(localStorage.getItem("user"));
+    return null;
+
+    <Directions
+          curLoc={this.state.curLoc}
+          startLoc={this.state.startLoc}  
+          input={this.state.destination}/> 
   }
  
   render() {
     return (
-      <Container id="main" className="container home" fluid={true}>
-      <Row>
+      <Container id="main" className="container dashboard" fluid={true}>
+      <Requestor destination={this.state.destination} onUpdate={this.handleRequestorUpdate}/>
+      <Row id="nav">
         <Col xs={{size: 4}} sm={{size: 4}} md={{size: 4}} lg={{size: 4}}> 
             <h1>Pelican</h1>
         </Col>
@@ -105,20 +126,7 @@ class App extends React.Component {
             </p>
         </Col>
       </Row>
-      <Row>
-        <Col xs={{size: 12}} sm={{size: 12}} md={{size: 8, offset: 2}} lg={{size: 8, offset: 2}}>
-            {this.state.curLoc && this.state.startLoc ?
-            //<Directions
-            //    curLoc={this.state.curLoc}
-            //    startLoc={this.state.startLoc}  
-            //    input={this.state.destination.input}/>
-            <Map
-                curLoc={this.state.curLoc}
-                startLoc={this.state.startLoc}  
-            />
-            : null }
-        </Col>
-      </Row>
+      {this.showRelevantMap()} 
       </Container> 
     );
   }

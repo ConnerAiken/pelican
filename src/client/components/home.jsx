@@ -17,6 +17,7 @@ class Signup extends React.Component {
     this.handleRegister = this.handleRegister.bind(this);
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
+    this.handleForgotPassword = this.handleForgotPassword.bind(this);
     this.state = {
       email: 'john.smith@gmail.com',
       password: 'testpass'
@@ -46,7 +47,8 @@ class Signup extends React.Component {
       email: this.state.email,
       password: this.state.password
     }, headers)
-    .then(function(response) {  
+    .then(function(response) {   
+      localStorage.setItem('token', response.data.token);
       toastr.success("Successfully logged in.."); 
       history.push("/map"); 
       return <Redirect to="/map"/>;
@@ -74,6 +76,10 @@ class Signup extends React.Component {
   handleChange(e) {
     this.setState({ value: e.target.value });
   } 
+
+  handleForgotPassword() {
+
+  }
  
   render() {
     return (
@@ -98,7 +104,7 @@ class Signup extends React.Component {
                     </Col>
                     <Col xs={{size: 6, offset: 0}} sm={{size: 6, offset: 0}} md={{size: 6, offset: 0}} lg={{size: 6, offset: 0}} style={{textAlign: 'right', divor: 'white'}}>
                       <br/>
-                      <a id="forgot-link" href="#">Forgot Password?</a>
+                      <a id="forgot-link" onClick={this.handleForgotPassword} href="#">Forgot Password?</a>
                     </Col>
                   </Row> 
                 </form> 

@@ -6,6 +6,7 @@ import bodyParser from "body-parser";
 import utils from "./libs/utils.js";
 import path from "path"; 
 import _ from "lodash";
+import helmet from "helmet";
 import userRoutes from "./routes/user"; 
  
 
@@ -16,13 +17,20 @@ const httpApp = express();
  
 app.use(bodyParser.json());
 httpApp.use(bodyParser.json());
+
+app.use(helmet()); 
+httpApp.use(helmet());
+
 app.use(bodyParser.urlencoded({extended: true})); 
 httpApp.use(bodyParser.urlencoded({extended: true}));
  
 if(process.env.NODE_ENV != "development") { 
+
     app.use(express.static(path.resolve(process.cwd(), 'public')))
     app.use('/api/v1/user', userRoutes);
     app.get('/api/v1/health-check', (req, res) => res.sendStatus(200)); 
+
+    app.use(utils.verifyToken);
 
     // Certificate
     const privateKey = fs.readFileSync('/etc/letsencrypt/live/pelican.fittedtech.com/privkey.pem', 'utf8');
@@ -47,6 +55,7 @@ if(process.env.NODE_ENV != "development") {
     const httpServer = http.createServer(httpApp).listen(80, '0.0.0.0', () => {
         utils.log(`Server has started and is listening on port 80!`); 
     });
+
 } else {
     httpApp.use(express.static(path.resolve(process.cwd(), 'public')))
     httpApp.use('/api/v1/user', userRoutes);

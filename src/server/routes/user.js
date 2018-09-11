@@ -1,9 +1,11 @@
+import jwt from "jsonwebtoken";
+import db from "./../libs/db";
+import bcrypt from "bcrypt";
+import express from "express";
 
-const express = require('express'); 
-const bcrypt = require('bcrypt');
-const db = require('./../libs/db'); 
 const router = express.Router(); 
-  
+const appData = {};
+
 router.post('/register', function(req, res) {  
   
   if(Object.keys(req.body).length < 5) {
@@ -65,23 +67,30 @@ router.post('/login', function(req, res) {
           failed: 'No relevant user'
        });
     }  
- 
-     const user = users[0];
+    
+
+     const user = Object.assign({}, users[0]);
+
      bcrypt.compare(req.body.password, user.password, function(err, result){ 
         if(err) {
            return res.status(401).json({
               failed: 'Invalid credentials'
            });
         }
-        if(result) {
+        
+        if(result) { 
            return res.status(200).json({
-              success: 'Welcome to Pelican Delivers'
+              success: 'Welcome to Pelican Delivers',
+              token: jwt.sign(user, process.env.appSecret, {expiresIn: 5000})
            });
         }
+
+
         return res.status(401).json({
            failed: 'Unauthorized Access'
         });
      });
+     
   }).catch(error => {  
     return res.status(500).json({error: error});
   });

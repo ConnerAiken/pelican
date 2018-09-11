@@ -34,5 +34,24 @@ export default {
         if (exitCode || exitCode === 0) console.log(exitCode);
         
         if (options.exit) process.exit();
+    },
+    verifyToken(req, res, next) {  
+        console.log(req);
+        var token = req.body.token || req.headers['token']; 
+        if (token) {
+            jwt.verify(token, process.env.appSecret, function(err) {
+                if (err) { 
+                    res.status(500).json({
+                        failed: "Token is invalid"
+                    });
+                } else {
+                    next();
+                }
+            });
+        } else { 
+            res.status(403).json({
+                failed: "Please send a token"
+            });
+        }
     }
 }

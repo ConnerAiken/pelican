@@ -26,7 +26,7 @@ ReactDOM.render(
             <Route path="/map" component={Dash} />
         </Switch> 
     </Router>
-, document.querySelector("body"));
+, document.querySelector("#root"));
 
 module.hot.accept(); 
  

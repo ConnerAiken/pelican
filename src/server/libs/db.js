@@ -1,4 +1,4 @@
-import mysql from "mysql";
+import mysql from "mysql"; 
 import utils from "./utils";
 
 utils.loadENV();
@@ -8,6 +8,7 @@ var pool = mysql.createPool({
     user: process.env.mysqlUser,
     password: process.env.mysqlPassword,
     database: process.env.mysqlDB,
+    debug: process.env.NODE_ENV !== 'production',
     connectionLimit: 10,
     supportBigNumbers: true
 });
