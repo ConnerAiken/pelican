@@ -13,9 +13,7 @@ var pool = mysql.createPool({
 });
 
 exports.saveUser = function(user) { 
-    var sql = "INSERT INTO users SET ?";
-    console.log(pool);
-    console.log("Saving", user);
+    var sql = "INSERT INTO users SET ?"; 
     // get a connection from the pool
     return new Promise((resolve, reject) => { 
       pool.getConnection(function(err, connection) {
@@ -41,13 +39,13 @@ exports.saveUser = function(user) {
 }
 // Get record from a email
 exports.findUser = function(email) {
-  var sql = "SELECT * FROM users WHERE email=?"; 
-  console.log(pool);
+  var sql = "SELECT * FROM users WHERE email=?";  
 
   // get a connection from the pool
   return new Promise((resolve, reject) => { 
     pool.getConnection(function(err, connection) {
         if(err) { 
+            console.log(err);
             reject(err); 
         }
         // make the query
@@ -55,6 +53,7 @@ exports.findUser = function(email) {
           connection.release();
 
           if(err) {
+            console.log(err);
                reject(err);
           }
           
