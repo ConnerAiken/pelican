@@ -8,7 +8,7 @@ var pool = mysql.createPool({
     user: process.env.mysqlUser,
     password: process.env.mysqlPassword,
     database: process.env.mysqlDB,
-    debug: process.env.NODE_ENV !== 'production',
+    debug: false,
     connectionLimit: 10,
     supportBigNumbers: true
 });
@@ -41,6 +41,31 @@ exports.saveUser = function(user) {
 // Get record from a email
 exports.findUser = function(email) {
   var sql = "SELECT * FROM users WHERE email=?";  
+
+  // get a connection from the pool
+  return new Promise((resolve, reject) => { 
+    pool.getConnection(function(err, connection) {
+        if(err) { 
+            console.log(err);
+            reject(err); 
+        }
+        // make the query
+        connection.query(sql, [email], function(err, results) {
+          connection.release();
+
+          if(err) {
+            console.log(err);
+               reject(err);
+          }
+          
+          resolve(results);
+        });
+      });
+  }); 
+};
+// Get record from a email
+exports.findStores = function(email) {
+  var sql = "SELECT * FROM stores";  
 
   // get a connection from the pool
   return new Promise((resolve, reject) => { 

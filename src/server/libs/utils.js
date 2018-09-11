@@ -1,7 +1,7 @@
-let connection;
-import mysql from "mysql";
+let connection; 
 import dotenv from "dotenv";
 import path from "path";
+import jwt from "jsonwebtoken";
 
 export default {
     log(msg, type = 0) {
@@ -35,9 +35,9 @@ export default {
         
         if (options.exit) process.exit();
     },
-    verifyToken(req, res, next) {  
-        console.log(req);
-        var token = req.body.token || req.headers['token']; 
+    verifyToken(req, res, next) {   
+        var token = req.body ? req.body.token : req.headers['token']; 
+        console.log("Verifying token: "+token); 
         if (token) {
             jwt.verify(token, process.env.appSecret, function(err) {
                 if (err) { 
@@ -48,6 +48,8 @@ export default {
                     next();
                 }
             });
+        }else if(['/api/v1/user/login', '/api/v1/user/register', '/api/v1/store'].includes(req.originalUrl)) {
+            next();
         } else { 
             res.status(403).json({
                 failed: "Please send a token"

@@ -3,6 +3,8 @@ import React from "react";
 import toastr from "toastr";
 import axios from "axios";
 import './../../../node_modules/toastr/build/toastr.css';   
+import ClientMap from "./clientMap.jsx";
+import ClientOrderMap from "./clientOrderMap.jsx";
 import Directions from "./directions.jsx";   
 import Requestor from "./requestor.jsx";
 import { Container, Row, Col } from 'reactstrap';
@@ -20,16 +22,16 @@ class App extends React.Component {
       curLoc: false,
       destination: null
     };
-    this.initializeGMap();
+    this.initializeGMap(); 
     
     setInterval(this.checkToken(), 5000);
   }
 
-  checkToken() {  
-    axios.get('/api/v1/user/health-check', {}, {
+  checkToken() {   
+    axios.get('/api/v1/health-check', {headers: {
       'Content-Type': 'application/json;charset=UTF-8',
       'token': localStorage.getItem('token')
-    })
+    }})
     .then(function(response) {   
       console.log(response);
     }).catch(request => {   
@@ -100,13 +102,34 @@ class App extends React.Component {
   }
 
   showRelevantMap() {
-    console.log(localStorage.getItem("user"));
-    return null;
+    const user = JSON.parse(localStorage.getItem("user")); 
+    console.log(user.accountType);
+    if(user.accountType == "client") {
+      if(localStorage.getItem("orderNumber")) { 
+        return <ClientOrderMap
+        curLoc={this.state.curLoc}/>
+      }
+      console.log("Fetching stores");
 
-    <Directions
+      if(!this.state.stores) {
+        axios.get('/api/v1/store').then(res => {   
+          this.setState({stores: res.data});
+          return <ClientMap
+            curLoc={this.state.curLoc}
+            stores={this.state.stores}/>;
+        }).catch(e => console.log(e));
+      }else {
+        return <ClientMap
           curLoc={this.state.curLoc}
-          startLoc={this.state.startLoc}  
-          input={this.state.destination}/> 
+          stores={this.state.stores}/>;
+      }
+       
+    }else if(user.accountType == "shipper") { 
+      return <Directions
+      curLoc={this.state.curLoc}
+      startLoc={this.state.startLoc}  
+      input={this.state.destination}/> 
+    } 
   }
  
   render() {
@@ -126,7 +149,7 @@ class App extends React.Component {
             </p>
         </Col>
       </Row>
-      {this.showRelevantMap()} 
+      {this.state.curLoc && this.showRelevantMap()} 
       </Container> 
     );
   }

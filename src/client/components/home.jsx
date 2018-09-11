@@ -49,6 +49,7 @@ class Signup extends React.Component {
     }, headers)
     .then(function(response) {   
       localStorage.setItem('token', response.data.token);
+      localStorage.setItem('user', JSON.stringify(response.data.payload));
       toastr.success("Successfully logged in.."); 
       history.push("/map"); 
       return <Redirect to="/map"/>;

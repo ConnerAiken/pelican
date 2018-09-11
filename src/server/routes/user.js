@@ -81,7 +81,24 @@ router.post('/login', function(req, res) {
         if(result) { 
            return res.status(200).json({
               success: 'Welcome to Pelican Delivers',
-              token: jwt.sign(user, process.env.appSecret, {expiresIn: 5000})
+              token: jwt.sign(user, process.env.appSecret, {expiresIn: 5000}),
+              payload: {
+                accountType: user.accountType,
+                email: user.email,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                phone: user.phone,
+                addressLine1: user.addressLine1,
+                addressLine2: user.addressLine2,
+                city: user.city,
+                state: user.state,
+                zipCode: user.zipCode,
+                country: user.country,
+                description: user.description, 
+                vehicleColor: user.vehicleColor,
+                vehicleType: user.vehicleType,
+                vehiclePlate: user.vehiclePlate,
+              }
            });
         }
 
