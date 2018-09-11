@@ -71,7 +71,7 @@
       state: started
       published_ports: 
         - 443:443
-        - 80:80
+        - 80:80 
       domainname: pelican.fittedtech.com
       restart_policy: always
       env_file: ~/pelican.env

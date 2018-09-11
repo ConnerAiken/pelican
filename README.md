@@ -31,6 +31,7 @@ Remaining: 65 hours
 2.25h (Saturday - 10:00am-12:15pm) -> Improving landing page css by adding flexbox, adding login validation using regex and hook registration form into server-side endpoint
 
 1.5h (Monday - 10:15am-11:45am) -> Breaking up address into parts: city, zip, line1, line2, state, country, etc. Adding further validation (message on bad login, duplicate user)
+.5h (Monday - 5:15pm-5:45pm)
 
 ## SSL Certificates
 

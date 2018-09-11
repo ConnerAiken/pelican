@@ -14,7 +14,7 @@ var pool = mysql.createPool({
 
 exports.saveUser = function(user) { 
     var sql = "INSERT INTO users SET ?";
-
+    console.log(pool);
     console.log("Saving", user);
     // get a connection from the pool
     return new Promise((resolve, reject) => { 
@@ -41,7 +41,8 @@ exports.saveUser = function(user) {
 }
 // Get record from a email
 exports.findUser = function(email) {
-  var sql = "SELECT * FROM users WHERE email=?";
+  var sql = "SELECT * FROM users WHERE email=?"; 
+  console.log(pool);
 
   // get a connection from the pool
   return new Promise((resolve, reject) => { 
