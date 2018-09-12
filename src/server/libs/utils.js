@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 import path from "path";
 import jwt from "jsonwebtoken";
 
+const whiteListedRoutes = ['/api/v1/user/login', '/api/v1/user/register', '/api/v1/store'];
+
 export default {
     log(msg, type = 0) {
         if(type === 1) {
@@ -48,7 +50,7 @@ export default {
                     next();
                 }
             });
-        }else if(['/api/v1/user/login', '/api/v1/user/register', '/api/v1/store'].includes(req.originalUrl)) {
+        }else if(whiteListedRoutes.includes(req.originalUrl)) {
             next();
         } else { 
             res.status(403).json({

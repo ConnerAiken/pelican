@@ -15,9 +15,7 @@ utils.loadENV();
 
 const app = express();   
 const httpApp = express();   
- 
-app.use(utils.verifyToken);
-httpApp.use(utils.verifyToken);
+  
 
 app.use(bodyParser.json());
 httpApp.use(bodyParser.json());
@@ -28,13 +26,14 @@ httpApp.use(helmet());
 app.use(bodyParser.urlencoded({extended: true})); 
 httpApp.use(bodyParser.urlencoded({extended: true}));
  
-if(process.env.NODE_ENV != "development") { 
+app.use(express.static(path.resolve(process.cwd(), 'public')))
+app.use(utils.verifyToken); 
+app.use('/api/v1/user', userRoutes);
+app.use('/api/v1/store', storeRoutes);
+app.get('/api/v1/health-check', (req, res) => res.sendStatus(200));  
+ 
 
-    app.use(express.static(path.resolve(process.cwd(), 'public')))
-    app.use('/api/v1/user', userRoutes);
-    app.use('/api/v1/store', storeRoutes);
-    app.get('/api/v1/health-check', (req, res) => res.sendStatus(200));  
-
+if(process.env.NODE_ENV != "development") {  
     // Certificate
     const privateKey = fs.readFileSync('/etc/letsencrypt/live/pelican.fittedtech.com/privkey.pem', 'utf8');
     const certificate = fs.readFileSync('/etc/letsencrypt/live/pelican.fittedtech.com/cert.pem', 'utf8');
@@ -59,15 +58,15 @@ if(process.env.NODE_ENV != "development") {
         utils.log(`Server has started and is listening on port 80!`); 
     });
 
-} else {
+} else {    
     httpApp.use(express.static(path.resolve(process.cwd(), 'public')))
+    httpApp.use(utils.verifyToken);
     httpApp.use('/api/v1/user', userRoutes);
     httpApp.use('/api/v1/store', storeRoutes);
-    httpApp.get('/api/v1/health-check', (req, res) => res.sendStatus(200)); 
- 
+    httpApp.get('/api/v1/health-check', (req, res) => res.sendStatus(200));  
+
     const httpServer = http.createServer(httpApp).listen(8081, '0.0.0.0', () => {
         utils.log(`Server has started and is listening on port 8081!`); 
-    });
-        
+    }); 
 }
   
