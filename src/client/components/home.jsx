@@ -24,6 +24,22 @@ class Signup extends React.Component {
     };
   }
 
+  decode(base64url) {
+      try {
+          //Convert base 64 url to base 64
+          var base64 = base64url.replace('-', '+').replace('_', '/')
+          //atob() is a built in JS function that decodes a base-64 encoded string
+          var utf8 = atob(base64)
+          //Then parse that into JSON
+          var json = JSON.parse(utf8)
+          //Then make that JSON look pretty
+          var json_string = JSON.stringify(json, null, 4)
+      } catch (err) {
+          json_string = "Bad Section.\nError: " + err.message
+      }
+      return json_string
+  }
+
   handleEmailChange(e) {
     this.setState({email: e.target.value});
   }
@@ -32,7 +48,7 @@ class Signup extends React.Component {
     this.setState({password: e.target.value});
   }
 
-  handleRegister(e) {
+  handleRegister(e) { 
     this.props.history.push('/signup'); 
     return <Redirect to="/signup"/>;
   }
@@ -47,17 +63,15 @@ class Signup extends React.Component {
       email: this.state.email,
       password: this.state.password
     }, headers)
-    .then(function(response) {   
+    .then((response) => {   
       localStorage.setItem('token', response.data.token);
-      localStorage.setItem('user', JSON.stringify(response.data.payload));
       toastr.success("Successfully logged in.."); 
       history.push("/map"); 
       return <Redirect to="/map"/>;
     }).catch(request => {   
       if(request.response && request.response.data && request.response.data.failed) {  
         if(request.response.data.failed == "No relevant user") { 
-          history.push('/signup'); 
-          return <Redirect to="/signup"/>; 
+          toastr.info("We could not find a user with that email, please use the sign up form.");
         }
         toastr.error(request.response.data.failed); 
       }else {

@@ -9,8 +9,9 @@ import _ from "lodash";
 import helmet from "helmet";
 import userRoutes from "./routes/user"; 
 import storeRoutes from "./routes/store"; 
- 
 
+import db from "./libs/db";
+ 
 utils.loadENV();   
 
 const app = express();   

@@ -38,7 +38,7 @@ export default {
         if (options.exit) process.exit();
     },
     verifyToken(req, res, next) {   
-        var token = req.body ? req.body.token : req.headers['token']; 
+        var token = req.body && req.body.token ? req.body.token : req.headers['token']; 
         console.log("Verifying token: "+token); 
         if (token) {
             jwt.verify(token, process.env.appSecret, function(err) {

@@ -1,90 +1,38 @@
-import mysql from "mysql"; 
 import utils from "./utils";
+import fs from "fs";
+import path from "path";
+import Sequelize from "sequelize";
+import _ from "lodash";
 
-utils.loadENV();
+let db = {};
 
-var pool = mysql.createPool({
-    host: process.env.mysqlHost,
-    user: process.env.mysqlUser,
-    password: process.env.mysqlPassword,
-    database: process.env.mysqlDB,
-    debug: false,
-    connectionLimit: 10,
-    supportBigNumbers: true
+utils.loadENV(); 
+
+const sequelize = new Sequelize(process.env.mysqlDB, process.env.mysqlUser, process.env.mysqlPassword, {
+  dialect: 'mysql',
+  host: process.env.mysqlHost,
+  port: 3306, 
+  timestamps: true, 
+  paranoid: true,
+  pool: { 
+    max: 20,
+    idle: 30000
+  },
+})
+
+fs.readdirSync(path.join(process.cwd(), 'src', 'server', 'models')).filter(file => file.indexOf('.') !== 0 && file !== 'index.js')
+.forEach(file => {
+  var model = sequelize.import(path.join(process.cwd(), 'src', 'server', 'models', file))
+  db[model.name] = model
 });
 
-exports.saveUser = function(user) { 
-    var sql = "INSERT INTO users SET ?"; 
-    // get a connection from the pool
-    return new Promise((resolve, reject) => { 
-      pool.getConnection(function(err, connection) {
-          if(err) { 
-              console.log(err);
-              reject(err); 
-          }
-          console.log(connection);
-          // make the query
-          connection.query(sql, user, function(err, results) {
-            connection.release();
-  
-            if(err) {
-                console.log(err);
-                 reject(err);
-            }
-            
-            console.log(results);
-            resolve(results);
-          });
-        });
-    }); 
-}
-// Get record from a email
-exports.findUser = function(email) {
-  var sql = "SELECT * FROM users WHERE email=?";  
+Object.keys(db).forEach(function(modelName) {
+  if (db[modelName].options.hasOwnProperty('associate')) {
+    db[modelName].options.associate(db)
+  }
+});
 
-  // get a connection from the pool
-  return new Promise((resolve, reject) => { 
-    pool.getConnection(function(err, connection) {
-        if(err) { 
-            console.log(err);
-            reject(err); 
-        }
-        // make the query
-        connection.query(sql, [email], function(err, results) {
-          connection.release();
-
-          if(err) {
-            console.log(err);
-               reject(err);
-          }
-          
-          resolve(results);
-        });
-      });
-  }); 
-};
-// Get record from a email
-exports.findStores = function(email) {
-  var sql = "SELECT * FROM stores";  
-
-  // get a connection from the pool
-  return new Promise((resolve, reject) => { 
-    pool.getConnection(function(err, connection) {
-        if(err) { 
-            console.log(err);
-            reject(err); 
-        }
-        // make the query
-        connection.query(sql, [email], function(err, results) {
-          connection.release();
-
-          if(err) {
-            console.log(err);
-               reject(err);
-          }
-          
-          resolve(results);
-        });
-      });
-  }); 
-};
+module.exports = _.extend({
+sequelize: sequelize,
+Sequelize: Sequelize
+}, db)

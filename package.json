@@ -90,11 +90,13 @@
     "lodash": "^4.17.10",
     "mdbreact": "^4.7.0",
     "mysql": "^2.16.0",
+    "mysql2": "^1.6.1",
     "nodemailer": "^4.6.8",
     "react-google-maps": "^9.4.5",
     "react-piwik": "^1.5.0",
     "react-router-dom": "^4.3.1",
     "reactstrap": "^6.4.0",
+    "sequelize": "^4.38.1",
     "simple-oauth2": "^2.2.1",
     "toastr": "^2.1.4"
   }

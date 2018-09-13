@@ -40,11 +40,10 @@ class Signup extends React.Component {
 
     this.state = {  
       form: {
-        accountType: 'store',
+        accountType: 'client',
         firstName: '',
         lastName: '',
-        phone: '',
-        address: '',
+        phone: '', 
         password: '',
         description: '', 
         vehicleType: '',
@@ -53,8 +52,8 @@ class Signup extends React.Component {
         addressLine1: '',
         addressLine2: '',
         city: '',
-        state: '',
-        country: '',
+        state: 'WA',
+        country: 'US',
         zipCode: ''
       }
     };  
@@ -64,11 +63,13 @@ class Signup extends React.Component {
 
   handleFormChange(e) {
     const form = Object.assign({}, this.state.form);  
-    if ((this.regex[e.target.name] && this.regex[e.target.name].test(e.target.value)) || !this.regex[e.target.name]) { 
+    if ((this.regex[e.target.name] && this.regex[e.target.name].test(e.target.value)) || !this.regex[e.target.name]) {  
        form[e.target.name] = e.target.value;
+       console.log(form);
        this.setState({form});
     }else { 
         form[e.target.name] = false;
+        console.log(form);
         this.setState({form}); 
     }         
   }
@@ -251,13 +252,13 @@ class Signup extends React.Component {
                 <Row className="addressRow">
                   <Col xs={12} sm={12} md={12} lg={12}> 
                     <p>Address Line 1</p>
-                    <Input valid={this.state.form.addressLine1  != false} invalid={this.state.form.addressLine1 === false}  required onChange={this.handleFormChange} name="addressLine1" id="addressLine1" type="text" placeholder="1234 easy street"/>
+                    <Input valid={this.state.form.addressLine1  != false} invalid={this.state.form.addressLine1 === false}  required onChange={this.handleFormChange} name="addressLine1" id="addressLine1" type="text" placeholder="1234 Easy St"/>
                     <a href="#" id="map-link">Pick to map</a>
                     {this.state.form.addressLine1 === false ? <p>Street address, P.O. box, company name</p> : null}
                   </Col>
                   <Col xs={12} sm={12} md={12} lg={12}> 
                     <p>Address Line 2</p>
-                    <Input valid={this.state.form.addressLine2  != false} invalid={this.state.form.addressLine2 === false}  required onChange={this.handleFormChange} name="addressLine2" id="addressLine2" type="text" placeholder="1234 easy street, tukwila wa 98031"/>
+                    <Input valid={this.state.form.addressLine2  != false} invalid={this.state.form.addressLine2 === false}  required onChange={this.handleFormChange} name="addressLine2" id="addressLine2" type="text" placeholder="Suite 300"/>
                   </Col>
                   <Col xs={6} sm={6} md={6} lg={6}> 
                     <p>City</p>
@@ -325,8 +326,8 @@ class Signup extends React.Component {
                   </Col>
                   <Col xs={6} sm={6} md={{size: 6, offset: 2}} lg={{size: 6, offset: 2}}> 
                     <p>Country</p>
-                    <Input valid={this.state.form.country  != false} invalid={this.state.form.country === false}  required onChange={this.handleFormChange} name="country" id="country" type="select" defaultValue="United States">
-                        <option value="United States">United States</option>
+                    <Input valid={this.state.form.country  != false} invalid={this.state.form.country === false} required onChange={this.handleFormChange} name="country" id="country" type="select" defaultValue="United States">
+                        <option value="US">United States</option>
                     </Input>
                   </Col>
                 </Row>  

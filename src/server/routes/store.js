@@ -9,7 +9,7 @@ const router = express.Router();
 router.get('/', function(req, res) {  
   console.log("/store endpoint detected");
   
-  db.findStores().then(function(stores) { 
+  db.Store.findAll().then(function(stores) { 
     console.log("Found "+stores.length+" stores.");
     if(stores.length == 0) {
        return res.status(401).json({

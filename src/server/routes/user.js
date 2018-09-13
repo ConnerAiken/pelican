@@ -43,11 +43,16 @@ router.post('/register', function(req, res) {
         };
  
         // Save to DB
-        return db.saveUser(user)
+        return db.User.create(user)
+                .then(res => { 
+                  user.userId = res.get({plain: true}).id;
+                  return db.UserInfo.create(user);
+                })
                 .then(result => res.json(result))
                 .catch(err => {
-                  console.log("Caught an error while saving to the database: "+err.errno);
-                  if(err.errno && err.errno == 1062) {
+                  console.log("Caught an error while saving to the database: ");
+                  console.log(err);
+                  if(err.original.errno && err.original.errno == 1062) {
                     console.log("Telling the client the user already exists");
                     return res.status(409).json({error: "User already exists"});
                   }else {
@@ -61,16 +66,13 @@ router.post('/register', function(req, res) {
 
 router.post('/login', function(req, res) { 
 
-  db.findUser(req.body.email).then(function(users) { 
-    if(users.length == 0) {
+  db.User.findOne({ where: {email: req.body.email} }).then(function(user) { 
+    if(!user) {
        return res.status(401).json({
           failed: 'No relevant user'
        });
     }  
-    
-
-     const user = Object.assign({}, users[0]);
-
+     
      bcrypt.compare(req.body.password, user.password, function(err, result){ 
         if(err) {
            return res.status(401).json({
@@ -78,27 +80,13 @@ router.post('/login', function(req, res) {
            });
         }
         
-        if(result) { 
+        if(result) {  
            return res.status(200).json({
               success: 'Welcome to Pelican Delivers',
-              token: jwt.sign(user, process.env.appSecret, {expiresIn: 5000}),
-              payload: {
-                accountType: user.accountType,
-                email: user.email,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                phone: user.phone,
-                addressLine1: user.addressLine1,
-                addressLine2: user.addressLine2,
-                city: user.city,
-                state: user.state,
-                zipCode: user.zipCode,
-                country: user.country,
-                description: user.description, 
-                vehicleColor: user.vehicleColor,
-                vehicleType: user.vehicleType,
-                vehiclePlate: user.vehiclePlate,
-              }
+              token: jwt.sign({
+                userId: user.id,
+                email: user.email
+              }, process.env.appSecret, {expiresIn: 5000})
            });
         }
 
@@ -109,6 +97,7 @@ router.post('/login', function(req, res) {
      });
      
   }).catch(error => {  
+    console.log(error);
     return res.status(500).json({error: error});
   });
 });

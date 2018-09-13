@@ -33,6 +33,7 @@ Remaining: 66 hours
 1.5h (Monday - 10:15am-11:45am) -> Breaking up address into parts: city, zip, line1, line2, state, country, etc. Adding further validation (message on bad login, duplicate user)
 .5h (Monday - 5:15pm-5:45pm) -> Debugging issues /w connection pool
 4h (Monday - 8:15am-12:15pm) -> Enabling helmet for express for security headers, setting up jwt token validation, generating list of 502 stores for mock display and displaying markers on map, separting views for different maps based on user types
+ (Thursday - 10:15am) -> Mongodb vs mysql research and setting up Sequelize/ORM
 
 ## SSL Certificates
 
