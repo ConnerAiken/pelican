@@ -1,39 +1,39 @@
 # Work log
 
-## Week 1 - 0 Remaining hours
-.5h -> Discussions about implementation/your vision 
-.5h -> Setting up staging server, code repository and "web server" to handle server request 
-.5h -> Setting up SSL certificates on the staging server so the API works correctly (Geolocation has unique requirements for security) and the site is secure. 
-.5h -> Configuring the app to work as a PWA (Progressive Web App) and researching best options for libraries/google map's api 
-2h -> Creating sample google maps component /w location tracking 
+## Week 1 - 0 Remaining hours  
+.5h -> Discussions about implementation/your vision   
+.5h -> Setting up staging server, code repository and "web server" to handle server request   
+.5h -> Setting up SSL certificates on the staging server so the API works correctly (Geolocation has unique requirements for security) and the site is secure.   
+.5h -> Configuring the app to work as a PWA (Progressive Web App) and researching best options for libraries/google map's api   
+2h -> Creating sample google maps component /w location tracking   
 
-# Week 2 - 0 Remaining hours
-1h -> Creating sample google maps component /w destination and directions 
-.5h -> Setting up dynamic destination updates 
-.5h -> Location lookup translation to address 
-3h -> Setting up analytics, css frameworks, React Router and middleware functions 
+# Week 2 - 0 Remaining hours  
+1h -> Creating sample google maps component /w destination and directions   
+.5h -> Setting up dynamic destination updates   
+.5h -> Location lookup translation to address   
+3h -> Setting up analytics, css frameworks, React Router and middleware functions   
 
-# Week 3 - 1 hour banked/total of 6 available (8/28~ish)
-.25h -> Phone call /w Trulioo 
-1.75h (9:00am-10:45am - 8/30/18) -> Setting up ansible deployment scripts  
-.5h (10:45am-11:15am - 8/30/18) -> Setup mysql db 
-.5h (11:15am-11:45am - 8/30/18) -> Refining ansible deployment scripts to use docker technology pt 1
-3h (1:15pm-4:15pm - 8/30/18) -> Refining ansible deploy scripts pt 2, start of JWT authentication and setting up SSL certificates /w express (not automatically renewing at this point) 
+# Week 3 - 1 hour banked/total of 6 available (8/28~ish)  
+.25h -> Phone call /w Trulioo   
+1.75h (9:00am-10:45am - 8/30/18) -> Setting up ansible deployment scripts    
+.5h (10:45am-11:15am - 8/30/18) -> Setup mysql db   
+.5h (11:15am-11:45am - 8/30/18) -> Refining ansible deployment scripts to use docker technology pt 1   
+3h (1:15pm-4:15pm - 8/30/18) -> Refining ansible deploy scripts pt 2, start of JWT authentication and setting up SSL    certificates /w express (not automatically renewing at this point) 
 
 
-# Week 4 - 76 hours banked for 4 weeks - (9/4/2018)
-Remaining: 66 hours
+# Week 4 - 76 hours banked for 4 weeks - (9/4/2018)   
+Remaining: 66 hours   
 
-1.5h (Mon - 11am-12:30pm) -> Upgrading babel, researching on iOS html/css requirements.
-1h (Mon - 1:45pm-2:45pm -> attempting to make scroll viewport work correctly in iphone, build process changes for docker
-1.5h (Mon - 2:45pm-4:15pm) -> Starting on registration wireframe, layout done but no validation
-1.75h (Mon - 4:15pm-6pm) -> /register server endpoint, creates user account and logs in user account. Front end login request but force success redirect.
-2.25h (Saturday - 10:00am-12:15pm) -> Improving landing page css by adding flexbox, adding login validation using regex and hook registration form into server-side endpoint
+1.5h (Mon - 11am-12:30pm) -> Upgrading babel, researching on iOS html/css requirements.   
+1h (Mon - 1:45pm-2:45pm -> attempting to make scroll viewport work correctly in iphone, build process changes for docker   
+1.5h (Mon - 2:45pm-4:15pm) -> Starting on registration wireframe, layout done but no validation   
+1.75h (Mon - 4:15pm-6pm) -> /register server endpoint, creates user account and logs in user account. Front end login request but force success redirect.   
+2.25h (Saturday - 10:00am-12:15pm) -> Improving landing page css by adding flexbox, adding login validation using regex and hook registration form into server-side endpoint    
 
-1.5h (Monday - 10:15am-11:45am) -> Breaking up address into parts: city, zip, line1, line2, state, country, etc. Adding further validation (message on bad login, duplicate user)
-.5h (Monday - 5:15pm-5:45pm) -> Debugging issues /w connection pool
-4h (Monday - 8:15am-12:15pm) -> Enabling helmet for express for security headers, setting up jwt token validation, generating list of 502 stores for mock display and displaying markers on map, separting views for different maps based on user types
-2h (Thursday - 10:15am-12:30pm -> Mongodb vs mysql research and setting up Sequelize/ORM
+1.5h (Monday - 10:15am-11:45am) -> Breaking up address into parts: city, zip, line1, line2, state, country, etc. Adding further validation (message on bad login, duplicate user)   
+.5h (Monday - 5:15pm-5:45pm) -> Debugging issues /w connection pool    
+4h (Monday - 8:15am-12:15pm) -> Enabling helmet for express for security headers, setting up jwt token validation, generating list of 502 stores for mock display and displaying markers on map, separting views for different maps based on user types   
+2h (Thursday - 10:15am-12:30pm -> Mongodb vs mysql research and setting up Sequelize/ORM   
 
 ## SSL Certificates
 
