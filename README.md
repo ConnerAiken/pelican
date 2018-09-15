@@ -102,3 +102,12 @@ Making changes are simple! Follow these steps..
 5) Front end changes are shown instantly, server-side changes currently require restart 
 6) Commit your changes and push to the remote repo 
 7) `npm run deploy` (requires ansible to be installed) 
+
+
+## Integrations
+
+### Google Maps
+
+### Greenbits
+
+Api docs: https://developer.greenbits.com/v1/
