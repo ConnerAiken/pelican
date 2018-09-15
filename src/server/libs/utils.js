@@ -50,7 +50,7 @@ export default {
                     next();
                 }
             });
-        }else if(whiteListedRoutes.includes(req.originalUrl)) {
+        }else if(whiteListedRoutes.includes(req.originalUrl) || !req.originalUrl.includes('/api')) {
             next();
         } else { 
             res.status(403).json({

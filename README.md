@@ -22,7 +22,7 @@
 
 
 # Week 4 - 76 hours banked for 4 weeks - (9/4/2018)   
-Remaining: 66 hours   
+Remaining: 59 hours   
 
 1.5h (Mon - 11am-12:30pm) -> Upgrading babel, researching on iOS html/css requirements.   
 1h (Mon - 1:45pm-2:45pm -> attempting to make scroll viewport work correctly in iphone, build process changes for docker   
@@ -34,6 +34,7 @@ Remaining: 66 hours
 .5h (Monday - 5:15pm-5:45pm) -> Debugging issues /w connection pool    
 4h (Monday - 8:15am-12:15pm) -> Enabling helmet for express for security headers, setting up jwt token validation, generating list of 502 stores for mock display and displaying markers on map, separting views for different maps based on user types   
 2h (Thursday - 10:15am-12:30pm -> Mongodb vs mysql research and setting up Sequelize/ORM   
+1h (Thursday - 8:30am-9:30am ->    
 
 ## SSL Certificates
 
