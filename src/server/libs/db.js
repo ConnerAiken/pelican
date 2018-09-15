@@ -32,7 +32,7 @@ Object.keys(db).forEach(function(modelName) {
   }
 });
 
-module.exports = _.extend({
+export default  _.extend({
 sequelize: sequelize,
 Sequelize: Sequelize
 }, db)

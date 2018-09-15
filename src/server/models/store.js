@@ -1,6 +1,6 @@
 var classMethods = {  };
 
-module.exports = function(sequelize, DataTypes) {
+export default function(sequelize, DataTypes) {
     return sequelize.define('Store', { 
         id: { type: DataTypes.BIGINT, autoIncrement: true,  primaryKey: true },
         address: DataTypes.TEXT,

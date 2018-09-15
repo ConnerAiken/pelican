@@ -67,4 +67,4 @@ const MapWithADirectionsRenderer = compose(
   </GoogleMap> 
 );
 
-module.exports = MapWithADirectionsRenderer;
+export default  MapWithADirectionsRenderer;
