@@ -1,6 +1,6 @@
 import React from "react"; 
 import ReactDOM from "react-dom";
-import { Router, Route, Switch } from "react-router-dom";  
+import { HashRouter, Route, Switch } from "react-router-dom";  
 import ReactPiwik from 'react-piwik';
 import createBrowserHistory from 'history/createBrowserHistory'
 import 'font-awesome/css/font-awesome.min.css';
@@ -19,13 +19,13 @@ const piwik = new ReactPiwik({
 const history = createBrowserHistory();
 
 ReactDOM.render(
-    <Router history={piwik.connectToHistory(history)}>
+    <HashRouter  history={piwik.connectToHistory(history)}>
         <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/signup" component={Signup} />
             <Route path="/map" component={Dash} />
         </Switch> 
-    </Router>
+    </HashRouter>
 , document.querySelector("#root"));
 
 module.hot.accept(); 

@@ -23,7 +23,7 @@ const MapWithADirectionsRenderer = compose(
     defaultZoom={7}
     defaultCenter={new google.maps.LatLng(props.curLoc.coords.lat, props.curLoc.coords.lng)}> 
     { props.curLoc && <Marker title="Current Location" position={{ lat: props.curLoc.coords.lat, lng: props.curLoc.coords.lng}} /> } 
-    {props.stores.slice(0).map(store => <Marker title={store.name} position={{ lat: parseFloat(store.lat), lng: parseFloat(store.lng)}} options={{icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'}} opacity={.25}/>)}
+    { props.activeOrder && <Marker title={"Driver"} position={{ lat: parseFloat(props.activeOrder.lat), lng: parseFloat(props.activeOrder.lng)}} options={{icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'}} opacity={.25}/> }
   </GoogleMap>
 );
 

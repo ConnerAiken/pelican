@@ -7,7 +7,7 @@ export default  function(sequelize, DataTypes) {
         userId: {
           type: DataTypes.BIGINT, 
           references: { 
-            model: sequelize.models.User,  
+            model: 'users',  
             key: 'id',  
           }
         },

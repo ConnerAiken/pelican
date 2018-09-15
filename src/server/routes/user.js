@@ -14,7 +14,7 @@ router.post('/register', function(req, res) {
    });
   }
     
-   bcrypt.hash(req.body.password, 10, function(err, hash){
+   bcrypt.hash(req.body.password, 10, function(err, hash) {
       if(err) {
          console.log("Caught an error in hashing function");
          console.log(err);
@@ -84,7 +84,7 @@ router.post('/login', function(req, res) {
            return res.status(200).json({
               success: 'Welcome to Pelican Delivers',
               token: jwt.sign({
-                userId: user.id,
+                id: user.id,
                 accountType: user.accountType,
                 email: user.email
               }, process.env.appSecret, {expiresIn: 5000})

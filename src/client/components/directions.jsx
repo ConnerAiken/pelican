@@ -41,8 +41,7 @@ const MapWithADirectionsRenderer = compose(
           origin: new google.maps.LatLng(this.props.curLoc.coords.lat, this.props.curLoc.coords.lng),
           destination: new google.maps.LatLng(dest.lat, dest.lng),
           travelMode: google.maps.TravelMode.DRIVING,
-        }, (result, status) => {
-          console.log(result);
+        }, (result, status) => { 
           if (status === google.maps.DirectionsStatus.OK) {
             this.setState({
               directions: result,

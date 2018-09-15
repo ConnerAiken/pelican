@@ -7,33 +7,46 @@ import ClientMap from "./clientMap.jsx";
 import ClientOrderMap from "./clientOrderMap.jsx";
 import Directions from "./directions.jsx";   
 import Requestor from "./requestor.jsx";
-import { Container, Row, Col } from 'reactstrap';
+import { Container, Row, Col, Button } from 'reactstrap';
 import utils from "./../assets/utils";
 
 import "./dashboard.scss";
+ 
 
 class App extends React.Component {
 
   constructor(props) {
-    super(props); 
-
+    super(props);  
     this.handleRequestorUpdate = this.handleRequestorUpdate.bind(this);
+    this.submitOrder = this.submitOrder.bind(this);
+    this.retrieveOrder = this.retrieveOrder.bind(this);
+    this.commitToOrder = this.commitToOrder.bind(this);
+    this.updateOrder = this.updateOrder.bind(this);
+    this.updateOrderLocation = this.updateOrderLocation.bind(this); 
+    this.checkOrderLocation = this.checkOrderLocation.bind(this);
+
     this.state = {
+      activeOrder: false,
       locationLoaded: false,
       startLoc: false,
       curLoc: false,
-      destination: null
+      destination: null,
+      user: utils.decodeToken(localStorage.getItem("token"))
     };
-    this.initializeGMap(); 
-    
-    setInterval(this.checkToken(), 5000);
+
+    this.opts = { 
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+        'token': localStorage.getItem('token')
+      }
+    };
+
+    this.retrieveOrder()
+    .then(res => this.initializeGMap());
   }
 
   checkToken() {   
-    axios.get('/api/v1/health-check', {headers: {
-      'Content-Type': 'application/json;charset=UTF-8',
-      'token': localStorage.getItem('token')
-    }})
+    axios.get('/api/v1/health-check', this.opts)
     .then(function(response) {   
       console.log(response);
     }).catch(request => {   
@@ -57,10 +70,7 @@ class App extends React.Component {
       
 
       navigator.geolocation.getCurrentPosition((position) => {  
-          this.setState({locationLoaded: true, startLoc: { coords:{ lat: position.coords.latitude, lng: position.coords.longitude }}}, () => { 
-            document.getElementById('startLat').innerHTML = this.state.startLoc.coords.lat;
-            document.getElementById('startLon').innerHTML = this.state.startLoc.coords.lng;
-          });
+          this.setState({locationLoaded: true, startLoc: { coords:{ lat: position.coords.latitude, lng: position.coords.longitude }}});
       }, (error) => {
         if(error == 2) {
           toastr.error('Your position is not currently available. Error code: ' + error.code);
@@ -74,10 +84,7 @@ class App extends React.Component {
       }, {timeout: 2500, enableHighAccuracy: true, maximumAge: 75000});
 
       navigator.geolocation.watchPosition((position) => {   
-        this.setState({locationLoaded: true, curLoc: { coords: {lat: position.coords.latitude, lng: position.coords.longitude}}}, () => { 
-          document.getElementById('currentLat').innerHTML = this.state.curLoc.coords.lat;
-          document.getElementById('currentLon').innerHTML = this.state.curLoc.coords.lng;
-        });
+        this.setState({locationLoaded: true, curLoc: { coords: {lat: position.coords.latitude, lng: position.coords.longitude}}});
       }, (err) => { 
           console.log(err);
       }, {timeout: 2500, enableHighAccuracy: true, maximumAge: 75000});
@@ -103,27 +110,124 @@ class App extends React.Component {
     this.setState({destination: e}); 
   }
 
+  submitOrder() {
+    return axios.post('/api/v1/order/submit', {
+      storeId: null, 
+      driverId: null,
+      items: []
+    }, this.opts)
+    .then((response) => {   
+      console.log(response);
+      this.setState({activeOrder:  response.data});
+      this.watchForOrderInProgress();
+    }).catch(request => {   
+      console.log(request);
+    }); 
+  }
+
+
+  commitToOrder() {
+    const order = Object.assign({}, this.state.activeOrder); 
+    return axios.post('/api/v1/order/commit', {
+      order: order
+    }, this.opts)
+    .then((response) => {   
+      console.log(response);
+      this.setState({activeOrder:  response.data});
+    }).catch(request => {   
+      console.log(request);
+    }); 
+  }
+
+  retrieveOrder() { 
+    return axios.get('/api/v1/order', this.opts)
+    .then((response) => {   
+      console.log(response);
+      this.setState({activeOrder: response.data}); 
+      this.watchForOrderInProgress();
+    }).catch(request => {   
+      console.log(request);
+    }); 
+  }
+
+  checkOrderLocation() { 
+    const order = Object.assign({}, this.state.activeOrder);  
+    return axios.get('/api/v1/order/location/', this.opts)
+    .then((response) => {   
+      console.log(response);
+      this.setState({activeOrder: response.data}); 
+    }).catch(request => {   
+      console.log(request);
+    });  
+  }
+
+  updateOrderLocation() { 
+    const order = Object.assign({}, this.state.activeOrder); 
+    console.log(order);
+    return axios.post('/api/v1/order/updateLocation', {
+      id: order.id, 
+      status: order.status,
+      lat: this.state.curLoc.coords.lat, 
+      lng: this.state.curLoc.coords.lng
+    }, this.opts)
+    .then((response) => {   
+      console.log(response);
+      this.setState({activeOrder: response.data}); 
+    }).catch(request => {   
+      console.log(request);
+    });  
+  }
+
+  updateOrder() {
+    const order = Object.assign({}, this.state.activeOrder); 
+    order.status += 1; 
+    return axios.post('/api/v1/order/update', {
+      order: order
+    },this.opts)
+    .then((response) => {   
+      console.log(response);
+      this.setState({activeOrder: response.data}); 
+    }).catch(request => {   
+      console.log(request);
+    }); 
+  }
+
+  watchForOrderInProgress() {
+    if(!this.state.activeOrder) return;
+
+    if([2,3].includes(this.state.activeOrder.status) && this.state.user.accountType == "shipper") {
+      setInterval(this.updateOrderLocation, 5000);
+    }else if([2,3].includes(this.state.activeOrder.status) && this.state.user.accountType == "client") {
+      setInterval(this.checkOrderLocation, 5000);
+    }else {
+
+    }
+
+  } 
+
   showRelevantMap() {
     const user = utils.decodeToken(localStorage.getItem("token")); 
     console.log(user); 
-    if(user.accountType == "client") {
-      if(localStorage.getItem("orderNumber")) { 
-        return <ClientOrderMap
-        curLoc={this.state.curLoc}/>
-      }
-      console.log("Fetching stores");
+    if(user.accountType == "client") { 
 
-      if(!this.state.stores) {
+      if(this.state.activeOrder) {
+        console.log("Active order, showing delivery map");
+        return <ClientMap
+          curLoc={this.state.curLoc}
+          activeOrder={this.state.activeOrder}/>;
+      }else if(!this.state.stores) {
+        console.log("No active order, showing orders map");
         axios.get('/api/v1/store').then(res => {   
           this.setState({stores: res.data});
-          return <ClientMap
+          return <ClientOrderMap
             curLoc={this.state.curLoc}
             stores={this.state.stores}/>;
         }).catch(e => console.log(e));
       }else {
-        return <ClientMap
-          curLoc={this.state.curLoc}
-          stores={this.state.stores}/>;
+        console.log("No active order, showing orders map");
+          return <ClientOrderMap
+            curLoc={this.state.curLoc}
+            stores={this.state.stores}/>;
       }
        
     }else if(user.accountType == "shipper") { 
@@ -144,11 +248,18 @@ class App extends React.Component {
         </Col>
         <Col xs={{size: 4}} sm={{size: 4}} md={{size: 4}} lg={{size: 4}}></Col>
         <Col xs={{size: 4}} sm={{size: 4}} md={{size: 4}} lg={{size: 4}}> 
-            <p>
-              Start: <span id="startLat">???</span>°, <span id="startLon">???</span>°<br/> 
-              Current: <span id="currentLat">???</span>°, <span id="currentLon">???</span>° <br/> 
-              Distance: <span id="distance">0</span> miles<br/> 
-            </p>
+            {this.state.user && this.state.user.accountType == "client"  && !this.state.activeOrder && <Button onClick={this.submitOrder}>Start Order</Button>}
+            {this.state.user && this.state.user.accountType == "client"  && this.state.activeOrder && <div>
+            <p>Estimated Arrival: <span id="estimate">99 mins</span></p>
+            <p>Status:  {this.state.activeOrder.status == 0 && "The store is confirming your order"}
+                        {this.state.activeOrder.status == 1 && "Driver is picking up your order"}
+                        {this.state.activeOrder.status == 2 && "Driver has your order and is on the way"}
+                        {this.state.activeOrder.status == 4 && "Delivered! Enjoy your product :)"}</p>
+            </div>} 
+            {this.state.user && this.state.user.accountType == "shipper" && !this.state.activeOrder && <Button onClick={this.commitToOrder}>Commit to Order</Button>}
+            {this.state.user && this.state.user.accountType == "shipper" && this.state.activeOrder && this.state.activeOrder.status == 1 && <Button onClick={this.updateOrder}>Start Pickup</Button>}
+            {this.state.user && this.state.user.accountType == "shipper" && this.state.activeOrder && this.state.activeOrder.status == 2 && <Button onClick={this.updateOrder}>Start Delivery</Button>}
+            {this.state.user && this.state.user.accountType == "shipper" && this.state.activeOrder && this.state.activeOrder.status == 3 && <Button onClick={this.updateOrder}>Mark Delivered</Button>}
         </Col>
       </Row>
       {this.state.curLoc && this.showRelevantMap()} 

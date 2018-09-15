@@ -2,6 +2,7 @@ let connection;
 import dotenv from "dotenv";
 import path from "path";
 import jwt from "jsonwebtoken";
+import atob from "atob";
 
 const whiteListedRoutes = ['/api/v1/user/login', '/api/v1/user/register', '/api/v1/store'];
 
@@ -57,5 +58,25 @@ export default {
                 failed: "Please send a token"
             });
         }
+    },
+    decodeToken(token) {
+        const components = token.split('.');
+        const base64url = components[1]; 
+        try {
+            //Convert base 64 url to base 64
+            var base64 = base64url.replace('-', '+').replace('_', '/')
+            //atob() is a built in JS function that decodes a base-64 encoded string
+            var utf8 = atob(base64)
+            //Then parse that into JSON
+            var json = JSON.parse(utf8)
+
+            console.log(json);
+            //Then make that JSON look pretty
+            var json_string = JSON.stringify(json, null, 4)
+        } catch (err) {
+            console.log(err);
+            json_string = "Bad Section.\nError: " + err.message
+        }
+        return json
     }
 }

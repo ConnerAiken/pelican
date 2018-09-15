@@ -8,7 +8,7 @@ const {
   DirectionsRenderer,
   Marker
 } = require("react-google-maps");
-   
+  
 const MapWithADirectionsRenderer = compose(
   withProps({
     googleMapURL: "https://maps.googleapis.com/maps/api/js?key=***REMOVED***-o&v=3.exp&libraries=geometry,drawing,places",
@@ -21,9 +21,10 @@ const MapWithADirectionsRenderer = compose(
 )(props => 
   <GoogleMap
     defaultZoom={7}
-    defaultCenter={props.curLoc && props.curLoc.coords ? new google.maps.LatLng(props.curLoc.coords.lat, props.curLoc.coords.lng) : new google.maps.LatLng(47.6101, 122.3421)}> 
-    { props.curLoc && <Marker title="Current Location" position={{ lat: props.curLoc.coords.lat, lng: props.curLoc.coords.lng}} /> }  
-  </GoogleMap> 
+    defaultCenter={new google.maps.LatLng(props.curLoc.coords.lat, props.curLoc.coords.lng)}> 
+    { props.curLoc && <Marker title="Current Location" position={{ lat: props.curLoc.coords.lat, lng: props.curLoc.coords.lng}} /> } 
+    {props.stores.slice(0).map(store => <Marker title={store.name} position={{ lat: parseFloat(store.lat), lng: parseFloat(store.lng)}} options={{icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'}} opacity={.25}/>)}
+  </GoogleMap>
 );
 
 export default MapWithADirectionsRenderer;
