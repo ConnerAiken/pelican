@@ -8,6 +8,8 @@ import ClientOrderMap from "./clientOrderMap.jsx";
 import Directions from "./directions.jsx";   
 import Requestor from "./requestor.jsx";
 import { Container, Row, Col } from 'reactstrap';
+import utils from "./../assets/utils";
+
 import "./dashboard.scss";
 
 class App extends React.Component {
@@ -102,8 +104,8 @@ class App extends React.Component {
   }
 
   showRelevantMap() {
-    const user = JSON.parse(localStorage.getItem("user")); 
-    console.log(user.accountType);
+    const user = utils.decodeToken(localStorage.getItem("token")); 
+    console.log(user); 
     if(user.accountType == "client") {
       if(localStorage.getItem("orderNumber")) { 
         return <ClientOrderMap

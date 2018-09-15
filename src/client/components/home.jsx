@@ -24,7 +24,9 @@ class Signup extends React.Component {
     };
   }
 
-  decode(base64url) {
+  decodeToken(token) {
+      const components = token.split('.');
+      const base64url = components[1];
       try {
           //Convert base 64 url to base 64
           var base64 = base64url.replace('-', '+').replace('_', '/')

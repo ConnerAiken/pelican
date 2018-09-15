@@ -85,6 +85,7 @@ router.post('/login', function(req, res) {
               success: 'Welcome to Pelican Delivers',
               token: jwt.sign({
                 userId: user.id,
+                accountType: user.accountType,
                 email: user.email
               }, process.env.appSecret, {expiresIn: 5000})
            });
