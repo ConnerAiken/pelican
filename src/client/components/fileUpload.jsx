@@ -49,7 +49,7 @@ export class FileUpload extends React.Component {
             <ImageUploader
                 style={this.props.style || {}}
                 fileContainerStyle={this.props.containerStyle || {background: 'none', boxShadow: 'none'}}
-                withLabel={false}
+                withLabel={true}
                 singleImage={true}
                 withIcon={false}
                 buttonText='Browse..'
