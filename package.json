@@ -7,15 +7,15 @@
     "test": "tests"
   },
   "scripts": {
-    "build": "cross-env webpack --config webpack.common.js --mode production",
-    "dev": "concurrently --kill-others \"cross-env NODE_ENV=development babel-node src/server/index.js\" \"webpack-dev-server --config webpack.common.js --mode development --watch\"",
-    "dev:start": "npm run build && cross-env NODE_ENV=development babel-node src/server/index.js",
+    "build": "webpack --config webpack.common.js --mode production",
+    "dev": "concurrently --kill-others \"NODE_ENV=development babel-node src/server/index.js\" \"webpack-dev-server --config webpack.common.js --mode development --watch\"",
+    "dev:start": "npm run build && NODE_ENV=development babel-node src/server/index.js",
     "deploy": "ansible-galaxy install -r requirements.yml && ansible-playbook playbooks/deploy.yml -i playbooks/inventory.yml",
     "test": "echo \"Error: no test specified but lets exit with success so travis builds\" && exit 0",
-    "start": "cross-env NODE_ENV=production babel-node src/server/index.js",
+    "start": "NODE_ENV=production babel-node src/server/index.js",
     "start:docker": "docker-compose up",
-    "db:update": "cross-env NODE_ENV=production babel-node src/server/scripts/updateDb.js",
-    "db:test": "cross-env NODE_ENV=development babel-node src/server/scripts/updateDb.js",
+    "db:update": "NODE_ENV=production babel-node src/server/scripts/updateDb.js",
+    "db:test": "NODE_ENV=development babel-node src/server/scripts/updateDb.js",
     "upgradeDeps": "ncu -u",
     "prepublishOnly": "npm run build"
   },
