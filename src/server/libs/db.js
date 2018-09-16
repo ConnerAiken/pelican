@@ -8,7 +8,7 @@ let db = {};
 
 utils.loadENV(); 
 
-const sequelize = new Sequelize(process.env.mysqlDB, process.env.mysqlUser, process.env.mysqlPassword, {
+const sequelize = new Sequelize(process.env.NODE_ENV != "development" ? process.env.mysqlDB : process.env.mysqlDB+"_development", process.env.mysqlUser, process.env.mysqlPassword, {
   dialect: 'mysql',
   host: process.env.mysqlHost,
   port: 3306, 

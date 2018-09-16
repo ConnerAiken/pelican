@@ -4,7 +4,7 @@ import toastr from "toastr";
 import './../../../node_modules/toastr/build/toastr.css';    
 import { Container, Row, Col } from 'reactstrap'; 
 
-class App extends React.Component {
+export class Requestor extends React.Component {
 
   constructor(props) {
     super(props);  
@@ -28,6 +28,4 @@ class App extends React.Component {
     );
   }
 };
-
-export default App;
  

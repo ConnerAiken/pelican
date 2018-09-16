@@ -7,12 +7,14 @@
     "test": "tests"
   },
   "scripts": {
-    "build": "webpack --config webpack.common.js --mode production",
+    "build": "cross-env NODE_ENV=production webpack --config webpack.common.js --mode production",
     "dev": "concurrently --kill-others \"cross-env NODE_ENV=development babel-node src/server/index.js\" \"webpack-dev-server --config webpack.common.js --mode development --watch\"",
     "deploy": "ansible-galaxy install -r requirements.yml && ansible-playbook playbooks/deploy.yml -i playbooks/inventory.yml",
     "test": "echo \"Error: no test specified but lets exit with success so travis builds\" && exit 0",
     "start": "cross-env NODE_ENV=production babel-node src/server/index.js",
     "start:docker": "docker-compose up",
+    "db:update": "cross-env NODE_ENV=production babel-node src/server/scripts/updateDb.js",
+    "db:test": "cross-env NODE_ENV=development babel-node src/server/scripts/updateDb.js",
     "upgradeDeps": "ncu -u",
     "prepublishOnly": "npm run build"
   },
@@ -82,6 +84,7 @@
     "bcrypt": "^3.0.0",
     "body-parser": "^1.18.3",
     "bootstrap": "^4.1.3",
+    "express-fileupload": "^0.4.0",
     "file-loader": "^2.0.0",
     "file-upload-with-preview": "^2.1.1",
     "greenlock-express": "^2.4.6",
@@ -94,6 +97,7 @@
     "mysql2": "^1.6.1",
     "nodemailer": "^4.6.8",
     "react-google-maps": "^9.4.5",
+    "react-images-upload": "^1.2.3",
     "react-piwik": "^1.5.0",
     "react-router-dom": "^4.3.1",
     "reactstrap": "^6.4.0",

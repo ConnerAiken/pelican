@@ -4,7 +4,7 @@ import path from "path";
 import jwt from "jsonwebtoken";
 import atob from "atob";
 
-const whiteListedRoutes = ['/api/v1/user/login', '/api/v1/user/register', '/api/v1/store'];
+const whiteListedRoutes = ['/api/v1/user/login', '/api/v1/user/register', '/api/v1/store', '/api/v1/upload'];
 
 export default {
     log(msg, type = 0) {

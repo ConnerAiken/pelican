@@ -1,3 +1,7 @@
 node_modules/
 *.env
 data/deploy
+public/uploads/*.jpg
+public/uploads/*.png
+public/uploads/*.jpeg
+public/uploads/*.gif

@@ -2,9 +2,19 @@ import jwt from "jsonwebtoken";
 import db from "./../libs/db";
 import bcrypt from "bcrypt";
 import express from "express";
+import path from "path";
+import fs from "fs";
 
 const router = express.Router(); 
 const appData = {};
+
+function base64Encode(file) {
+  // read binary data
+  var bitmap = fs.readFileSync(file);
+  // convert binary data to base64 encoded string
+  return new Buffer(bitmap).toString('base64');
+}
+
 
 router.post('/register', function(req, res) {  
   
@@ -38,17 +48,42 @@ router.post('/register', function(req, res) {
             description: req.body.description || null, 
             vehicleColor: req.body.vehicleColor || null,
             vehicleType: req.body.vehicleType || null,
+            vehicleImagePath: req.body.vehicleImage || null,
+            licenseImagePath: req.body.licenseImage || null,
+            profileImagePath: req.body.profileImage || null, 
             vehiclePlate: req.body.vehiclePlate || null,
             password: hash
         };
- 
+        
+        let paths = [];
         // Save to DB
         return db.User.create(user)
                 .then(res => { 
                   user.userId = res.get({plain: true}).id;
+
+                  if(user.vehicleImagePath) { 
+                    user.vehicleImageBase64 = base64Encode(path.join(process.cwd(), 'public', user.vehicleImagePath)); 
+                    paths.push(path.join(process.cwd(), 'public', user.vehicleImagePath)); 
+                    delete user.vehicleImagePath;
+                  } 
+                  if(user.licenseImagePath) {
+                    user.licenseImageBase64 = base64Encode(path.join(process.cwd(), 'public', user.licenseImagePath)); 
+                    paths.push(path.join(process.cwd(), 'public', user.licenseImagePath)); 
+                    delete user.licenseImagePath;
+                  }
+                  if(user.profileImagePath) {
+                    user.profileImageBase64 = base64Encode(path.join(process.cwd(), 'public', user.profileImagePath));
+                    paths.push(path.join(process.cwd(), 'public', user.profileImagePath)); 
+                    delete user.profileImagePath;
+                  }
+
                   return db.UserInfo.create(user);
-                })
+                }) 
                 .then(result => res.json(result))
+                // .then(result => {
+                //   paths.forEach(path => fs.unlinkSync(path));
+                //   return;
+                // })
                 .catch(err => {
                   console.log("Caught an error while saving to the database: ");
                   console.log(err);
@@ -57,7 +92,7 @@ router.post('/register', function(req, res) {
                     return res.status(409).json({error: "User already exists"});
                   }else {
                     console.log("Telling the client an unknown error occured");
-                    return res.status(500).json({error: "An unknown error occured"});
+                    return res.status(500).json({error: "An unknown error occured", details: err});
                   }
                 });
 
@@ -66,7 +101,7 @@ router.post('/register', function(req, res) {
 
 router.post('/login', function(req, res) { 
 
-  db.User.findOne({ where: {email: req.body.email} }).then(function(user) { 
+  db.User.findOne({ where: {email: req.body.email}}).then(function(user) {  
     if(!user) {
        return res.status(401).json({
           failed: 'No relevant user'
@@ -81,20 +116,27 @@ router.post('/login', function(req, res) {
         }
         
         if(result) {  
-           return res.status(200).json({
+          db.UserInfo.findOne({where: {userId: user.id}}).then(userInfo => { 
+            return res.status(200).json({
               success: 'Welcome to Pelican Delivers',
+              payload: {
+                profileImage: userInfo.profileImageBase64 || false, 
+              },
               token: jwt.sign({
                 id: user.id,
-                accountType: user.accountType,
+                accountType: user.accountType, 
                 email: user.email
               }, process.env.appSecret, {expiresIn: 5000})
            });
+          }).catch(error => {  
+            console.log(error);
+            return res.status(500).json({error: error});
+          }); 
+        }else { 
+          return res.status(401).json({
+            failed: 'Unauthorized Access'
+          });
         }
-
-
-        return res.status(401).json({
-           failed: 'Unauthorized Access'
-        });
      });
      
   }).catch(error => {  

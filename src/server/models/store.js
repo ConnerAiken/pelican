@@ -7,7 +7,17 @@ export default function(sequelize, DataTypes) {
         name: DataTypes.TEXT,
         city: DataTypes.TEXT,
         state: DataTypes.TEXT,
-        zipCode: DataTypes.TEXT,
+        zipCode: DataTypes.TEXT, 
+        apiType: {
+          type: DataTypes.TEXT,
+          allowNull: true,
+          defaultValue: "greenbits"
+        },
+        apiKey: {
+          type: DataTypes.TEXT,
+          allowNull: true,
+          defaultValue: null
+        },
         lat: {
           type: DataTypes.FLOAT,
           allowNull: true,

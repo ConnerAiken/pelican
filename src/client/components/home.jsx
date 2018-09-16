@@ -8,7 +8,7 @@ import { Container, Row, Col, Input, Button } from 'reactstrap';
 import axios from "axios";
 import './home.scss';
   
-class Signup extends React.Component {
+export class Home extends React.Component {
 
   constructor(props) {
     super(props); 
@@ -66,6 +66,7 @@ class Signup extends React.Component {
       password: this.state.password
     }, headers)
     .then((response) => {   
+      localStorage.setItem('profileImage', response.data.payload && response.data.payload.profileImage ? response.data.payload.profileImage : false);
       localStorage.setItem('token', response.data.token);
       toastr.success("Successfully logged in.."); 
       history.push("/map"); 
@@ -99,7 +100,7 @@ class Signup extends React.Component {
   }
  
   render() {
-    return (
+    return withRouter(
       <Container id="main" className="container home" fluid={true}>
           <Row>
             <Col xs={{size: 12}} sm={{size: 12}} md={{size: 8, offset: 2}} lg={{size: 8, offset: 2}}>
@@ -135,7 +136,5 @@ class Signup extends React.Component {
       </Container>
     );
   }
-};
-
-export default withRouter(Signup);
+}; 
  

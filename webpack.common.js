@@ -93,6 +93,9 @@ module.exports = {
           return true;
       }
     },  
+    resolve: {
+      extensions: [".scss", ".css", ".png", ".jpg", ".jpeg", ".js", ".jsx"]
+     },
     devServer: {
       proxy: { 
         // proxy URLs to backend development server

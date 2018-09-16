@@ -7,9 +7,9 @@ import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
  
-import Dash from "./components/dashboard.jsx"; 
-import Signup from "./components/signup.jsx"; 
-import Home from "./components/home.jsx"; 
+import { Dash } from "./components/dashboard.jsx"; 
+import { Signup } from "./components/signup.jsx"; 
+import { Home } from "./components/home.jsx"; 
  
 const piwik = new ReactPiwik({
     url: 'analytics.fittedtech.com',

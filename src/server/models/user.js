@@ -2,7 +2,7 @@ var classMethods = {  };
 
 export default  function(sequelize, DataTypes) {
     return sequelize.define('User', {
-        id: { type: DataTypes.BIGINT, autoIncrement: true,  primaryKey: true },
+        id: { type: DataTypes.BIGINT, autoIncrement: true,  primaryKey: true }, 
         resetToken: DataTypes.STRING,
         resetExpired: DataTypes.DATE,
         email: {

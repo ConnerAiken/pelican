@@ -4,6 +4,7 @@ import toastr from "toastr";
 import axios from "axios";
 import { withRouter, Redirect } from 'react-router-dom';
 import { Container, Row, Col, Button, Input } from 'reactstrap'; 
+import {FileUpload} from "./fileUpload.jsx";
 import './../../../node_modules/toastr/build/toastr.css';    
 import "./signup.scss";
  
@@ -18,13 +19,15 @@ const BrowseBtn = () => (
   </Button> 
 );
 
-class Signup extends React.Component {
+export class Signup extends React.Component {
 
   constructor(props) {
     super(props); 
     this.handleSave = this.handleSave.bind(this); 
-    this.handleBrowse = this.handleBrowse.bind(this);
-    
+    this.handleLicenseImage = this.handleLicenseImage.bind(this);
+    this.handleProfileImage = this.handleProfileImage.bind(this);
+    this.handleVehicleImage = this.handleVehicleImage.bind(this);
+    this.handleBrowse = this.handleBrowse.bind(this); 
     this.regex = {  
       firstName: /(.*[a-z]){3}/i,
       lastName: /(.*[a-z]){3}/i, 
@@ -49,13 +52,17 @@ class Signup extends React.Component {
         vehicleType: '',
         vehiclePlate: '',
         vehicleColor: '',
+        vehicleImage: null,
+        licenseImage: null,
+        profileImage: null,
         addressLine1: '',
         addressLine2: '',
         city: '',
         state: 'WA',
         country: 'US',
         zipCode: ''
-      }
+      },
+      pendingRequest: false
     };  
 
     this.handleFormChange = this.handleFormChange.bind(this);
@@ -75,6 +82,14 @@ class Signup extends React.Component {
   }
 
   handleSave(e) {    
+    if(this.state.form.accountType == "driver" && !this.state.form.vehicleImage) {
+      toastr.error("You must upload a vehicle image.");
+      return;
+    }else if(!this.state.form.licenseImage) {
+      toastr.error("You must upload a license image.");
+      return;
+    }
+
     const history = this.props.history; 
     const headers = {
       'Content-Type': 'application/json;charset=UTF-8'
@@ -95,6 +110,24 @@ class Signup extends React.Component {
     });
   } 
 
+  handleVehicleImage(imageUrl) {
+    const form = Object.assign({}, this.state.form);
+    form.vehicleImage = imageUrl;
+    this.setState({form: form});
+  }
+
+  handleLicenseImage(imageUrl) {
+    const form = Object.assign({}, this.state.form);
+    form.licenseImage = imageUrl;
+    this.setState({form: form});
+  }
+
+  handleProfileImage(imageUrl) {
+    const form = Object.assign({}, this.state.form);
+    form.profileImage = imageUrl;
+    this.setState({form: form});
+  }
+  
   handleBrowse(e) {
     console.log(e);
   }
@@ -115,16 +148,16 @@ class Signup extends React.Component {
           </Col>   
         </Row>
       );
-    }else if(this.state.form.accountType == "shipper") {
+    }else if(this.state.form.accountType == "driver") {
       accountSpecifics = () => ( 
-          <Row clsasName="input-row"> 
+          <Row className="input-row"> 
             <Col xs={{size: 1, offset: 1}} sm={{size: 1, offset: 1}} md={{size: 1, offset: 1}} lg={{size: 1, offset: 1}}>
                 <i className="fa fa-car fa-2x"></i>
             </Col>  
             <Col xs={{size: 9}} sm={{size: 9}} md={{size: 9}} lg={{size: 9}}>
               <Row className="vehicleRow">
                 <Col xs={12} sm={12} md={12} lg={12}> 
-                  <p>Vehicle Model and Make</p>
+                  <p>Vehicle Make, Model and Year</p>
                   <Input onChange={this.handleFormChange} name="vehicleType" id="vehicleType" type="text" placeholder="Toyota Prius"/>  
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12}> 
@@ -141,11 +174,11 @@ class Signup extends React.Component {
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12}>  
                   <p>Vehicle Plate</p>
-                  <Input onChange={this.handleFormChange} name="vehiclePlate" id="vehiclePlate" type="text" placeholder="Vehicle plate"/> 
+                  <Input onChange={this.handleFormChange} name="vehiclePlate" id="vehiclePlate" type="text" placeholder="Vehicle plate"/>  
                 </Col>
-                <Col xs={12} sm={12} md={12} lg={12}>  
-                    <p>Vehicle Image</p>
-                    <a href="#"><img src="https://via.placeholder.com/140x100"/></a>
+                <Col xs={12} sm={12} md={12} lg={12} className="d-flex justify-content-left flex-column">  
+                    <p>Vehicle Image</p> 
+                    {this.state.form.vehicleImage ? <img src={this.state.form.vehicleImage} style={{width: '250px'}}/> : <FileUpload style={{width: '100px'}} containerStyle={{width: '25%', background: 'none', boxShadow: 'none'}}  onFinish={this.handleVehicleImage}  name="vehicleImage"/>}<br/>
                 </Col>
               </Row>  
             </Col>   
@@ -155,7 +188,7 @@ class Signup extends React.Component {
       accountSpecifics = () => null;
     }
 
-    return (
+    return withRouter(
       <Container id="main" className="container signup" fluid={true}>
       <form> 
       <Row id="top-toolbar">
@@ -170,18 +203,15 @@ class Signup extends React.Component {
         </Col> 
       </Row>
           <Row className="input-row">
-            <Col xs={{size: 10, offset: 1}} sm={{size: 10, offset: 1}} md={{size: 10, offset: 1}} lg={{size: 10, offset: 1}} className="d-flex justify-content-center align-items-center">
-              { this.state.imageUploaded ? <img id='imgUpload'/> : (<span className="fa-stack fa-5x">
+            <Col xs={{size: 10, offset: 1}} sm={{size: 10, offset: 1}} md={{size: 10, offset: 1}} lg={{size: 10, offset: 1}} className="d-flex flex-column justify-content-center align-items-center">
+              { this.state.form.profileImage ? <img src={this.state.form.profileImage}  style={{width: '250px'}}/> : (<span className="fa-stack fa-5x">
                 <i className="fa fa-circle fa-stack-2x"></i>
                 <i className="fa fa-user-o fa-stack-1x" style={{color: 'grey'}}></i>
               </span>) }
+              <br/>
+              { this.state.form.profileImage ? null : <FileUpload onFinish={this.handleProfileImage} styles={{input: {width: '25%'}, btn: {}}} name="profileImage"/>}
             </Col>   
-          </Row>
-          <Row> 
-            <Col xs={{size: 10, offset: 1}} sm={{size: 10, offset: 1}} md={{size: 10, offset: 1}} lg={{size: 10, offset: 1}} className="d-flex justify-content-center align-items-center">
-                <BrowseBtn onClick={this.handleBrowse}/>
-            </Col>  
-          </Row>
+          </Row> 
           <Row className="input-row"> 
             <Col xs={{size: 1, offset: 1}} sm={{size: 1, offset: 1}} md={{size: 1, offset: 1}} lg={{size: 1, offset: 1}} className="d-flex justify-content-center" >
                 <i className="fa fa-envelope fa-2x"></i>
@@ -210,7 +240,7 @@ class Signup extends React.Component {
                 <p>Account Type</p> 
                 <Input required onChange={this.handleFormChange} type="select" name="accountType" id="accountType" defaultValue="client">
                   <option value="seller">Store</option>
-                  <option value="shipper">Driver</option> 
+                  <option value="driver">Driver</option> 
                   <option value="client">Customer</option> 
                 </Input>
             </Col>  
@@ -338,9 +368,9 @@ class Signup extends React.Component {
             <Col xs={{size: 1, offset: 1}} sm={{size: 1, offset: 1}} md={{size: 1, offset: 1}} lg={{size: 1, offset: 1}} className="d-flex justify-content-center" >
                 <i className="fa fa-id-card fa-2x"></i>
             </Col>  
-            <Col xs={{size: 9}} sm={{size: 9}} md={{size: 9}} lg={{size: 9}}>
-                <p>License Image</p>
-                <a href="#"><img src="https://via.placeholder.com/300x150"/></a>
+            <Col xs={{size: 9}} sm={{size: 9}} md={{size: 9}} lg={{size: 9}} className="d-flex justify-content-left flex-column ">
+                <p>License Image</p> 
+                { this.state.form.licenseImage ? <img src={this.state.form.licenseImage} style={{width: '250px'}}/> : <FileUpload style={{width: '100px'}} containerStyle={{width: '25%', background: 'none', boxShadow: 'none'}} onFinish={this.handleLicenseImage} name="licenseImage"/> }<br/>
             </Col>  
           </Row>  
           <Row className="input-row">  
@@ -355,6 +385,5 @@ class Signup extends React.Component {
     ); 
   }
 };
-
-export default withRouter(Signup);
+ 
  

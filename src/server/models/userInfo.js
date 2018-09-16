@@ -21,7 +21,16 @@ export default  function(sequelize, DataTypes) {
         state: DataTypes.STRING, 
         country: DataTypes.STRING, 
         zipCode: DataTypes.INTEGER, 
-        description: DataTypes.TEXT
+        description: DataTypes.TEXT, 
+        profileImageBase64: {
+            type: DataTypes.TEXT('long'),
+        },
+        licenseImageBase64: {
+            type: DataTypes.TEXT('long'),
+        },
+        vehicleImageBase64: {
+            type: DataTypes.TEXT('long'),
+        },
     }, {  tableName: 'userInfos',
         classMethods: classMethods
     });

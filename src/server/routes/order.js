@@ -72,7 +72,7 @@ router.get('/location', function(req, res) {
     });
 });
 
-router.post('/updateLocation', function(req, res) {  
+router.post('/location', function(req, res) {  
   const token = req.body && req.body.token ? req.body.token : req.headers['token']; 
   const user = utils.decodeToken(token);
   
@@ -90,7 +90,7 @@ router.post('/updateLocation', function(req, res) {
     });  
 });
 
-router.post('/update', function(req, res) {  
+router.post('/status', function(req, res) {  
   const token = req.body && req.body.token ? req.body.token : req.headers['token']; 
   const user = utils.decodeToken(token);
    
