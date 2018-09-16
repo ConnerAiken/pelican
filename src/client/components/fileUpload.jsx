@@ -26,6 +26,8 @@ export class FileUpload extends React.Component {
     }
   
     handleUploadImage() {  
+      console.log(Object.assign({}, this.state.pictures));
+      
       const data = new FormData();
       data.append('file', this.state.pictures[0]);
       data.append('filename', this.state.pictures[0].name);
