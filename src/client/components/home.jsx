@@ -19,8 +19,8 @@ class Home extends React.Component {
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleForgotPassword = this.handleForgotPassword.bind(this);
     this.state = {
-      email: 'john.smith@gmail.com',
-      password: 'testpass'
+      email: '',
+      password: ''
     };
   }
 
@@ -56,6 +56,10 @@ class Home extends React.Component {
   }
 
   handleLogin(e) {
+    if(!this.state.email || !this.state.password) {
+      toastr.error("Please provide credentials.");
+      return;
+    }
     const headers = {
       'Content-Type': 'application/json;charset=UTF-8'
     }; 
@@ -72,10 +76,7 @@ class Home extends React.Component {
       history.push("/map"); 
       return <Redirect to="/map"/>;
     }).catch(request => {   
-      if(request.response && request.response.data && request.response.data.failed) {  
-        if(request.response.data.failed == "No relevant user") { 
-          toastr.info("We could not find a user with that email, please use the sign up form.");
-        }
+      if(request.response && request.response.data && request.response.data.failed) {   
         toastr.error(request.response.data.failed); 
       }else {
         console.log(request);

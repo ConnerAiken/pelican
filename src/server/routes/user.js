@@ -104,7 +104,7 @@ router.post('/login', function(req, res) {
   db.User.findOne({ where: {email: req.body.email}}).then(function(user) {  
     if(!user) {
        return res.status(401).json({
-          failed: 'No relevant user'
+          failed: 'We could not find a user with that email, please use the sign up form.'
        });
     }  
      

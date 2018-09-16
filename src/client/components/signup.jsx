@@ -158,23 +158,15 @@ class Signup extends React.Component {
               <Row className="vehicleRow">
                 <Col xs={12} sm={12} md={12} lg={12}> 
                   <p>Vehicle Make, Model and Year</p>
-                  <Input onChange={this.handleFormChange} name="vehicleType" id="vehicleType" type="text" placeholder="Toyota Prius"/>  
+                  <Input onChange={this.handleFormChange} name="vehicleType" id="vehicleType" type="text" placeholder=""/>  
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12}> 
                   <p>Vehicle Color</p>
-                  <Input onChange={this.handleFormChange} name="vehicleColor" id="vehicleColor" type="select" defaultValue="red">   
-                    <option value="black">Black</option>
-                    <option value="blue">Blue</option>
-                    <option value="green">Green</option> 
-                    <option value="grey">Grey/Silver</option> 
-                    <option value="red">Red</option>
-                    <option value="white">White</option>
-                    <option value="yellow">Yellow</option>
-                  </Input>
+                  <Input onChange={this.handleFormChange} name="vehicleColor" id="vehicleType" type="text" placeholder=""/>   
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12}>  
                   <p>Vehicle Plate</p>
-                  <Input onChange={this.handleFormChange} name="vehiclePlate" id="vehiclePlate" type="text" placeholder="Vehicle plate"/>  
+                  <Input onChange={this.handleFormChange} name="vehiclePlate" id="vehiclePlate" type="text" placeholder=""/>  
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} className="d-flex justify-content-left flex-column">  
                     <p>Vehicle Image</p> 
@@ -218,7 +210,7 @@ class Signup extends React.Component {
             </Col>  
             <Col xs={{size: 9}} sm={{size: 9}} md={{size: 9}} lg={{size: 9}}>
                 <p>Email</p>
-                <Input invalid={this.state.form.email === false} valid={this.state.form.email  != false} required onChange={this.handleFormChange} name="email" id="email" type="text" placeholder="john.smith@gmail.com"/>
+                <Input invalid={this.state.form.email === false} valid={this.state.form.email  != false} required onChange={this.handleFormChange} name="email" id="email" type="text" placeholder=""/>
                 {this.state.form.email === false ? <p>Please enter a valid email.</p> : null}
             </Col>   
           </Row>
@@ -228,7 +220,7 @@ class Signup extends React.Component {
             </Col>  
             <Col xs={{size: 9}} sm={{size: 9}} md={{size: 9}} lg={{size: 9}}>
                 <p>Password</p>
-                <Input invalid={this.state.form.password === false} valid={this.state.form.password  != false}  required onChange={this.handleFormChange} name="password" id="password" type="password" placeholder="*********"/>
+                <Input invalid={this.state.form.password === false} valid={this.state.form.password  != false}  required onChange={this.handleFormChange} name="password" id="password" type="password" placeholder=""/>
                 {this.state.form.password === false ? <p>Passwords must have atleast one digit, symbol, upper/lowercase, and contain 8 or more characters.</p> : null}
             </Col>   
           </Row>
@@ -253,12 +245,12 @@ class Signup extends React.Component {
               <Row>
                 <Col xs={{size: 12}} sm={{size: 12}} md={{size: 5}} lg={{size: 5}}> 
                     <p>First Name</p>
-                    <Input invalid={this.state.form.firstName === false} valid={this.state.form.firstName != false} required onChange={this.handleFormChange} name="firstName" id="firstName" type="text" placeholder="John"/>
+                    <Input invalid={this.state.form.firstName === false} valid={this.state.form.firstName != false} required onChange={this.handleFormChange} name="firstName" id="firstName" type="text" placeholder=""/>
                     {this.state.form.firstName === false ? <p>Please enter a first name.</p> : null}
                 </Col>
                 <Col xs={{size: 12}} sm={{size: 12}} md={{size: 5, offset: 2}} lg={{size: 5, offset: 2}}> 
                     <p>Last Name</p>
-                    <Input invalid={this.state.form.lastName === false} valid={this.state.form.lastName != false} required onChange={this.handleFormChange} name="lastName" id="lastName" type="text" placeholder="Smith"/>
+                    <Input invalid={this.state.form.lastName === false} valid={this.state.form.lastName != false} required onChange={this.handleFormChange} name="lastName" id="lastName" type="text" placeholder=""/>
                     {this.state.form.lastName === false ? <p>Please enter a last name.</p> : null}
                 </Col>
               </Row> 
@@ -270,7 +262,7 @@ class Signup extends React.Component {
             </Col>  
             <Col xs={{size: 9}} sm={{size: 9}} md={{size: 9}} lg={{size: 9}}>
                 <p>Phone Number</p>
-                <Input invalid={this.state.form.phone === false} valid={this.state.form.phone != false}  required onChange={this.handleFormChange}  name="phone" id="phone" type="text" placeholder="999-888-7777"/>
+                <Input invalid={this.state.form.phone === false} valid={this.state.form.phone != false}  required onChange={this.handleFormChange}  name="phone" id="phone" type="text" placeholder=""/>
                 {this.state.form.phone === false ? <p>Phone numbers should be 9 digits long and includes dashes and the area code.</p> : null}
             </Col>  
           </Row>  
@@ -282,17 +274,17 @@ class Signup extends React.Component {
                 <Row className="addressRow">
                   <Col xs={12} sm={12} md={12} lg={12}> 
                     <p>Address Line 1</p>
-                    <Input valid={this.state.form.addressLine1  != false} invalid={this.state.form.addressLine1 === false}  required onChange={this.handleFormChange} name="addressLine1" id="addressLine1" type="text" placeholder="1234 Easy St"/>
+                    <Input valid={this.state.form.addressLine1  != false} invalid={this.state.form.addressLine1 === false}  required onChange={this.handleFormChange} name="addressLine1" id="addressLine1" type="text" placeholder=""/>
                     <a href="#" id="map-link">Pick to map</a>
                     {this.state.form.addressLine1 === false ? <p>Street address, P.O. box, company name</p> : null}
                   </Col>
                   <Col xs={12} sm={12} md={12} lg={12}> 
                     <p>Address Line 2</p>
-                    <Input valid={this.state.form.addressLine2  != false} invalid={this.state.form.addressLine2 === false}  required onChange={this.handleFormChange} name="addressLine2" id="addressLine2" type="text" placeholder="Suite 300"/>
+                    <Input valid={this.state.form.addressLine2  != false} invalid={this.state.form.addressLine2 === false}  required onChange={this.handleFormChange} name="addressLine2" id="addressLine2" type="text" placeholder=""/>
                   </Col>
                   <Col xs={6} sm={6} md={6} lg={6}> 
                     <p>City</p>
-                    <Input valid={this.state.form.city  != false} invalid={this.state.form.city === false}  required onChange={this.handleFormChange} name="city" id="city" type="text" placeholder="Tukwila"/>
+                    <Input valid={this.state.form.city  != false} invalid={this.state.form.city === false}  required onChange={this.handleFormChange} name="city" id="city" type="text" placeholder=""/>
                   </Col>
                   <Col xs={6} sm={6} md={6} lg={6}> 
                     <p>State</p>
@@ -352,7 +344,7 @@ class Signup extends React.Component {
                   </Col>
                   <Col xs={6} sm={6} md={4} lg={4}> 
                     <p>ZipCode</p>
-                    <Input valid={this.state.form.zipCode  != false} invalid={this.state.form.zipCode === false}  required onChange={this.handleFormChange} name="zipCode" id="zipCode" type="text" placeholder="98035"/>
+                    <Input valid={this.state.form.zipCode  != false} invalid={this.state.form.zipCode === false}  required onChange={this.handleFormChange} name="zipCode" id="zipCode" type="text" placeholder=""/>
                   </Col>
                   <Col xs={6} sm={6} md={{size: 6, offset: 2}} lg={{size: 6, offset: 2}}> 
                     <p>Country</p>
