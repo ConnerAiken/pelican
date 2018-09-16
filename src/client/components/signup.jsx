@@ -10,7 +10,7 @@ import "./signup.scss";
  
 
 const BackBtn = withRouter(({ history }) => (
-  <i className="fa fa-chevron-left fa-2x" onClick={() => { history.push('/'); return <Redirect to="/"/>; }}/> 
+  <i className="fa fa-chevron-left fa-2x formIcon" onClick={() => { history.push('/'); return <Redirect to="/"/>; }}/> 
 ));
 
 const BrowseBtn = () => (
@@ -41,7 +41,7 @@ class Signup extends React.Component {
       password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/, 
     };
 
-    this.state = {  
+    this.state = {   
       form: {
         accountType: 'client',
         firstName: '',
@@ -90,13 +90,11 @@ class Signup extends React.Component {
       return;
     }
 
-    const history = this.props.history; 
-    const headers = {
+    const history = this.props.history;  
+     
+    axios.post('/api/v1/user/register', this.state.form, {
       'Content-Type': 'application/json;charset=UTF-8'
-    };
-    
-    console.log("Sending registration request");
-    axios.post('/api/v1/user/register', this.state.form, headers)
+    })
     .then(response => {  
       toastr.success("Please sign in.");
       history.push('/'); 
@@ -191,7 +189,7 @@ class Signup extends React.Component {
           <h2>Register</h2>
         </Col> 
         <Col xs={{size: 3}} sm={{size: 3}} md={{size: 3}} lg={{size: 3}} className="d-flex justify-content-end align-items-center">
-          <i className="fa fa-floppy-o fa-2x" onClick={this.handleSave}/>
+          <i className="fa fa-floppy-o fa-2x formIcon" onClick={this.handleSave}/>
         </Col> 
       </Row>
           <Row className="input-row">
@@ -206,7 +204,7 @@ class Signup extends React.Component {
           </Row> 
           <Row className="input-row"> 
             <Col xs={{size: 1, offset: 1}} sm={{size: 1, offset: 1}} md={{size: 1, offset: 1}} lg={{size: 1, offset: 1}} className="d-flex justify-content-center" >
-                <i className="fa fa-envelope fa-2x"></i>
+                <i className="fa fa-envelope fa-2x formIcon"></i>
             </Col>  
             <Col xs={{size: 9}} sm={{size: 9}} md={{size: 9}} lg={{size: 9}}>
                 <p>Email</p>
@@ -216,7 +214,7 @@ class Signup extends React.Component {
           </Row>
           <Row className="input-row"> 
             <Col xs={{size: 1, offset: 1}} sm={{size: 1, offset: 1}} md={{size: 1, offset: 1}} lg={{size: 1, offset: 1}} className="d-flex justify-content-center" >
-                <i className="fa fa-key fa-2x"></i>
+                <i className="fa fa-key fa-2x formIcon"></i>
             </Col>  
             <Col xs={{size: 9}} sm={{size: 9}} md={{size: 9}} lg={{size: 9}}>
                 <p>Password</p>
@@ -226,7 +224,7 @@ class Signup extends React.Component {
           </Row>
           <Row className="input-row"> 
             <Col xs={{size: 1, offset: 1}} sm={{size: 1, offset: 1}} md={{size: 1, offset: 1}} lg={{size: 1, offset: 1}} className="d-flex justify-content-center" >
-                <i className="fa fa-address-card-o fa-2x"/>
+                <i className="fa fa-address-card-o fa-2x formIcon"/>
             </Col>  
             <Col xs={{size: 9}} sm={{size: 9}} md={{size: 9}} lg={{size: 9}}>
                 <p>Account Type</p> 
@@ -239,7 +237,7 @@ class Signup extends React.Component {
           </Row>
           <Row className="input-row"> 
             <Col xs={{size: 1, offset: 1}} sm={{size: 1, offset: 1}} md={{size: 1, offset: 1}} lg={{size: 1, offset: 1}} className="d-flex justify-content-center" >
-                <i className="fa fa-user fa-2x"></i>
+                <i className="fa fa-user fa-2x formIcon"></i>
             </Col>  
             <Col xs={{size: 9}} sm={{size: 9}} md={{size: 9}} lg={{size: 9}}>
               <Row>
@@ -258,7 +256,7 @@ class Signup extends React.Component {
           </Row>
           <Row className="input-row"> 
             <Col xs={{size: 1, offset: 1}} sm={{size: 1, offset: 1}} md={{size: 1, offset: 1}} lg={{size: 1, offset: 1}} className="d-flex justify-content-center" >
-                <i className="fa fa-phone fa-2x"></i>
+                <i className="fa fa-phone fa-2x formIcon"></i>
             </Col>  
             <Col xs={{size: 9}} sm={{size: 9}} md={{size: 9}} lg={{size: 9}}>
                 <p>Phone Number</p>
@@ -268,7 +266,7 @@ class Signup extends React.Component {
           </Row>  
           <Row className="input-row"> 
             <Col xs={{size: 1, offset: 1}} sm={{size: 1, offset: 1}} md={{size: 1, offset: 1}} lg={{size: 1, offset: 1}} className="d-flex justify-content-center" >
-                <i className="fa fa-map-marker fa-2x"></i>
+                <i className="fa fa-map-marker fa-2x formIcon"></i>
             </Col>  
             <Col xs={{size: 9}} sm={{size: 9}} md={{size: 9}} lg={{size: 9}}>
                 <Row className="addressRow">
@@ -358,11 +356,11 @@ class Signup extends React.Component {
           {accountSpecifics()}
           <Row className="input-row"> 
             <Col xs={{size: 1, offset: 1}} sm={{size: 1, offset: 1}} md={{size: 1, offset: 1}} lg={{size: 1, offset: 1}} className="d-flex justify-content-center" >
-                <i className="fa fa-id-card fa-2x"></i>
+                <i className="fa fa-id-card fa-2x formIcon"></i>
             </Col>  
             <Col xs={{size: 9}} sm={{size: 9}} md={{size: 9}} lg={{size: 9}} className="d-flex justify-content-left flex-column ">
                 <p>License Image</p> 
-                { this.state.form.licenseImage ? <img src={this.state.form.licenseImage} style={{width: '250px'}}/> : <FileUpload style={{width: '100px'}} containerStyle={{width: '25%', background: 'none', boxShadow: 'none'}} onFinish={this.handleLicenseImage} name="licenseImage"/> }<br/>
+                { this.state.form.licenseImage ? <img src={this.state.form.licenseImage} style={{width: '50%'}}/> : <FileUpload style={{width: '25%'}} containerStyle={{width: '25%', background: 'none', boxShadow: 'none'}} onFinish={this.handleLicenseImage} name="licenseImage"/> }<br/>
             </Col>  
           </Row>  
           <Row className="input-row">  

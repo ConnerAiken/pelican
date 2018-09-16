@@ -27,3 +27,36 @@
         padding-top: 1%;
     }
 }
+
+
+.signup {
+    @media screen and (max-width: 299px) { 
+        p {
+            font-size: 14px;
+        }
+
+        i.formIcon {
+            font-size: 26px;
+        }
+    }
+    
+    @media screen and (min-width: 300px) and (max-width: 799px) {
+        p {
+            font-size: 16px;
+        } 
+
+        i.formIcon {
+            font-size: 28px;
+        }
+    }
+    
+    @media screen and (min-width: 800px) { 
+        p {
+            font-size: 18px;
+        }
+
+        i.formIcon {
+            font-size: 30px;
+        }
+    }
+}
