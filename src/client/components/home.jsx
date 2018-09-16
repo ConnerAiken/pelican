@@ -8,7 +8,7 @@ import { Container, Row, Col, Input, Button } from 'reactstrap';
 import axios from "axios";
 import './home.scss';
   
-export class Home extends React.Component {
+class Home extends React.Component {
 
   constructor(props) {
     super(props); 
@@ -100,7 +100,7 @@ export class Home extends React.Component {
   }
  
   render() {
-    return withRouter(
+    return (
       <Container id="main" className="container home" fluid={true}>
           <Row>
             <Col xs={{size: 12}} sm={{size: 12}} md={{size: 8, offset: 2}} lg={{size: 8, offset: 2}}>
@@ -137,4 +137,5 @@ export class Home extends React.Component {
     );
   }
 }; 
- 
+
+export default withRouter(Home);

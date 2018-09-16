@@ -19,7 +19,7 @@ const BrowseBtn = () => (
   </Button> 
 );
 
-export class Signup extends React.Component {
+class Signup extends React.Component {
 
   constructor(props) {
     super(props); 
@@ -188,7 +188,7 @@ export class Signup extends React.Component {
       accountSpecifics = () => null;
     }
 
-    return withRouter(
+    return (
       <Container id="main" className="container signup" fluid={true}>
       <form> 
       <Row id="top-toolbar">
@@ -386,4 +386,4 @@ export class Signup extends React.Component {
   }
 };
  
- 
+export default withRouter(Signup);
