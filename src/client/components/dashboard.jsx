@@ -15,6 +15,7 @@ export class Dash extends React.Component {
   }
   
   render() {
+    console.log(this.state.user.accountType);
     if(this.state.user && this.state.user.accountType == "driver") {
       return (<DriverDash/>);
     }else if(this.state.user && this.state.user.accountType == "client") {

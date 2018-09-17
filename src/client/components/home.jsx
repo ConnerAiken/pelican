@@ -6,6 +6,7 @@ import header from "./../assets/img/header.png";
 import { withRouter, Redirect } from 'react-router-dom';
 import { Container, Row, Col, Input, Button } from 'reactstrap';
 import axios from "axios";
+import LoadingScreen from "./loadingScreen.jsx";
 import './home.scss';
   
 class Home extends React.Component {
@@ -19,6 +20,7 @@ class Home extends React.Component {
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleForgotPassword = this.handleForgotPassword.bind(this);
     this.state = {
+      pendingRequest: false,
       email: '',
       password: ''
     };
@@ -65,6 +67,7 @@ class Home extends React.Component {
     }; 
     const history = this.props.history;
 
+    this.setState({pendingRequest: true});
     return axios.post('/api/v1/user/login', {
       email: this.state.email,
       password: this.state.password
@@ -72,6 +75,7 @@ class Home extends React.Component {
     .then((response) => {   
       localStorage.setItem('profileImage', response.data.payload && response.data.payload.profileImage ? response.data.payload.profileImage : false);
       localStorage.setItem('token', response.data.token);
+      this.setState({pendingRequest: false});
       toastr.success("Successfully logged in.."); 
       history.push("/map"); 
       return <Redirect to="/map"/>;
@@ -134,6 +138,7 @@ class Home extends React.Component {
                 </a> 
             </Col>
           </Row>
+          {this.state.pendingRequest ? <LoadingScreen/> : null}
       </Container>
     );
   }

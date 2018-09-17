@@ -11,8 +11,6 @@ export default  function(sequelize, DataTypes) {
             key: 'id',  
           }
         },
-        email: DataTypes.STRING, 
-        password: DataTypes.STRING,  
         firstName: DataTypes.STRING, 
         lastName: DataTypes.STRING, 
         addressLine1: DataTypes.STRING, 

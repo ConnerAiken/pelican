@@ -34,7 +34,7 @@ Remaining 51 hours
 4h (Monday - 8:15am-12:15pm) -> Enabling helmet for express for security headers, setting up jwt token validation, generating list of 502 stores for mock display and displaying markers on map, separting views for different maps based on user types   
 2h (Thursday - 10:15am-12:30pm -> Mongodb vs mysql research and setting up Sequelize/ORM   
 4h (Saturday - 8:30am-12:30am -> Setting up order/orderLog schema and start of order creation/order update api endpoints
-5h (Sunday - 11:30am - 4:30pm ) -> Splitting dashboards into separate user views, file upload functionality (base64 encodes into db), db seeding script setup
+6h (Sunday - 11:30am - 5:30pm ) -> Splitting dashboards into separate user views, file upload functionality (base64 encodes into db), db seeding script setup, adding slick loading screen component to signup, login and initial dashboard loading processes
 
 ## SSL Certificates
 

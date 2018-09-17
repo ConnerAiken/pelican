@@ -5,6 +5,7 @@ import axios from "axios";
 import { withRouter, Redirect } from 'react-router-dom';
 import { Container, Row, Col, Button, Input } from 'reactstrap'; 
 import {FileUpload} from "./fileUpload.jsx";
+import LoadingScreen from "./loadingScreen.jsx";
 import './../../../node_modules/toastr/build/toastr.css';    
 import "./signup.scss";
  
@@ -62,6 +63,7 @@ class Signup extends React.Component {
         country: 'US',
         zipCode: ''
       },
+      error: false,
       pendingRequest: false
     };  
 
@@ -71,13 +73,12 @@ class Signup extends React.Component {
   handleFormChange(e) {
     const form = Object.assign({}, this.state.form);  
     if ((this.regex[e.target.name] && this.regex[e.target.name].test(e.target.value)) || !this.regex[e.target.name]) {  
-       form[e.target.name] = e.target.value;
-       console.log(form);
-       this.setState({form});
+       form[e.target.name] = e.target.value; 
+       this.setState({form, error: false});
     }else { 
         form[e.target.name] = false;
         console.log(form);
-        this.setState({form}); 
+        this.setState({form, error: true}); 
     }         
   }
 
@@ -89,6 +90,8 @@ class Signup extends React.Component {
       toastr.error("You must upload a license image.");
       return;
     }
+
+    this.setState({pendingRequest: true});
 
     const history = this.props.history;  
      
@@ -105,7 +108,7 @@ class Signup extends React.Component {
       }else {
         console.log(request);
       }
-    });
+    }).then(() => this.setState({pendingRequest: false}));
   } 
 
   handleVehicleImage(imageUrl) {
@@ -366,11 +369,12 @@ class Signup extends React.Component {
           <Row className="input-row">  
             <Col xs={{size: 1, offset: 1}} sm={{size: 1, offset: 1}} md={{size: 1, offset: 1}} lg={{size: 1, offset: 1}} className="d-flex justify-content-center"></Col>  
             <Col xs={{size: 9}} sm={{size: 9}} md={{size: 9}} lg={{size: 9}}>
-                <Button onClick={this.handleSave} color="success" block={true}>Register</Button>
+                <Button disabled={this.state.error} onClick={this.handleSave} color="success" block={true}>Register</Button>
             </Col>   
           </Row>
           </form> 
           <br/>
+          {this.state.pendingRequest ? <LoadingScreen/> : null}
       </Container> 
     ); 
   }

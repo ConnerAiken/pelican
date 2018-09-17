@@ -79,11 +79,7 @@ router.post('/register', function(req, res) {
 
                   return db.UserInfo.create(user);
                 }) 
-                .then(result => res.json(result))
-                // .then(result => {
-                //   paths.forEach(path => fs.unlinkSync(path));
-                //   return;
-                // })
+                .then(result => res.json(result)) 
                 .catch(err => {
                   console.log("Caught an error while saving to the database: ");
                   console.log(err);

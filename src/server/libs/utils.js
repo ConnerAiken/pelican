@@ -60,6 +60,10 @@ export default {
         }
     },
     decodeToken(token) {
+        if(!token) {
+            window.location = location.host;
+        }
+        
         const components = token.split('.');
         const base64url = components[1]; 
         try {

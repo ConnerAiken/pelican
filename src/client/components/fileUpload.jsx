@@ -19,15 +19,20 @@ export class FileUpload extends React.Component {
     }
 
    
-    onDrop(picture) {
+    onDrop(picture) { 
+        if(picture && picture.length == 0) { 
+            return;
+        }
+
         this.setState({
-            pictures: picture,
+            pictures: this.state.pictures.concat(picture),
         }, () => this.handleUploadImage());  
     }
   
     handleUploadImage() {  
-      console.log(Object.assign({}, this.state.pictures));
-      
+      console.log(Object.assign({}, this.state));
+      if(this.state.pictures.length == 0) return;
+
       const data = new FormData();
       data.append('file', this.state.pictures[0]);
       data.append('filename', this.state.pictures[0].name);
@@ -58,7 +63,7 @@ export class FileUpload extends React.Component {
                 buttonText='Browse..'
                 onChange={this.onDrop}
                 buttonClassName={'btn btn-warning'}
-                imgExtension={['.jpg', '.gif', '.png', '.gif']}
+                imgExtension={['.jpg', '.jpeg', '.gif', '.png']}
                 maxFileSize={5242880}
             />
             );

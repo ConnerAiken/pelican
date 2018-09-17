@@ -7,6 +7,7 @@ import ClientMap from "./clientMap";
 import ClientOrderMap from "./clientOrderMap";
 import Directions from "./directions";   
 import {Requestor} from "./requestor";
+import LoadingScreen from "./loadingScreen.jsx";
 import { Container, Row, Col, Button } from 'reactstrap';
 import utils from "../assets/utils";
  
@@ -26,6 +27,7 @@ export class DriverDash extends React.Component {
     this.checkOrderLocation = this.checkOrderLocation.bind(this);
 
     this.state = {
+      pendingRequest: true,
       activeOrder: false,
       locationLoaded: false, 
       curLoc: false,
@@ -71,7 +73,7 @@ export class DriverDash extends React.Component {
       
 
       navigator.geolocation.getCurrentPosition((position) => {  
-          this.setState({locationLoaded: true, curLoc: { coords:{ lat: position.coords.latitude, lng: position.coords.longitude }}});
+          this.setState({locationLoaded: true, pendingRequest: false, curLoc: { coords:{ lat: position.coords.latitude, lng: position.coords.longitude }}});
       }, (error) => {
         if(error == 2) {
           toastr.error('Your position is not currently available. Error code: ' + error.code);
@@ -85,7 +87,7 @@ export class DriverDash extends React.Component {
       }, {timeout: 2500, enableHighAccuracy: true, maximumAge: 75000});
 
       navigator.geolocation.watchPosition((position) => {   
-        this.setState({locationLoaded: true, curLoc: { coords: {lat: position.coords.latitude, lng: position.coords.longitude}}});
+        this.setState({locationLoaded: true, pendingRequest: false, curLoc: { coords: {lat: position.coords.latitude, lng: position.coords.longitude}}});
       }, (err) => { 
           console.log(err);
       }, {timeout: 2500, enableHighAccuracy: true, maximumAge: 75000});
@@ -242,6 +244,7 @@ export class DriverDash extends React.Component {
     const orderExists = this.state.activeOrder && nextState.activeOrder;
     const orderStatusChange = orderExists && this.state.activeOrder.status !== nextState.activeOrder.status;
     const locationLoaded = this.state.locationLoaded !== nextState.locationLoaded;
+    const curLocLoaded = this.state.curLoc === false && nextState.curLoc !== false;
 
     console.log("Update request started, emitting nextProps", Object.assign({}, nextProps));
     console.log("Update request started, emitting nextState", Object.assign({}, nextState));
@@ -250,11 +253,11 @@ export class DriverDash extends React.Component {
 
     if(orderStatusChange) {
       return true;
-    }else if(locationLoaded) {
+    }else if(locationLoaded || curLocLoaded) {
       return true;
     }
 
-    return false;
+    return true;
   }
 
   render() {
@@ -283,6 +286,7 @@ export class DriverDash extends React.Component {
             {this.state.user && this.state.user.accountType == "driver" && this.state.activeOrder && this.state.activeOrder.status == 3 && <Button onClick={this.updateOrder}>Mark Delivered</Button>}
         </Col>
       </Row>
+      {this.state.pendingRequest ? <LoadingScreen/> : null}
       {this.state.curLoc && this.showRelevantMap()} 
       </Container> 
     );
