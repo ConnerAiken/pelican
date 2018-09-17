@@ -11,10 +11,11 @@ import LoadingScreen from "./loadingScreen.jsx";
 import { Container, Row, Col, Button } from 'reactstrap';
 import utils from "../assets/utils";
  
+import { withRouter, Redirect } from 'react-router-dom';
 import "./clientDashboard.scss";
  
 
-export class ClientDash extends React.Component {
+class ClientDash extends React.Component {
 
   constructor(props) {
     super(props);  
@@ -35,7 +36,7 @@ export class ClientDash extends React.Component {
       user: utils.decodeToken(localStorage.getItem("token"))
     };
  
-    this.state.user.profileImage = 'data:image/jpg;base64,'+localStorage.getItem("profileImage");  
+    this.state.user.profileImage = localStorage.getItem("profileImage") ? 'data:image/jpg;base64,'+localStorage.getItem("profileImage") : null;  
 
     this.opts = { 
       headers: {
@@ -272,7 +273,7 @@ export class ClientDash extends React.Component {
           {this.state.user.profileImage && <img src={this.state.user.profileImage} style={{width: '75px'}} />}  
         </Col>
         <Col xs={{size: 4}} sm={{size: 4}} md={{size: 4}} lg={{size: 4}}> 
-            {this.state.user && this.state.user.accountType == "client"  && !this.state.activeOrder && <Button onClick={this.submitOrder}>Start Order</Button>}
+            {this.state.user && this.state.user.accountType == "client"  && !this.state.activeOrder && <Button color="warning" onClick={this.submitOrder}>Start Order</Button>}
             {this.state.user && this.state.user.accountType == "client"  && this.state.activeOrder && <div>
             <p>Estimated Arrival: <span id="estimate">99 mins</span></p>
             <p>Status:  {this.state.activeOrder.status == 0 && "The store is confirming your order"}
@@ -292,3 +293,5 @@ export class ClientDash extends React.Component {
     );
   }
 };
+
+export default withRouter(ClientDash);

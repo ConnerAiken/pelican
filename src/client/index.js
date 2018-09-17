@@ -1,18 +1,14 @@
 import React from "react"; 
 import ReactDOM from "react-dom";
-import { HashRouter, Route, Switch } from "react-router-dom";  
-import ReactPiwik from 'react-piwik';
-import createBrowserHistory from 'history/createBrowserHistory'
-import $ from 'jquery'; 
+import { BrowserRouter, Route, Switch } from "react-router-dom";  
+import ReactPiwik from 'react-piwik'; 
 import 'font-awesome/css/font-awesome.min.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'mdbreact/dist/css/mdb.css';
- 
-import { Dash } from "./components/dashboard.jsx"; 
+import 'bootstrap/dist/css/bootstrap.min.css'; 
+import createHistory from 'history/createHashHistory'
+
+import Dash from "./components/dashboard.jsx"; 
 import Signup from "./components/signup.jsx"; 
-import Home from "./components/home.jsx"; 
- 
-window.$ = $;
+import Home from "./components/home.jsx";  
 
 const piwik = new ReactPiwik({
     url: 'analytics.fittedtech.com',
@@ -21,13 +17,13 @@ const piwik = new ReactPiwik({
 });  
 
 ReactDOM.render(
-    <HashRouter>
+    <BrowserRouter>
         <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/signup" component={Signup} />
             <Route path="/map" component={Dash} />
         </Switch> 
-    </HashRouter>
+    </BrowserRouter>
 , document.querySelector("#root"));
 
 module.hot.accept(); 

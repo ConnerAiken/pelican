@@ -3,6 +3,10 @@ html, body, #main {
     color: white;
 } 
   
+#nav > div {
+    padding: 1%;
+}
+
 #main, #root, html, body {
     padding: 0; 
     width: 100%;

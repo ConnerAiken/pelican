@@ -10,11 +10,11 @@ import {Requestor} from "./requestor";
 import LoadingScreen from "./loadingScreen.jsx";
 import { Container, Row, Col, Button } from 'reactstrap';
 import utils from "../assets/utils";
+import { withRouter, Redirect } from 'react-router-dom';
  
 import "./driverDashboard.scss";
  
-
-export class DriverDash extends React.Component {
+class DriverDash extends React.Component {
 
   constructor(props) {
     super(props);  
@@ -272,7 +272,7 @@ export class DriverDash extends React.Component {
           {this.state.user.profileImage && <img src={this.state.user.profileImage} style={{width: '75px'}} />}  
         </Col>
         <Col xs={{size: 4}} sm={{size: 4}} md={{size: 4}} lg={{size: 4}}> 
-            {this.state.user && this.state.user.accountType == "client"  && !this.state.activeOrder && <Button onClick={this.submitOrder}>Start Order</Button>}
+            {this.state.user && this.state.user.accountType == "client"  && !this.state.activeOrder && <Button color="warning" onClick={this.submitOrder}>Start Order</Button>}
             {this.state.user && this.state.user.accountType == "client"  && this.state.activeOrder && <div>
             <p>Estimated Arrival: <span id="estimate">99 mins</span></p>
             <p>Status:  {this.state.activeOrder.status == 0 && "The store is confirming your order"}
@@ -280,7 +280,7 @@ export class DriverDash extends React.Component {
                         {this.state.activeOrder.status == 2 && "Driver has your order and is on the way"}
                         {this.state.activeOrder.status == 4 && "Delivered! Enjoy your product :)"}</p>
             </div>} 
-            {this.state.user && this.state.user.accountType == "driver" && !this.state.activeOrder && <Button onClick={this.commitToOrder}>Commit to Order</Button>}
+            {this.state.user && this.state.user.accountType == "driver" && !this.state.activeOrder && <Button color="warning" onClick={this.commitToOrder}>Commit to Order</Button>}
             {this.state.user && this.state.user.accountType == "driver" && this.state.activeOrder && this.state.activeOrder.status == 1 && <Button onClick={this.updateOrder}>Start Pickup</Button>}
             {this.state.user && this.state.user.accountType == "driver" && this.state.activeOrder && this.state.activeOrder.status == 2 && <Button onClick={this.updateOrder}>Start Delivery</Button>}
             {this.state.user && this.state.user.accountType == "driver" && this.state.activeOrder && this.state.activeOrder.status == 3 && <Button onClick={this.updateOrder}>Mark Delivered</Button>}
@@ -292,3 +292,5 @@ export class DriverDash extends React.Component {
     );
   }
 };
+
+export default withRouter(DriverDash);

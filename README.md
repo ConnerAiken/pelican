@@ -22,7 +22,7 @@
 
 
 # Week 4 - 76 hours banked for 4 weeks - (9/4/2018)    
-Remaining 49.5 hours
+Remaining 49 hours
 
 1.5h (Mon - 11am-12:30pm) -> Upgrading babel, researching on iOS html/css requirements.   
 1h (Mon - 1:45pm-2:45pm -> attempting to make scroll viewport work correctly in iphone, build process changes for docker   
@@ -35,6 +35,7 @@ Remaining 49.5 hours
 2h (Thursday - 10:15am-12:30pm -> Mongodb vs mysql research and setting up Sequelize/ORM   
 4h (Saturday - 8:30am-12:30am -> Setting up order/orderLog schema and start of order creation/order update api endpoints
 6.5h (Sunday - 11:30am - 6pm ) -> Splitting dashboards into separate user views, file upload functionality (base64 encodes into db), db seeding script setup, adding slick loading screen component to signup, allow enter to login, login and initial dashboard loading processes
+.5h     (Monday - 8:30am - 9am) -> Fixing react router issues on IOS, reworked with BrowserRouter
 
  
 ## SSL Certificates

@@ -9,11 +9,7 @@ import LoadingScreen from "./loadingScreen.jsx";
 import './../../../node_modules/toastr/build/toastr.css';    
 import "./signup.scss";
  
-
-const BackBtn = withRouter(() => (
-  <i className="fa fa-chevron-left fa-2x formIcon" onClick={() => { return <Redirect to="/"/>; }}/> 
-));
-
+ 
 const BrowseBtn = () => (
   <Button type="button" className="btn-deep-orange" id="browse-btn">
     BROWSE 
@@ -99,7 +95,7 @@ class Signup extends React.Component {
     })
     .then(response => {  
       toastr.success("Please sign in."); 
-      return <Redirect to="/"/>; 
+      this.props.history.push('/');
     }).catch(request => { 
       if(request.response && request.response.data && request.response.data.error) {  
         toastr.error(request.response.data.error); 
@@ -184,7 +180,7 @@ class Signup extends React.Component {
       <form> 
       <Row id="top-toolbar">
         <Col xs={{size: 3, offset: 1}} sm={{size: 3, offset: 1}} md={{size: 3, offset: 1}} lg={{size: 3, offset: 1}} className="d-flex justify-content-start align-items-center">
-          <BackBtn/> 
+            <i className="fa fa-chevron-left fa-2x formIcon" onClick={() => { this.props.history.push('/'); }}/> 
         </Col> 
         <Col xs={{size: 4}} sm={{size: 4}} md={{size: 4}} lg={{size: 4}} className="d-flex justify-content-center align-items-center">
           <h2>Register</h2>

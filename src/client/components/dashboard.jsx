@@ -1,11 +1,12 @@
 // Node.JS
 import React from "react";   
 import utils from "./../assets/utils";
-import {ClientDash} from "./clientDashboard.jsx";
-import {DriverDash} from "./driverDashboard.jsx";
+import ClientDash from "./clientDashboard.jsx";
+import DriverDash from "./driverDashboard.jsx";
+import {withRouter} from "react-router-dom";
  
 
-export class Dash extends React.Component {
+class Dash extends React.Component {
 
   constructor(props) {
     super(props);    
@@ -14,8 +15,7 @@ export class Dash extends React.Component {
     }; 
   }
   
-  render() {
-    console.log(this.state.user.accountType);
+  render() { 
     if(this.state.user && this.state.user.accountType == "driver") {
       return (<DriverDash/>);
     }else if(this.state.user && this.state.user.accountType == "client") {
@@ -25,4 +25,6 @@ export class Dash extends React.Component {
     return <p>Please Login</p>;
   }
 }; 
- 
+
+
+export default withRouter(Dash);

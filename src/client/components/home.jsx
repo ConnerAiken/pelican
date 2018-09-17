@@ -53,7 +53,7 @@ class Home extends React.Component {
   }
 
   handleRegister(e) {  
-    return <Redirect to="/signup"/>;
+    this.props.history.push('/signup'); 
   }
 
   handleLogin(e) {
@@ -66,6 +66,7 @@ class Home extends React.Component {
     };  
 
     this.setState({pendingRequest: true});
+
     return axios.post('/api/v1/user/login', {
       email: this.state.email,
       password: this.state.password
@@ -73,9 +74,9 @@ class Home extends React.Component {
     .then((response) => {   
       localStorage.setItem('profileImage', response.data.payload && response.data.payload.profileImage ? response.data.payload.profileImage : false);
       localStorage.setItem('token', response.data.token);
-      this.setState({pendingRequest: false});
-      toastr.success("Successfully logged in..");  
-      return <Redirect to="/map"/>;
+      this.setState({pendingRequest: false}); 
+      console.log(this.props.history);
+      return this.props.history.push('/map');  
     }).catch(request => {   
       if(request.response && request.response.data && request.response.data.failed) {   
         toastr.error(request.response.data.failed); 
@@ -118,7 +119,7 @@ class Home extends React.Component {
                   <Row>  
                     <Col xs={{size: 6, offset: 0}} sm={{size: 6, offset: 0}} md={{size: 6, offset: 0}} lg={{size: 6, offset: 0}}>
                       <br/>
-                      <Button type="submit" className="btn-deep-orange btn-block" id="login-btn">
+                      <Button style={{backgroundColor: 'orange'}} color="warning" block={true} type="submit"  id="login-btn">
                         LOGIN
                       </Button>
                     </Col>
