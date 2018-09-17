@@ -26,6 +26,7 @@ class ClientDash extends React.Component {
     this.updateOrder = this.updateOrder.bind(this);
     this.updateOrderLocation = this.updateOrderLocation.bind(this); 
     this.checkOrderLocation = this.checkOrderLocation.bind(this);
+    this.toggleSidebar = this.toggleSidebar.bind(this);
 
     this.state = {
       pendingRequest: true,
@@ -47,6 +48,11 @@ class ClientDash extends React.Component {
 
     this.retrieveOrder()
     .then(res => this.initializeGMap());
+  }
+
+
+  toggleSidebar() {
+    document.querySelector('#nav').classList.toggle("active");
   }
 
   checkToken() {   
@@ -263,14 +269,12 @@ class ClientDash extends React.Component {
 
   render() {
     return (
-      <Container id="main" className="container dashboard" fluid={true}> 
-      <Row id="nav">
-        <Col xs={{size: 4}} sm={{size: 4}} md={{size: 4}} lg={{size: 4}}> 
-            <h1>Pelican</h1>
+      <Container className="container dashboard" fluid={true}> 
+      <Row id="header">
+        <Col xs={{size: 4}} sm={{size: 4}} md={{size: 4}} lg={{size: 4}}>  
+          <i className="fa fa-bars" onClick={this.toggleSidebar}></i>
         </Col>
         <Col xs={{size: 4}} sm={{size: 4}} md={{size: 4}} lg={{size: 4}}> 
-        <br/>
-          {this.state.user.profileImage && <img src={this.state.user.profileImage} style={{width: '75px'}} />}  
         </Col>
         <Col xs={{size: 4}} sm={{size: 4}} md={{size: 4}} lg={{size: 4}}> 
             {this.state.user && this.state.user.accountType == "client"  && !this.state.activeOrder && <Button color="warning" onClick={this.submitOrder}>Start Order</Button>}

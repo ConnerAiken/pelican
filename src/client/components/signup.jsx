@@ -79,6 +79,8 @@ class Signup extends React.Component {
   }
 
   handleSave(e) {    
+    e.preventDefault();
+    
     if(this.state.form.accountType == "driver" && !this.state.form.vehicleImage) {
       toastr.error("You must upload a vehicle image.");
       return;

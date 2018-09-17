@@ -3,7 +3,10 @@ import React from "react";
 import utils from "./../assets/utils";
 import ClientDash from "./clientDashboard.jsx";
 import DriverDash from "./driverDashboard.jsx";
+import Sidebar from "./sidebar.jsx";
 import {withRouter} from "react-router-dom";
+
+import './dashboard.scss';
  
 
 class Dash extends React.Component {
@@ -17,9 +20,18 @@ class Dash extends React.Component {
   
   render() { 
     if(this.state.user && this.state.user.accountType == "driver") {
-      return (<DriverDash/>);
+      return (
+      <React.Fragment>
+        <Sidebar/>
+        <DriverDash/>
+      </React.Fragment> 
+      );
     }else if(this.state.user && this.state.user.accountType == "client") {
-      return (<ClientDash/>);
+      return (
+        <React.Fragment id="wrapper">
+          <Sidebar/>
+          <ClientDash/>
+        </React.Fragment>);
     }
 
     return <p>Please Login</p>;

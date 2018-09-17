@@ -113,10 +113,13 @@ router.post('/login', function(req, res) {
         
         if(result) {  
           db.UserInfo.findOne({where: {userId: user.id}}).then(userInfo => { 
+            console.log(userInfo);
             return res.status(200).json({
               success: 'Welcome to Pelican Delivers',
               payload: {
                 profileImage: userInfo.profileImageBase64 || false, 
+                firstName: userInfo.firstName || "John",
+                lastName: userInfo.lastName || "Smith"
               },
               token: jwt.sign({
                 id: user.id,

@@ -57,6 +57,8 @@ class Home extends React.Component {
   }
 
   handleLogin(e) {
+    e.preventDefault();
+
     if(!this.state.email || !this.state.password) {
       toastr.error("Please provide credentials.");
       return;
@@ -67,22 +69,22 @@ class Home extends React.Component {
 
     this.setState({pendingRequest: true});
 
-    return axios.post('/api/v1/user/login', {
+    axios.post('/api/v1/user/login', {
       email: this.state.email,
       password: this.state.password
     }, headers)
     .then((response) => {   
+      console.log(response);
       localStorage.setItem('profileImage', response.data.payload && response.data.payload.profileImage ? response.data.payload.profileImage : false);
+      localStorage.setItem('userInfo', JSON.stringify(response.data.payload));
       localStorage.setItem('token', response.data.token);
-      this.setState({pendingRequest: false}); 
-      console.log(this.props.history);
-      return this.props.history.push('/map');  
+      this.setState({pendingRequest: false});  
+      this.props.history.push('/map');  
     }).catch(request => {   
+      console.log(request);
       if(request.response && request.response.data && request.response.data.failed) {   
         toastr.error(request.response.data.failed); 
-      }else {
-        console.log(request);
-      }
+      } 
     });
   }
 

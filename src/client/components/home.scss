@@ -72,6 +72,10 @@
 }
 
 #footer-col {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;

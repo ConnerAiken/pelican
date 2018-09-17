@@ -1,13 +1,13 @@
-html, body, #main { 
+html, body, .dashboard { 
     background-color: #3d5e4c; 
     color: white;
 } 
   
-#nav > div {
+#header > div {
     padding: 1%;
 }
 
-#main, #root, html, body {
+.dashboard, #root, html, body {
     padding: 0; 
     width: 100%;
     height: 100%;
@@ -15,7 +15,7 @@ html, body, #main {
 }
  
 .dashboard {
-    & #nav {
+    & #header {
         height: 10%;
     }
 

@@ -36,6 +36,7 @@ Remaining 49 hours
 4h (Saturday - 8:30am-12:30am -> Setting up order/orderLog schema and start of order creation/order update api endpoints
 6.5h (Sunday - 11:30am - 6pm ) -> Splitting dashboards into separate user views, file upload functionality (base64 encodes into db), db seeding script setup, adding slick loading screen component to signup, allow enter to login, login and initial dashboard loading processes
 .5h     (Monday - 8:30am - 9am) -> Fixing react router issues on IOS, reworked with BrowserRouter
+1h     (Monday - 9am-10am) -> Start of sidebar
 
  
 ## SSL Certificates
