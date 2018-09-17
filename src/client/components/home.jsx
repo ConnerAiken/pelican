@@ -52,8 +52,7 @@ class Home extends React.Component {
     this.setState({password: e.target.value});
   }
 
-  handleRegister(e) { 
-    this.props.history.push('/signup'); 
+  handleRegister(e) {  
     return <Redirect to="/signup"/>;
   }
 
@@ -64,8 +63,7 @@ class Home extends React.Component {
     }
     const headers = {
       'Content-Type': 'application/json;charset=UTF-8'
-    }; 
-    const history = this.props.history;
+    };  
 
     this.setState({pendingRequest: true});
     return axios.post('/api/v1/user/login', {
@@ -76,8 +74,7 @@ class Home extends React.Component {
       localStorage.setItem('profileImage', response.data.payload && response.data.payload.profileImage ? response.data.payload.profileImage : false);
       localStorage.setItem('token', response.data.token);
       this.setState({pendingRequest: false});
-      toastr.success("Successfully logged in.."); 
-      history.push("/map"); 
+      toastr.success("Successfully logged in..");  
       return <Redirect to="/map"/>;
     }).catch(request => {   
       if(request.response && request.response.data && request.response.data.failed) {   

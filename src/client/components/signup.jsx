@@ -10,8 +10,8 @@ import './../../../node_modules/toastr/build/toastr.css';
 import "./signup.scss";
  
 
-const BackBtn = withRouter(({ history }) => (
-  <i className="fa fa-chevron-left fa-2x formIcon" onClick={() => { history.push('/'); return <Redirect to="/"/>; }}/> 
+const BackBtn = withRouter(() => (
+  <i className="fa fa-chevron-left fa-2x formIcon" onClick={() => { return <Redirect to="/"/>; }}/> 
 ));
 
 const BrowseBtn = () => (
@@ -92,15 +92,13 @@ class Signup extends React.Component {
     }
 
     this.setState({pendingRequest: true});
-
-    const history = this.props.history;  
+  
      
     axios.post('/api/v1/user/register', this.state.form, {
       'Content-Type': 'application/json;charset=UTF-8'
     })
     .then(response => {  
-      toastr.success("Please sign in.");
-      history.push('/'); 
+      toastr.success("Please sign in."); 
       return <Redirect to="/"/>; 
     }).catch(request => { 
       if(request.response && request.response.data && request.response.data.error) {  
