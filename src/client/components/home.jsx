@@ -115,13 +115,13 @@ class Home extends React.Component {
                 <img src={header}/>
             </Col>
             <Col xs={{size: 12}} sm={{size: 12}} md={{size: 8, offset: 2}} lg={{size: 8, offset: 2}} id="form-col"> 
-                <form> 
+                <form onSubmit={this.handleLogin}> 
                   <Input icon="envelope" type="email" error="wrong" success="right" value={this.state.email} onChange={this.handleEmailChange}/><br/>
                   <Input label="Type your password" icon="lock" type="password" value={this.state.password} onChange={this.handlePasswordChange}/>
                   <Row>  
                     <Col xs={{size: 6, offset: 0}} sm={{size: 6, offset: 0}} md={{size: 6, offset: 0}} lg={{size: 6, offset: 0}}>
                       <br/>
-                      <Button className="btn-deep-orange btn-block" id="login-btn" onClick={this.handleLogin}>
+                      <Button type="submit" className="btn-deep-orange btn-block" id="login-btn">
                         LOGIN
                       </Button>
                     </Col>
