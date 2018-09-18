@@ -2,20 +2,19 @@
 import React from "react"; 
 import toastr from "toastr";
 import axios from "axios";
-import './../../../node_modules/toastr/build/toastr.css';   
-import ClientMap from "./clientMap";
-import ClientOrderMap from "./clientOrderMap";
-import Directions from "./directions";   
-import {Requestor} from "./requestor";
-import LoadingScreen from "./loadingScreen.jsx";
+import './../../../../node_modules/toastr/build/toastr.css';   
+import ClientMap from "../maps/client.map";
+import ClientOrderMap from "../maps/client.order.map";
+import Directions from "../directions";    
+import LoadingScreen from "../loadingScreen";
 import { Container, Row, Col, Button } from 'reactstrap';
-import utils from "../assets/utils";
+import utils from "./../../assets/utils";
  
 import { withRouter, Redirect } from 'react-router-dom';
-import "./clientDashboard.scss";
+import "./client.map.scss";
  
 
-class ClientDash extends React.Component {
+class ClientMapDash extends React.Component {
 
   constructor(props) {
     super(props);  
@@ -27,24 +26,15 @@ class ClientDash extends React.Component {
     this.updateOrderLocation = this.updateOrderLocation.bind(this); 
     this.checkOrderLocation = this.checkOrderLocation.bind(this);
     this.toggleSidebar = this.toggleSidebar.bind(this);
+    utils.initializeComponent.call(this, utils); 
 
-    this.state = {
-      pendingRequest: true,
+    this.state = { 
       activeOrder: false,
       locationLoaded: false, 
       curLoc: false,
-      destination: null,
-      user: utils.decodeToken(localStorage.getItem("token"))
+      destination: null, 
     };
- 
-    this.state.user.profileImage = localStorage.getItem("profileImage") ? 'data:image/jpg;base64,'+localStorage.getItem("profileImage") : null;  
-
-    this.opts = { 
-      headers: {
-        'Content-Type': 'application/json;charset=UTF-8',
-        'token': localStorage.getItem('token')
-      }
-    };
+  
 
     this.retrieveOrder()
     .then(res => this.initializeGMap());
@@ -271,8 +261,7 @@ class ClientDash extends React.Component {
     return (
       <Container className="container dashboard" fluid={true}> 
       <Row id="header">
-        <Col xs={{size: 4}} sm={{size: 4}} md={{size: 4}} lg={{size: 4}}>  
-          <i className="fa fa-bars" onClick={this.toggleSidebar}></i>
+        <Col xs={{size: 4}} sm={{size: 4}} md={{size: 4}} lg={{size: 4}}>   
         </Col>
         <Col xs={{size: 4}} sm={{size: 4}} md={{size: 4}} lg={{size: 4}}> 
         </Col>
@@ -298,4 +287,4 @@ class ClientDash extends React.Component {
   }
 };
 
-export default withRouter(ClientDash);
+export default withRouter(ClientMapDash);

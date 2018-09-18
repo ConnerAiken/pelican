@@ -1,9 +1,9 @@
 // Node.JS
 import React from "react";   
-import utils from "./../assets/utils";
-import ClientDash from "./clientDashboard.jsx";
-import DriverDash from "./driverDashboard.jsx";
-import Sidebar from "./sidebar.jsx";
+import utils from "./../../assets/utils";
+import ClientDash from "./../dashboards/client.map.jsx";
+import DriverDash from "./../dashboards/driver.map.jsx";
+import Sidebar from "./../dashboards/sidebar";
 import {withRouter} from "react-router-dom";
 
 import './dashboard.scss';
@@ -13,9 +13,7 @@ class Dash extends React.Component {
 
   constructor(props) {
     super(props);    
-    this.state = { 
-      user: utils.decodeToken(localStorage.getItem("token"))
-    }; 
+    utils.initializeComponent.call(this, utils); 
   }
   
   render() { 
@@ -28,7 +26,13 @@ class Dash extends React.Component {
       );
     }else if(this.state.user && this.state.user.accountType == "client") {
       return (
-        <React.Fragment id="wrapper">
+        <React.Fragment>
+          <Sidebar/>
+          <ClientDash/>
+        </React.Fragment>);
+    }else if(this.state.user && this.state.user.accountType == "store") {
+      return (
+        <React.Fragment>
           <Sidebar/>
           <ClientDash/>
         </React.Fragment>);

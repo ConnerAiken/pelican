@@ -5,6 +5,7 @@ export default  function(sequelize, DataTypes) {
         id: { type: DataTypes.BIGINT, autoIncrement: true,  primaryKey: true }, 
         resetToken: DataTypes.STRING,
         resetExpired: DataTypes.DATE,
+        phone: DataTypes.STRING,
         email: {
           type: DataTypes.STRING,
           unique: true,

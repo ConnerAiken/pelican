@@ -1,8 +1,6 @@
 // Node.JS
 import React from "react"; 
-import toastr from "toastr";
-import './../../../node_modules/toastr/build/toastr.css';    
-import { Container, Row, Col } from 'reactstrap'; 
+import utils from "./../assets/utils";
 import "./loadingScreen.scss";
 
 class LoadingScreen extends React.Component {
@@ -12,6 +10,7 @@ class LoadingScreen extends React.Component {
     this.state = {
         visible: !this.props.visible
     }
+    utils.initializeComponent.call(this, utils); 
   } 
    
   render() {

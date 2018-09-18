@@ -112,15 +112,15 @@ router.post('/login', function(req, res) {
         }
         
         if(result) {  
-          db.UserInfo.findOne({where: {userId: user.id}}).then(userInfo => { 
-            console.log(userInfo);
+          db.UserInfo.findOne({where: {userId: user.id}}).then(userInfo => {  
+            userInfo.password = false; 
+            userInfo.licenseImageBase64 = false;
+            userInfo.vehicleImageBase64 = false;
+            userInfo.profileImage = userInfo.profileImageBase64;
+
             return res.status(200).json({
               success: 'Welcome to Pelican Delivers',
-              payload: {
-                profileImage: userInfo.profileImageBase64 || false, 
-                firstName: userInfo.firstName || "John",
-                lastName: userInfo.lastName || "Smith"
-              },
+              payload: userInfo,
               token: jwt.sign({
                 id: user.id,
                 accountType: user.accountType, 

@@ -2,19 +2,18 @@
 import React from "react"; 
 import toastr from "toastr";
 import axios from "axios";
-import './../../../node_modules/toastr/build/toastr.css';   
-import ClientMap from "./clientMap";
-import ClientOrderMap from "./clientOrderMap";
-import Directions from "./directions";   
-import {Requestor} from "./requestor";
-import LoadingScreen from "./loadingScreen.jsx";
+import './../../../../node_modules/toastr/build/toastr.css';   
+import ClientMap from "../maps/client.map";
+import ClientOrderMap from "../maps/client.order.map";
+import Directions from "../directions";    
+import LoadingScreen from "../loadingScreen";
 import { Container, Row, Col, Button } from 'reactstrap';
-import utils from "../assets/utils";
+import utils from "./../../assets/utils";
 import { withRouter, Redirect } from 'react-router-dom';
  
-import "./driverDashboard.scss";
+import "./driver.map.scss";
  
-class DriverDash extends React.Component {
+class DriverMapDash extends React.Component {
 
   constructor(props) {
     super(props);  
@@ -27,23 +26,15 @@ class DriverDash extends React.Component {
     this.checkOrderLocation = this.checkOrderLocation.bind(this);
     this.toggleSidebar = this.toggleSidebar.bind(this);
 
-    this.state = {
-      pendingRequest: true,
+    utils.initializeComponent.call(this, utils); 
+
+    this.state = { 
       activeOrder: false,
       locationLoaded: false, 
       curLoc: false,
-      destination: null,
-      user: utils.decodeToken(localStorage.getItem("token"))
+      destination: null, 
     };
- 
-    this.state.user.profileImage = 'data:image/jpg;base64,'+localStorage.getItem("profileImage");  
-
-    this.opts = { 
-      headers: {
-        'Content-Type': 'application/json;charset=UTF-8',
-        'token': localStorage.getItem('token')
-      }
-    };
+  
 
     this.retrieveOrder()
     .then(res => this.initializeGMap());
@@ -271,7 +262,7 @@ class DriverDash extends React.Component {
       <Container className="container dashboard" fluid={true}> 
       <Row id="header">
         <Col xs={{size: 4}} sm={{size: 4}} md={{size: 4}} lg={{size: 4}}>  
-          <i className="fa fa-bars" onClick={this.toggleSidebar}></i>
+          
         </Col>
         <Col xs={{size: 4}} sm={{size: 4}} md={{size: 4}} lg={{size: 4}}> 
         </Col>
@@ -297,4 +288,4 @@ class DriverDash extends React.Component {
   }
 };
 
-export default withRouter(DriverDash);
+export default withRouter(DriverMapDash);

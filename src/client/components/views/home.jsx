@@ -1,12 +1,13 @@
 // Node.JS
 import React from "react"; 
 import toastr from "toastr";
-import './../../../node_modules/toastr/build/toastr.css';    
-import header from "./../assets/img/header.png";  
-import { withRouter, Redirect } from 'react-router-dom';
+import './../../../../node_modules/toastr/build/toastr.css';    
+import header from "./../../assets/img/header.png";  
+import { withRouter } from 'react-router-dom';
 import { Container, Row, Col, Input, Button } from 'reactstrap';
 import axios from "axios";
-import LoadingScreen from "./loadingScreen.jsx";
+import LoadingScreen from "../loadingScreen";
+import utils from "./../../assets/utils";
 import './home.scss';
   
 class Home extends React.Component {
@@ -73,13 +74,10 @@ class Home extends React.Component {
       email: this.state.email,
       password: this.state.password
     }, headers)
-    .then((response) => {   
-      console.log(response);
-      localStorage.setItem('profileImage', response.data.payload && response.data.payload.profileImage ? response.data.payload.profileImage : false);
-      localStorage.setItem('userInfo', JSON.stringify(response.data.payload));
-      localStorage.setItem('token', response.data.token);
+    .then((response) => {    
+      utils.setUserStorage(response);
       this.setState({pendingRequest: false});  
-      this.props.history.push('/map');  
+      this.props.history.push('/dashboard');  
     }).catch(request => {   
       console.log(request);
       if(request.response && request.response.data && request.response.data.failed) {   
@@ -105,6 +103,7 @@ class Home extends React.Component {
   }
  
   render() {
+    
     return (
       <Container id="main" className="container home" fluid={true}>
           <Row>

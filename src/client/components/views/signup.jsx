@@ -2,11 +2,11 @@
 import React from "react"; 
 import toastr from "toastr";
 import axios from "axios";
-import { withRouter, Redirect } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { Container, Row, Col, Button, Input } from 'reactstrap'; 
-import {FileUpload} from "./fileUpload.jsx";
-import LoadingScreen from "./loadingScreen.jsx";
-import './../../../node_modules/toastr/build/toastr.css';    
+import {FileUpload} from "../fileUpload";
+import LoadingScreen from "../loadingScreen";
+import './../../../../node_modules/toastr/build/toastr.css';    
 import "./signup.scss";
  
  
@@ -132,7 +132,7 @@ class Signup extends React.Component {
   render() {
     let accountSpecifics = () => null;
 
-    if(this.state.form.accountType == "seller") { 
+    if(this.state.form.accountType == "store") { 
       accountSpecifics = () => (  
         <Row className="input-row"> 
           <Col xs={{size: 1, offset: 1}} sm={{size: 1, offset: 1}} md={{size: 1, offset: 1}} lg={{size: 1, offset: 1}} className="d-flex justify-content-center" >
@@ -228,7 +228,7 @@ class Signup extends React.Component {
             <Col xs={{size: 9}} sm={{size: 9}} md={{size: 9}} lg={{size: 9}}>
                 <p>Account Type</p> 
                 <Input required onChange={this.handleFormChange} type="select" name="accountType" id="accountType" defaultValue="client">
-                  <option value="seller">Store</option>
+                  <option value="store">Store</option>
                   <option value="driver">Driver</option> 
                   <option value="client">Customer</option> 
                 </Input>

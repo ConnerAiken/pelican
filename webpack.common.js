@@ -94,7 +94,7 @@ module.exports = {
       }
     },  
     resolve: {
-      extensions: [".scss", ".css", ".png", ".jpg", ".jpeg", ".js", ".jsx"]
+      extensions: [".js", ".jsx", ".scss", ".css", ".png", ".jpg", ".jpeg"]
      },
     devServer: {
       proxy: { 
