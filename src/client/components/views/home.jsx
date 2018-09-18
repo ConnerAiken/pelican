@@ -83,6 +83,7 @@ class Home extends React.Component {
       this.props.history.push('/dashboard');  
     }).catch(request => {   
       console.log(request);
+      this.setState({pendingRequest: false});  
       if(request.response && request.response.data && request.response.data.failed) {   
         toastr.error(request.response.data.failed); 
       } 
