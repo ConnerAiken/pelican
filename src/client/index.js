@@ -15,6 +15,7 @@ import Payment from "./components/views/payment.jsx";
 import Profile from "./components/views/profile.jsx";  
 import Share from "./components/views/share.jsx";   
 import Signup from "./components/views/signup.jsx"; 
+import PrivacyPolicy from "./components/views/privacyPolicy.jsx"; 
 
 const piwik = new ReactPiwik({
     url: 'analytics.fittedtech.com',
@@ -34,6 +35,7 @@ ReactDOM.render(
             <Route path="/payment" component={Payment} /> 
             <Route path="/share" component={Share} />  
             <Route path="/signup" component={Signup} />
+            <Route path="/privacy" component={PrivacyPolicy} />
         </Switch> 
     </BrowserRouter>
 , document.querySelector("#root"));

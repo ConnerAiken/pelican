@@ -51,7 +51,13 @@
         background-color: white;
     } 
 }
-
+#privacy-link {
+    color: white;
+    &:hover {
+        cursor: pointer;
+        text-decoration: none;
+    }
+}
 #forgot-link {
     color: white;
     text-decoration: underline;
@@ -108,5 +114,8 @@
         -ms-flex-item-align: auto;
         align-self: auto; 
         font-size: 16px;
+        &:hover {
+            cursor: pointer;
+        }
     }
 }

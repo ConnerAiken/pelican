@@ -8,14 +8,7 @@ import {FileUpload} from "../fileUpload";
 import LoadingScreen from "../loadingScreen";
 import './../../../../node_modules/toastr/build/toastr.css';    
 import "./signup.scss";
- 
- 
-const BrowseBtn = () => (
-  <Button type="button" className="btn-deep-orange" id="browse-btn">
-    BROWSE 
-  </Button> 
-);
-
+  
 class Signup extends React.Component {
 
   constructor(props) {

@@ -17,6 +17,7 @@ class Home extends React.Component {
     this.handleChange = this.handleChange.bind(this); 
     this.handleLogin = this.handleLogin.bind(this);
     this.handleRegister = this.handleRegister.bind(this);
+    this.handlePrivacyPolicy = this.handlePrivacyPolicy.bind(this);
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleForgotPassword = this.handleForgotPassword.bind(this);
@@ -51,8 +52,10 @@ class Home extends React.Component {
 
   handlePasswordChange(e) {
     this.setState({password: e.target.value});
+  } 
+  handlePrivacyPolicy(e) {  
+    this.props.history.push('/privacy'); 
   }
-
   handleRegister(e) {  
     this.props.history.push('/signup'); 
   }
@@ -107,8 +110,10 @@ class Home extends React.Component {
     return (
       <Container id="main" className="container home" fluid={true}>
           <Row>
-            <Col xs={{size: 12}} sm={{size: 12}} md={{size: 8, offset: 2}} lg={{size: 8, offset: 2}}>
-              &nbsp;
+            <Col xs={{size: 12}} sm={{size: 12}} md={{size: 8, offset: 2}} lg={{size: 8, offset: 2}} className="text-center"> 
+                <a id="privacy-link" href="#" onClick={this.handlePrivacyPolicy}>
+                  PRIVACY POLICY
+                </a> 
             </Col>
             <Col xs={{size: 12}} sm={{size: 12}} md={{size: 8, offset: 2}} lg={{size: 8, offset: 2}}>
                 <img src={header}/>
@@ -134,7 +139,7 @@ class Home extends React.Component {
             <Col xs={{size: 12}} sm={{size: 12}} md={{size: 8, offset: 2}} lg={{size: 8, offset: 2}} id="footer-col"> 
                 <a onClick={this.handleRegister}>
                   CREATE NEW ACCOUNT
-                </a> 
+                </a>  
             </Col>
           </Row>
           {this.state.pendingRequest ? <LoadingScreen/> : null}

@@ -37,7 +37,7 @@ Remaining 45 hours
 6.5h (Sunday - 11:30am - 6pm ) -> Splitting dashboards into separate user views, file upload functionality (base64 encodes into db), db seeding script setup, adding slick loading screen component to signup, allow enter to login, login and initial dashboard loading processes
 .5h     (Monday - 8:30am - 9am) -> Fixing react router issues on IOS, reworked with BrowserRouter
 1h     (Monday - 9am-10am) -> Start of sidebar
-3h        (Tuesday - 9:45am-12:45pm) -> Sidebar work, creating new view controllers and architecture work
+4h        (Tuesday - 9:45am-1:45pm) -> Sidebar work, creating new view controllers and architecture work, research, sample privacy policy
  
 ## SSL Certificates
 
