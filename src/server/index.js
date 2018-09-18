@@ -33,12 +33,16 @@ app.use(bodyParser.urlencoded({extended: true}));
 httpApp.use(bodyParser.urlencoded({extended: true}));
  
 app.use(express.static(path.resolve(process.cwd(), 'public')))
-app.use(utils.verifyToken); 
+app.use(utils.verifyToken);  
 app.use('/api/v1/upload', uploadRoutes);
 app.use('/api/v1/user', userRoutes);
 app.use('/api/v1/store', storeRoutes);
 app.use('/api/v1/order', orderRoutes);
 app.get('/api/v1/health-check', (req, res) => res.sendStatus(200));  
+app.get('*', (req,res) =>{
+    res.sendFile(path.join(process.cwd(), 'public', 'index.html'));
+});
+
  
 
 if(process.env.NODE_ENV != "development") {  
@@ -60,7 +64,7 @@ if(process.env.NODE_ENV != "development") {
     httpApp.get('*', function(req, res) {   
         console.log("Redirecting from http to https");
         res.redirect('https://' + req.headers.host + req.url); 
-    });
+    }); 
 
     const httpServer = http.createServer(httpApp).listen(80, '0.0.0.0', () => {
         utils.log(`Server has started and is listening on port 80!`); 
@@ -74,6 +78,9 @@ if(process.env.NODE_ENV != "development") {
     httpApp.use('/api/v1/store', storeRoutes);
     httpApp.use('/api/v1/order', orderRoutes);
     httpApp.get('/api/v1/health-check', (req, res) => res.sendStatus(200));  
+    httpApp.get('*', (req,res) =>{
+        res.sendFile(path.join(process.cwd(), 'public', 'index.html'));
+    });
 
     const httpServer = http.createServer(httpApp).listen(8081, '0.0.0.0', () => {
         utils.log(`Server has started and is listening on port 8081!`); 
