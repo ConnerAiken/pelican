@@ -22,7 +22,7 @@
 
 
 # Billing Period Four 76 hours banked for 4 weeks - (9/4/2018)    
-Remaining 45 hours
+Remaining  hours: 35.5
 
 1.5h (Mon - 11am-12:30pm) -> Upgrading babel, researching on iOS html/css requirements.   
 1h (Mon - 1:45pm-2:45pm -> attempting to make scroll viewport work correctly in iphone, build process changes for docker   
@@ -38,7 +38,8 @@ Remaining 45 hours
 .5h     (Monday - 8:30am - 9am) -> Fixing react router issues on IOS, reworked with BrowserRouter
 2h     (Monday - 9am-11am) -> Start of sidebar
 6.5h     (Tuesday - 9:45am-3:45pm, 5:30pm-6:00pm) -> Sidebar work, creating new view controllers and architecture work, research, sample privacy policy
- 
+2h (Thursday sep 20 - 8:30-10:30am) => Research on sequelize.js and reviewing designs
+
 ## SSL Certificates
 
 ### Usage
