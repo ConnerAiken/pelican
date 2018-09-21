@@ -19,12 +19,14 @@ export default function withAuth(AuthComponent) {
             }
             else {
                 try {
-                    const profile = Auth.getProfile()
-  
+                    const profile = Auth.getProfile();
+
+                    console.log(profile);
+
                     this.setState({
                         user: profile
                     })
-                    
+
                     if (Auth.loggedIn() && !profile.verified) {
                         this.props.history.replace('/verify') 
                     }

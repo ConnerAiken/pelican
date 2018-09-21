@@ -122,12 +122,12 @@ router.post('/login', function(req, res) {
             return res.status(200).json({
               success: 'Welcome to Pelican Delivers',
               payload: userInfo,
-              token: jwt.sign({
+              token: jwt.sign(_.extend({
                 id: user.id,
                 accountType: user.accountType, 
                 verified: user.verified, 
                 email: user.email
-              }, process.env.appSecret, {expiresIn: 5000})
+              }, userInfo), process.env.appSecret, {expiresIn: 5000})
            });
           }).catch(error => {  
             console.log(error);
