@@ -5,6 +5,7 @@ import HelpDash from "./../dashboards/help.jsx";
 import Sidebar from "./../dashboards/sidebar.jsx";
 import {withRouter} from "react-router-dom";
 
+import withAuth from "./../higherOrder/withAuth";
 import './help.scss';
  
 
@@ -42,4 +43,4 @@ class Help extends React.Component {
 }; 
 
 
-export default withRouter(Help);
+export default withRouter(withAuth(Help));

@@ -23,16 +23,15 @@ export default {
         localStorage.setItem('user', JSON.stringify(response.data.payload));
         localStorage.setItem('token', response.data.token);
     },
-    initializeProtectedComponent(utils) { 
+
+    initializeProtectedComponent(utils) {  
         if(!this.state) this.state = {};
  
 
         this.Auth = new AuthService();
         this.state.pendingRequest = false;
-        this.state.user = this.state.user ? this.state.user : {};  
-        Object.assign(this.state.user, localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")) : {});  
-        Object.assign(this.state.user, localStorage.getItem("token") ? utils.decodeToken(localStorage.getItem("token")) : {});  
-    
+        this.state.user = this.Auth.getProfile();
+
         this.componentWillMount = () => {
             if(!this.Auth.loggedIn())
                 this.props.history.replace('/login');

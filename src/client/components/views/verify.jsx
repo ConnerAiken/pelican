@@ -1,33 +1,28 @@
 // Node.JS
 import React from "react";   
-import utils from "./../../assets/utils";
-import DeliveriesDash from "./../dashboards/deliveries.jsx"; 
+import utils from "../../assets/utils";
+import VerifyDash from "../dashboards/verify"; 
 import Sidebar from "../dashboards/sidebar";
 import {withRouter} from "react-router-dom";
 import withAuth from "./../higherOrder/withAuth";
 
-import './deliveries.scss';
+import './verify.scss';
  
 
-class Deliveries extends React.Component {
+class Verify extends React.Component {
 
   constructor(props) {
-    super(props);    
+    super(props);   
     utils.initializeProtectedComponent.call(this, utils); 
   }
   
   render() { 
     if(this.state.user && this.state.user.accountType == "driver") {
-      return (
-      <React.Fragment>
-        <Sidebar/>
-        <DeliveriesDash/>
-      </React.Fragment> 
-      );
+      return (<VerifyDash/>);
     }else if(this.state.user && this.state.user.accountType == "client") {
-      this.props.history.push('/cart');
+      return (<VerifyDash/>);
     }else if(this.state.user && this.state.user.accountType == "store") {
-      this.props.history.push('/orders');
+      return (<VerifyDash/>);
     }
 
     return <p>Please Login</p>;
@@ -35,4 +30,4 @@ class Deliveries extends React.Component {
 }; 
 
 
-export default withRouter(withAuth(Deliveries));
+export default withRouter(withAuth(Verify));

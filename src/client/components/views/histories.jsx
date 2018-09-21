@@ -7,6 +7,7 @@ import StoreHistories from "../dashboards/store.histories";
 import Sidebar from "./../dashboards/sidebar.jsx";
 import {withRouter} from "react-router-dom";
 
+import withAuth from "./../higherOrder/withAuth";
 import './histories.scss';
  
 
@@ -46,4 +47,4 @@ class Histories extends React.Component {
 }; 
 
 
-export default withRouter(Histories);
+export default withRouter(withAuth(Histories));

@@ -7,6 +7,7 @@ import StorePayment from "./../dashboards/store.payment.jsx";
 import Sidebar from "./../dashboards/sidebar.jsx";
 import {withRouter} from "react-router-dom";
 
+import withAuth from "./../higherOrder/withAuth";
 import './payment.scss';
  
 
@@ -44,4 +45,4 @@ class Payment extends React.Component {
 }; 
 
 
-export default withRouter(Payment);
+export default withRouter(withAuth(Payment));

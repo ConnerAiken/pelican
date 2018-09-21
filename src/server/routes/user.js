@@ -4,6 +4,7 @@ import bcrypt from "bcrypt";
 import express from "express";
 import path from "path";
 import fs from "fs";
+import _ from "lodash";
 
 const router = express.Router(); 
 const appData = {};

@@ -4,6 +4,7 @@ import utils from "./../../assets/utils";
 import CartDash from "./../dashboards/cart.jsx"; 
 import Sidebar from "./../dashboards/sidebar.jsx";
 import {withRouter} from "react-router-dom";
+import withAuth from "./../higherOrder/withAuth";
 
 import './cart.scss';
  
@@ -33,4 +34,4 @@ class Cart extends React.Component {
 }; 
 
 
-export default withRouter(Cart);
+export default withRouter(withAuth(Cart));

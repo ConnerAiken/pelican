@@ -5,6 +5,7 @@ import ClientDash from "./../dashboards/client.map.jsx";
 import DriverDash from "./../dashboards/driver.map.jsx";
 import Sidebar from "./../dashboards/sidebar";
 import {withRouter} from "react-router-dom"; 
+import withAuth from "./../higherOrder/withAuth";
 
 import './dashboard.scss';
  
@@ -12,8 +13,8 @@ import './dashboard.scss';
 class Dash extends React.Component {
 
   constructor(props) {
-    super(props);    
-    utils.initializeProtectedComponent.call(this, utils); 
+    super(props);     
+    utils.initializeProtectedComponent.call(this, utils);
   }
  
   render() {  
@@ -43,4 +44,4 @@ class Dash extends React.Component {
 }; 
 
 
-export default withRouter(Dash);
+export default withRouter(withAuth(Dash));

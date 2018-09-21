@@ -78,7 +78,7 @@ class DriverMapDash extends React.Component {
         } 
       }, {timeout: 2500, enableHighAccuracy: true, maximumAge: 75000});
 
-      navigator.geolocation.watchPosition((position) => {   
+      this.watchId = navigator.geolocation.watchPosition((position) => {   
         this.setState({locationLoaded: true, pendingRequest: false, curLoc: { coords: {lat: position.coords.latitude, lng: position.coords.longitude}}});
       }, (err) => { 
           console.log(err);
@@ -178,9 +178,8 @@ class DriverMapDash extends React.Component {
     order.status += 1; 
     return axios.post('/api/v1/order/status', {
       order: order
-    },this.opts)
-    .then((response) => {   
-      console.log(response);
+    }, this.opts)
+    .then((response) => {    
       this.setState({activeOrder: response.data}); 
     }).catch(request => {   
       console.log(request);
@@ -191,14 +190,20 @@ class DriverMapDash extends React.Component {
     if(!this.state.activeOrder) return;
 
     if([2,3].includes(this.state.activeOrder.status) && this.state.user.accountType == "driver") {
-      setInterval(this.updateOrderLocation, 5000);
+      this.updateLoop = setInterval(this.updateOrderLocation, 5000);
     }else if([2,3].includes(this.state.activeOrder.status) && this.state.user.accountType == "client") {
-      setInterval(this.checkOrderLocation, 5000);
+      this.checkLoop = setInterval(this.checkOrderLocation, 5000);
     }else {
 
     }
 
   } 
+  
+  componentWillUnmount() {
+    clearInterval(this.updateLoop);
+    clearInterval(this.checkLoop);
+    navigator.geolocation.clearWatch(this.watchId);
+  }
 
   showRelevantMap() {
     const user = utils.decodeToken(localStorage.getItem("token")); 

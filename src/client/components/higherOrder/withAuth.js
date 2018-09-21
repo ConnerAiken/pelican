@@ -20,9 +20,14 @@ export default function withAuth(AuthComponent) {
             else {
                 try {
                     const profile = Auth.getProfile()
+  
                     this.setState({
                         user: profile
                     })
+                    
+                    if (Auth.loggedIn() && !profile.verified) {
+                        this.props.history.replace('/verify') 
+                    }
                 }
                 catch(err){
                     Auth.logout()
@@ -31,7 +36,7 @@ export default function withAuth(AuthComponent) {
             }
         }
     
-        render() {
+        render() { 
             if (this.state.user) {
                 return (
                     <AuthComponent history={this.props.history} user={this.state.user} />

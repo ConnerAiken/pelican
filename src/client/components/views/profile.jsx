@@ -7,6 +7,7 @@ import StoreProfile from "./../dashboards/store.profile.jsx";
 import Sidebar from "./../dashboards/sidebar.jsx";
 import {withRouter} from "react-router-dom";
 
+import withAuth from "./../higherOrder/withAuth";
 import './profile.scss';
  
 
@@ -46,4 +47,4 @@ class Profile extends React.Component {
 }; 
 
 
-export default withRouter(Profile);
+export default withRouter(withAuth(Profile));

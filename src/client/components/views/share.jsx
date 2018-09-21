@@ -4,6 +4,7 @@ import utils from "./../../assets/utils";
 import ShareDash from "./../dashboards/share.jsx"; 
 import Sidebar from "./../dashboards/sidebar.jsx";
 import {withRouter} from "react-router-dom";
+import withAuth from "./../higherOrder/withAuth";
 
 import './share.scss';
  
@@ -42,4 +43,4 @@ class Share extends React.Component {
 }; 
 
 
-export default withRouter(Share);
+export default withRouter(withAuth(Share));
