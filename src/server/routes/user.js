@@ -124,6 +124,7 @@ router.post('/login', function(req, res) {
               token: jwt.sign({
                 id: user.id,
                 accountType: user.accountType, 
+                verified: user.verified, 
                 email: user.email
               }, process.env.appSecret, {expiresIn: 5000})
            });

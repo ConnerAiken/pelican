@@ -1,6 +1,6 @@
 import React from "react"; 
 import ReactDOM from "react-dom";
-import { BrowserRouter, Route, Switch } from "react-router-dom";  
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";  
 import ReactPiwik from 'react-piwik'; 
 import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css'; 
@@ -10,7 +10,7 @@ import Cart from "./components/views/cart.jsx";
 import Dash from "./components/views/dashboard.jsx"; 
 import Help from "./components/views/help.jsx";   
 import Histories from "./components/views/histories.jsx";  
-import Home from "./components/views/home.jsx";  
+import Login from "./components/views/login";  
 import Payment from "./components/views/payment.jsx";  
 import Profile from "./components/views/profile.jsx";  
 import Share from "./components/views/share.jsx";   
@@ -26,7 +26,10 @@ const piwik = new ReactPiwik({
 ReactDOM.render(
     <BrowserRouter>
         <Switch>
-            <Route exact path="/" component={Home} /> 
+            <Route exact path="/" render={() => (
+                <Redirect to="/login"/>
+            )}/>
+            <Route path="/login" component={Login} /> 
             <Route path="/cart" component={Cart} />
             <Route path="/dashboard" component={Dash} />
             <Route path="/histories" component={Histories} />

@@ -4,7 +4,8 @@ export default  function(sequelize, DataTypes) {
     return sequelize.define('User', {
         id: { type: DataTypes.BIGINT, autoIncrement: true,  primaryKey: true }, 
         resetToken: DataTypes.STRING,
-        resetExpired: DataTypes.DATE,
+        resetExpired: DataTypes.DATE, 
+        verified: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false },
         phone: DataTypes.STRING,
         email: {
           type: DataTypes.STRING,

@@ -26,7 +26,7 @@ class DriverMapDash extends React.Component {
     this.checkOrderLocation = this.checkOrderLocation.bind(this);
     this.toggleSidebar = this.toggleSidebar.bind(this);
 
-    utils.initializeComponent.call(this, utils); 
+    utils.initializeProtectedComponent.call(this, utils); 
 
     this.state = { 
       activeOrder: false,

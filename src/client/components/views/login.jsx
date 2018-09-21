@@ -5,12 +5,13 @@ import './../../../../node_modules/toastr/build/toastr.css';
 import header from "./../../assets/img/header.png";  
 import { withRouter } from 'react-router-dom';
 import { Container, Row, Col, Input, Button } from 'reactstrap';
+import AuthService from '../../services/Auth';
 import axios from "axios";
 import LoadingScreen from "../loadingScreen";
-import utils from "./../../assets/utils";
-import './home.scss';
+import utils from "../../assets/utils";
+import './login.scss';
   
-class Home extends React.Component {
+class Login extends React.Component {
 
   constructor(props) {
     super(props); 
@@ -21,6 +22,8 @@ class Home extends React.Component {
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleForgotPassword = this.handleForgotPassword.bind(this);
+    
+    this.Auth = new AuthService();
     this.state = {
       pendingRequest: false,
       email: '',
@@ -54,10 +57,10 @@ class Home extends React.Component {
     this.setState({password: e.target.value});
   } 
   handlePrivacyPolicy(e) {  
-    this.props.history.push('/privacy'); 
+    this.props.history.replace('/privacy'); 
   }
   handleRegister(e) {  
-    this.props.history.push('/signup'); 
+    this.props.history.replace('/signup'); 
   }
 
   handleLogin(e) {
@@ -66,29 +69,19 @@ class Home extends React.Component {
     if(!this.state.email || !this.state.password) {
       toastr.error("Please provide credentials.");
       return;
-    }
-    const headers = {
-      'Content-Type': 'application/json;charset=UTF-8'
-    };  
+    } 
 
-    this.setState({pendingRequest: true});
-
-    axios.post('/api/v1/user/login', {
-      email: this.state.email,
-      password: this.state.password
-    }, headers)
-    .then((response) => {    
-      utils.setUserStorage(response);
-      this.setState({pendingRequest: false});  
-      this.props.history.push('/dashboard');  
-    }).catch(request => {   
-      console.log(request);
-      this.setState({pendingRequest: false});  
-      if(request.response && request.response.data && request.response.data.failed) {   
-        toastr.error(request.response.data.failed); 
-      } 
-    });
+    this.setState({pendingRequest: true}); 
+    this.Auth.login(this.state.email,this.state.password)
+              .then(this.props.history.replace('/dashboard'))
+              .catch(err => toastr.error(err) && this.setState({pendingRequest: false}));
   }
+ 
+  componentWillMount(){
+      if(this.Auth.loggedIn())
+          this.props.history.replace('/dashboard');
+  }
+
 
   getValidationState() {
     const length = this.state.email.length;
@@ -149,4 +142,4 @@ class Home extends React.Component {
   }
 }; 
 
-export default withRouter(Home);
+export default withRouter(Login);

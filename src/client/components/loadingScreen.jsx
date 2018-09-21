@@ -10,7 +10,7 @@ class LoadingScreen extends React.Component {
     this.state = {
         visible: !this.props.visible
     }
-    utils.initializeComponent.call(this, utils); 
+    utils.initializeProtectedComponent.call(this, utils); 
   } 
    
   render() {

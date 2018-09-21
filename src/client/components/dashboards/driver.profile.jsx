@@ -15,7 +15,7 @@ class DriverProfile extends React.Component {
 
   constructor(props) {
     super(props); 
-    utils.initializeComponent.call(this, utils);
+    utils.initializeProtectedComponent.call(this, utils);
 
     this.handleSave = this.handleSave.bind(this); 
     this.handleLicenseImage = this.handleLicenseImage.bind(this);

@@ -1,3 +1,5 @@
+import AuthService from './../services/Auth';
+
 export default { 
     decodeToken(token) {
         const components = token.split('.');
@@ -21,14 +23,22 @@ export default {
         localStorage.setItem('user', JSON.stringify(response.data.payload));
         localStorage.setItem('token', response.data.token);
     },
-    initializeComponent(utils) { 
+    initializeProtectedComponent(utils) { 
         if(!this.state) this.state = {};
+ 
 
+        this.Auth = new AuthService();
         this.state.pendingRequest = false;
         this.state.user = this.state.user ? this.state.user : {};  
         Object.assign(this.state.user, localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")) : {});  
         Object.assign(this.state.user, localStorage.getItem("token") ? utils.decodeToken(localStorage.getItem("token")) : {});  
     
+        this.componentWillMount = () => {
+            if(!this.Auth.loggedIn())
+                this.props.history.replace('/login');
+        }
+        
+
         this.opts = { 
           headers: {
             'Content-Type': 'application/json;charset=UTF-8',

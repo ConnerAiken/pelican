@@ -11,7 +11,7 @@ class PrivacyPolicy extends React.Component {
 
   constructor(props) {
     super(props);    
-    utils.initializeComponent.call(this, utils); 
+    utils.initializeProtectedComponent.call(this, utils); 
   }
   
   render() { 

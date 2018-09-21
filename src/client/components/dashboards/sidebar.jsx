@@ -18,7 +18,7 @@ class Sidebar extends React.Component {
         collapsed: false
     };
 
-    utils.initializeComponent.call(this, utils); 
+    utils.initializeProtectedComponent.call(this, utils); 
   }
 
   checkToken() {   

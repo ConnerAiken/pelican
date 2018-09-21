@@ -5,7 +5,7 @@ import path from "path";
 
 let storesSql = fs.readFileSync(path.join(__dirname, 'stores.sql')).toString();
 
-db.sequelize.sync({force: process.env.NODE_ENV == "development"})
+db.sequelize.sync()
   .then(() => {
       return db.sequelize.query(storesSql, { type: db.sequelize.QueryTypes.INSERT})
   }) 

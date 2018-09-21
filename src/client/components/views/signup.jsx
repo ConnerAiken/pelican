@@ -27,7 +27,7 @@ class Signup extends React.Component {
       zipCode: /(.*[0-9]){3}/i,
       email:  	
       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-      phone: /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/, 
+      phone: /^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$/, 
       password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/, 
     };
 
@@ -179,11 +179,11 @@ class Signup extends React.Component {
         </Col> 
         <Col xs={{size: 4}} sm={{size: 4}} md={{size: 4}} lg={{size: 4}} className="d-flex justify-content-center align-items-center">
           <h2>Register</h2>
-        </Col> 
+         </Col> 
         <Col xs={{size: 3}} sm={{size: 3}} md={{size: 3}} lg={{size: 3}} className="d-flex justify-content-end align-items-center">
           <i className="fa fa-floppy-o fa-2x formIcon" onClick={this.handleSave}/>
         </Col> 
-      </Row>
+      </Row>  
           <Row className="input-row">
             <Col xs={{size: 10, offset: 1}} sm={{size: 10, offset: 1}} md={{size: 10, offset: 1}} lg={{size: 10, offset: 1}} className="d-flex flex-column justify-content-center align-items-center">
               { this.state.form.profileImage ? <img src={this.state.form.profileImage}  style={{width: '250px'}}/> : (<span className="fa-stack fa-5x">
@@ -252,8 +252,8 @@ class Signup extends React.Component {
             </Col>  
             <Col xs={{size: 9}} sm={{size: 9}} md={{size: 9}} lg={{size: 9}}>
                 <p>Phone Number</p>
-                <Input invalid={this.state.form.phone === false} valid={this.state.form.phone != false}  required onChange={this.handleFormChange}  name="phone" id="phone" type="text" placeholder=""/>
-                {this.state.form.phone === false ? <p>Phone numbers should be 9 digits long and includes dashes and the area code.</p> : null}
+                <Input invalid={this.state.form.phone === false} valid={this.state.form.phone != false} required onChange={this.handleFormChange}  name="phone" id="phone" type="text" placeholder=""/>
+                {this.state.form.phone === false ? <p>Phone numbers should be 9 digits long, have an area code but you may or may not includes dashes.</p> : null}
             </Col>  
           </Row>  
           <Row className="input-row"> 
@@ -270,7 +270,7 @@ class Signup extends React.Component {
                   </Col>
                   <Col xs={12} sm={12} md={12} lg={12}> 
                     <p>Address Line 2</p>
-                    <Input valid={this.state.form.addressLine2  != false} invalid={this.state.form.addressLine2 === false}  required onChange={this.handleFormChange} name="addressLine2" id="addressLine2" type="text" placeholder=""/>
+                    <Input valid={this.state.form.addressLine2  != false} onChange={this.handleFormChange} name="addressLine2" id="addressLine2" type="text" placeholder=""/>
                   </Col>
                   <Col xs={6} sm={6} md={6} lg={6}> 
                     <p>City</p>
@@ -355,6 +355,11 @@ class Signup extends React.Component {
                 { this.state.form.licenseImage ? <img src={this.state.form.licenseImage} style={{width: '50%'}}/> : <FileUpload style={{width: '25%'}} containerStyle={{width: '25%', background: 'none', boxShadow: 'none'}} onFinish={this.handleLicenseImage} name="licenseImage"/> }<br/>
             </Col>  
           </Row>  
+          <Row>
+            <Col xs={{size: 12}} sm={{size: 12}} md={{size: 12}} lg={{size: 12}} className="d-flex justify-content-end align-items-center" style={{marginTop: '5%', padding: '5%'}}>                
+              <p>After signing up, you will have to complete an online verification form that scans your identification and asks you a few questions for state/federal compliance. <b>Please have your state identification ready. We accept state licenses and US passports.</b></p>
+            </Col> 
+          </Row>
           <Row className="input-row">  
             <Col xs={{size: 1, offset: 1}} sm={{size: 1, offset: 1}} md={{size: 1, offset: 1}} lg={{size: 1, offset: 1}} className="d-flex justify-content-center"></Col>  
             <Col xs={{size: 9}} sm={{size: 9}} md={{size: 9}} lg={{size: 9}}>

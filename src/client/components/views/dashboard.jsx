@@ -4,7 +4,7 @@ import utils from "./../../assets/utils";
 import ClientDash from "./../dashboards/client.map.jsx";
 import DriverDash from "./../dashboards/driver.map.jsx";
 import Sidebar from "./../dashboards/sidebar";
-import {withRouter} from "react-router-dom";
+import {withRouter} from "react-router-dom"; 
 
 import './dashboard.scss';
  
@@ -13,10 +13,10 @@ class Dash extends React.Component {
 
   constructor(props) {
     super(props);    
-    utils.initializeComponent.call(this, utils); 
+    utils.initializeProtectedComponent.call(this, utils); 
   }
-  
-  render() { 
+ 
+  render() {  
     if(this.state.user && this.state.user.accountType == "driver") {
       return (
       <React.Fragment>

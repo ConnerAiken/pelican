@@ -11,7 +11,7 @@ export class Requestor extends React.Component {
     this.state = {
         visible: !this.props.destination
     }
-    utils.initializeComponent.call(this, utils); 
+    utils.initializeProtectedComponent.call(this, utils); 
   } 
    
   render() {
