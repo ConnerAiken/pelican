@@ -13,11 +13,11 @@ import './dashboard.scss';
 class Dash extends React.Component {
 
   constructor(props) {
-    super(props);     
+    super(props);      
     utils.initializeProtectedComponent.call(this, utils);
   }
  
-  render() {  
+  render() {   
     if(this.state.user && this.state.user.accountType == "driver") {
       return (
       <React.Fragment>

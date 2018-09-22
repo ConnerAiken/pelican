@@ -11,12 +11,15 @@ import Dash from "./components/views/dashboard.jsx";
 import Help from "./components/views/help.jsx";   
 import Histories from "./components/views/histories.jsx";  
 import Login from "./components/views/login";  
+import Logout from "./components/views/logout";  
 import Payment from "./components/views/payment.jsx";  
 import Profile from "./components/views/profile.jsx";  
 import Share from "./components/views/share.jsx";   
 import Signup from "./components/views/signup.jsx";  
 import PrivacyPolicy from "./components/views/privacyPolicy.jsx"; 
 import Verify from "./components/views/verify.jsx"; 
+
+window['NODE_ENV'] = process.env.NODE_ENV;
 
 const piwik = new ReactPiwik({
     url: 'analytics.fittedtech.com',
@@ -31,6 +34,7 @@ ReactDOM.render(
                 <Redirect to="/login"/>
             )}/>
             <Route path="/login" component={Login} /> 
+            <Route path="/logout" component={Logout} /> 
             <Route path="/cart" component={Cart} />
             <Route path="/dashboard" component={Dash} />
             <Route path="/histories" component={Histories} />

@@ -9,8 +9,7 @@ class LoadingScreen extends React.Component {
     super(props);  
     this.state = {
         visible: !this.props.visible
-    }
-    utils.initializeProtectedComponent.call(this, utils); 
+    } 
   } 
    
   render() {

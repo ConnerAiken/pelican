@@ -14,8 +14,19 @@ function base64Encode(file) {
   var bitmap = fs.readFileSync(file);
   // convert binary data to base64 encoded string
   return new Buffer(bitmap).toString('base64');
-}
+} 
 
+router.get('/verification', function(req, res) {
+  console.log("Sending verification form");
+  console.log(req);
+  return res.status(200).json({success: true});
+}); 
+
+router.post('/verification', function(req, res) {
+  console.log("Sending verification form");
+  console.log(req);
+  return res.status(200).json({success: true});
+}); 
 
 router.post('/register', function(req, res) {  
   
@@ -96,8 +107,7 @@ router.post('/register', function(req, res) {
    });
 });
 
-router.post('/login', function(req, res) { 
-
+router.post('/login', function(req, res) {   
   db.User.findOne({ where: {email: req.body.email}}).then(function(user) {  
     if(!user) {
        return res.status(401).json({
@@ -113,21 +123,27 @@ router.post('/login', function(req, res) {
         }
         
         if(result) {  
-          db.UserInfo.findOne({where: {userId: user.id}}).then(userInfo => {  
-            userInfo.password = false; 
+          db.UserInfo.findOne({where: {userId: user.id}}).then(userInfo => { 
+            // Construct token object
+            userInfo = userInfo.get({
+              plain: true
+            });
+
+            const userObj = {
+              id: user.id,
+              accountType: user.accountType,
+              email: user.email
+            }
+
+            delete user.password; 
             userInfo.licenseImageBase64 = false;
             userInfo.vehicleImageBase64 = false;
-            userInfo.profileImage = userInfo.profileImageBase64;
-
+            userInfo.profileImage = userInfo.profileImageBase64; 
+             
             return res.status(200).json({
-              success: 'Welcome to Pelican Delivers',
-              payload: userInfo,
-              token: jwt.sign(_.extend({
-                id: user.id,
-                accountType: user.accountType, 
-                verified: user.verified, 
-                email: user.email
-              }, userInfo), process.env.appSecret, {expiresIn: 5000})
+              success: 'Welcome to Pelican Delivers', 
+              token: jwt.sign(userObj, process.env.appSecret, {expiresIn: 5000}),
+              userInfo
            });
           }).catch(error => {  
             console.log(error);

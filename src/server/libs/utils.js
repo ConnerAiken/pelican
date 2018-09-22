@@ -4,7 +4,7 @@ import path from "path";
 import jwt from "jsonwebtoken";
 import atob from "atob";
 
-const whiteListedRoutes = ['/api/v1/user/login', '/api/v1/user/register', '/api/v1/store', '/api/v1/upload'];
+const whiteListedRoutes = ['/api/v1/user/login', '/api/v1/user/register', '/api/v1/store', '/api/v1/upload', '/api/v1/user/verify'];
 
 export default {
     log(msg, type = 0) {
@@ -39,8 +39,9 @@ export default {
         if (options.exit) process.exit();
     },
     verifyToken(req, res, next) {   
-        var token = req.body && req.body.token ? req.body.token : req.headers['token']; 
-        console.log("Verifying token: "+token); 
+        console.log("Verifying token..."); 
+        var token = req.body && req.body.token ? req.body.token : req.headers['token'];  
+        console.log("Token: "+token); 
         if (token) {
             jwt.verify(token, process.env.appSecret, function(err) {
                 if (err) { 

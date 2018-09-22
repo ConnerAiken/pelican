@@ -9,6 +9,7 @@ import Directions from "../directions";
 import LoadingScreen from "../loadingScreen";
 import { Container, Row, Col, Button } from 'reactstrap';
 import utils from "./../../assets/utils";
+import Store from "./../widgets/store";
  
 import { withRouter, Redirect } from 'react-router-dom';
 import "./client.map.scss";
@@ -26,20 +27,22 @@ class ClientMapDash extends React.Component {
     this.updateOrderLocation = this.updateOrderLocation.bind(this); 
     this.checkOrderLocation = this.checkOrderLocation.bind(this);
     this.toggleSidebar = this.toggleSidebar.bind(this);
+    this.selectStore = this.selectStore.bind(this);
+
     utils.initializeProtectedComponent.call(this, utils); 
 
     this.state = { 
       activeOrder: false,
       locationLoaded: false, 
       curLoc: false,
-      destination: null, 
-    };
-  
+      destination: null,
+      store: false 
+    }; 
 
     this.retrieveOrder()
     .then(res => this.initializeGMap());
   }
-
+ 
 
   toggleSidebar() {
     document.querySelector('#nav').classList.toggle("active");
@@ -108,6 +111,11 @@ class ClientMapDash extends React.Component {
 
   handleRequestorUpdate(e) { 
     this.setState({destination: e}); 
+  }
+
+  selectStore(store) {
+    console.log(store);
+    this.setState({store});
   }
 
   submitOrder() {
@@ -232,6 +240,7 @@ class ClientMapDash extends React.Component {
       }else {
         console.log("No active order, showing orders map");
           return <ClientOrderMap
+            onSelect={this.selectStore}
             curLoc={this.state.curLoc}
             stores={this.state.stores}/>;
       }
@@ -288,6 +297,7 @@ class ClientMapDash extends React.Component {
       </Row>
       {this.state.pendingRequest ? <LoadingScreen/> : null}
       {this.state.curLoc && this.showRelevantMap()} 
+      {this.state.store ? <Store info={this.state.store}/> : null}
       </Container> 
     );
   }

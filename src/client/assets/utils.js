@@ -1,4 +1,6 @@
 import AuthService from './../services/Auth';
+import toastr from "toastr"; 
+import './../../../node_modules/toastr/build/toastr.css';   
 
 export default { 
     decodeToken(token) {
@@ -23,11 +25,22 @@ export default {
         localStorage.setItem('user', JSON.stringify(response.data.payload));
         localStorage.setItem('token', response.data.token);
     },
+    alert(text, type) {
 
+        if(type == 1) {
+            toastr.success(text);
+        }else if(type == 2) {
+            toastr.warning(text);
+        }else if(type == 3) {
+            toastr.error(text);
+        }else {
+            toastr.info(text);
+        }
+
+    },
     initializeProtectedComponent(utils) {  
         if(!this.state) this.state = {};
  
-
         this.Auth = new AuthService();
         this.state.pendingRequest = false;
         this.state.user = this.Auth.getProfile();

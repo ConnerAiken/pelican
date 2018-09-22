@@ -1,24 +1,25 @@
 import decode from 'jwt-decode';
+import _ from "lodash";
 
 // https://hptechblogs.com/using-json-web-token-react/
 export default class AuthService {
     // Initializing important variables
-    constructor(domain) {
-        this.domain = domain || 'http://localhost:8080' // API server domain
+    constructor() { 
+        this.domain = window.NODE_ENV == "development" ? 'http://localhost:8080' : 'https://pelican.fittedtech.com'; // API server domain
         this.fetch = this.fetch.bind(this) // React binding stuff
         this.login = this.login.bind(this)
         this.getProfile = this.getProfile.bind(this)
     }
  
     login(email, password) {
-        // Get a token from api server using the fetch api
+        // Get a token from api server using the fetch api 
         return this.fetch(`${this.domain}/api/v1/user/login`, {
             method: 'POST',
             body: JSON.stringify({
                 email,
                 password
             })
-        }).then(res => {
+        }).then(res => { 
             this.setToken(res.token) // Setting the token in localStorage
             return Promise.resolve(res);
         })
@@ -26,8 +27,7 @@ export default class AuthService {
 
     loggedIn() {
         // Checks if there is a saved token and it's still valid
-        const token = this.getToken() // GEtting token from localstorage
-        console.log(!!token && !this.isTokenExpired(token));
+        const token = this.getToken() // GEtting token from localstorage 
         return !!token && !this.isTokenExpired(token) // handwaiving here
     }
 
@@ -45,12 +45,12 @@ export default class AuthService {
         }
     }
 
-    setToken(idToken) {
+    setToken(idToken) { 
         // Saves user token to localStorage
         localStorage.setItem('token', idToken)
     }
 
-    getToken() {
+    getToken() { 
         // Retrieves the user token from localStorage
         return localStorage.getItem('token')
     }
@@ -68,17 +68,17 @@ export default class AuthService {
 
     fetch(url, options) {
         // performs api calls sending the required authentication headers
-        const headers = {
+        let headers = {
             'Accept': 'application/json',
             'Content-Type': 'application/json;charset=UTF-8'
         } 
 
         // Setting Authorization header
         // Authorization: Bearer xxxxxxx.xxxxxxxx.xxxxxx
-        if (this.loggedIn()) {
+        if (this.loggedIn()) { 
             headers['Token'] = this.getToken()
-        }
-
+        } 
+ 
         return fetch(url, {
             headers,
             ...options

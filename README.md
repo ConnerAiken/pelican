@@ -41,7 +41,7 @@ Remaining  hours: 35.5
 2h (Thursday sep 20 - 8:30-10:30am) => Research on sequelize.js and reviewing designs
 1.5h (Friday sep 21 - 8:30-10:00am) => Working on verification workflow
 .25h (Friday sep 21 - 1:30pm-1:45pm) => Trulioo sync
-1h (Saturday sep 22 - 1:00pm-x) => Verification workflow and greenbits
+1h (Saturday sep 22 - 1:00pm-x) => Researching greenbits
 
 ## SSL Certificates
 
@@ -118,3 +118,7 @@ Making changes are simple! Follow these steps..
 ### Greenbits
 
 Api docs: https://developer.greenbits.com/v1/
+
+Auth token: (Send basic auth /w username/password to https://api.greenbits.com/api/v1/me, use token/company IDs to generate requetss such as https://api.greenbits.com/api/v1/companies/239e77a5-d1c4-4510-962e-2de706d33af0)
+
+Or should we use websockets? https://developer.greenbits.com/v2/#header-events
