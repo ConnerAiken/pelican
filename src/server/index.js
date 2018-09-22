@@ -12,6 +12,7 @@ import userRoutes from "./routes/user";
 import storeRoutes from "./routes/store"; 
 import orderRoutes from "./routes/order"; 
 import uploadRoutes from "./routes/upload"; 
+import inventoryRoutes from "./routes/inventory"; 
 
 import db from "./libs/db";
  
@@ -38,6 +39,7 @@ app.use('/api/v1/upload', uploadRoutes);
 app.use('/api/v1/user', userRoutes);
 app.use('/api/v1/store', storeRoutes);
 app.use('/api/v1/order', orderRoutes);
+app.use('/api/v1/inventory', inventoryRoutes);
 app.get('/api/v1/health-check', (req, res) => res.sendStatus(200));  
 app.get('*', (req,res) =>{
     res.sendFile(path.join(process.cwd(), 'public', 'index.html'));
@@ -77,6 +79,7 @@ if(process.env.NODE_ENV != "development") {
     httpApp.use('/api/v1/user', userRoutes); 
     httpApp.use('/api/v1/store', storeRoutes);
     httpApp.use('/api/v1/order', orderRoutes);
+    httpApp.use('/api/v1/inventory', inventoryRoutes);
     httpApp.get('/api/v1/health-check', (req, res) => res.sendStatus(200));  
     httpApp.get('*', (req,res) =>{
         res.sendFile(path.join(process.cwd(), 'public', 'index.html'));

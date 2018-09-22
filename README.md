@@ -40,6 +40,8 @@ Remaining  hours: 35.5
 6.5h     (Tuesday - 9:45am-3:45pm, 5:30pm-6:00pm) -> Sidebar work, creating new view controllers and architecture work, research, sample privacy policy
 2h (Thursday sep 20 - 8:30-10:30am) => Research on sequelize.js and reviewing designs
 1.5h (Friday sep 21 - 8:30-10:00am) => Working on verification workflow
+.25h (Friday sep 21 - 1:30pm-1:45pm) => Trulioo sync
+1h (Saturday sep 22 - 1:00pm-x) => Verification workflow and greenbits
 
 ## SSL Certificates
 
