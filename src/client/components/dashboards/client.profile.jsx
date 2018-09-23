@@ -68,8 +68,7 @@ class ClientProfile extends React.Component {
        form[e.target.name] = e.target.value; 
        this.setState({form, error: false});
     }else { 
-        form[e.target.name] = false;
-        console.log(form);
+        form[e.target.name] = false; 
         this.setState({form, error: true}); 
     }         
   }
@@ -120,10 +119,7 @@ class ClientProfile extends React.Component {
     form.profileImage = imageUrl;
     this.setState({form: form});
   }
-  
-  handleBrowse(e) {
-    console.log(e);
-  }
+   
  
   render() { 
     return (

@@ -15,9 +15,7 @@ class StoreHistories extends React.Component {
     utils.initializeProtectedComponent.call(this, utils); 
   } 
  
-  render() {
-    console.log("Rendering store.histories");
-
+  render() { 
     return (
       <Container className="container dashboard" fluid={true}> 
       <Row id="header">

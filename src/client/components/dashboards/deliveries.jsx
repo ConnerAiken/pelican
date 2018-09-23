@@ -15,9 +15,7 @@ class Deliveries extends React.Component {
     utils.initializeProtectedComponent.call(this, utils); 
   } 
  
-  render() {
-    console.log("Rendering deliveries");
-
+  render() { 
     return (
       <Container className="container dashboard" fluid={true}> 
       <Row id="header">

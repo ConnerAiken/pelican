@@ -69,8 +69,7 @@ class StoreProfile extends React.Component {
        form[e.target.name] = e.target.value; 
        this.setState({form, error: false});
     }else { 
-        form[e.target.name] = false;
-        console.log(form);
+        form[e.target.name] = false; 
         this.setState({form, error: true}); 
     }         
   }

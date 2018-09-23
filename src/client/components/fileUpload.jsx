@@ -29,8 +29,7 @@ export class FileUpload extends React.Component {
         }, () => this.handleUploadImage());  
     }
   
-    handleUploadImage() {  
-      console.log(Object.assign({}, this.state));
+    handleUploadImage() {   
       if(this.state.pictures.length == 0) return;
 
       const data = new FormData();
@@ -39,8 +38,7 @@ export class FileUpload extends React.Component {
       data.append('type', this.props.name);
   
       axios.post('/api/v1/upload', data)
-        .then((response) => {
-            console.log(response);
+        .then((response) => { 
             this.setState({ imageURL: `/${response.data.file}`, uploadStatus: true }); 
             if(this.props.onFinish) {
                 this.props.onFinish(`/${response.data.file}`);

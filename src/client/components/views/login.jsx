@@ -9,8 +9,8 @@ import AuthService from '../../services/Auth';
 import axios from "axios";
 import LoadingScreen from "../loadingScreen";
 import utils from "../../assets/utils";
-import './login.scss';
-  
+import './login.scss'; 
+
 class Login extends React.Component {
 
   constructor(props) {
@@ -139,7 +139,7 @@ class Login extends React.Component {
                 </a>  
             </Col>
           </Row>
-          {this.state.pendingRequest ? <LoadingScreen/> : null}
+          {this.state.pendingRequest ? <LoadingScreen/> : null} 
       </Container>
     );
   }

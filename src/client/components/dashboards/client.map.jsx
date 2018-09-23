@@ -50,16 +50,7 @@ class ClientMapDash extends React.Component {
   }
  
 
-  initializeGMap() {   
-      console.log("Initializing gMap");
-      // check for Geolocation support
-      if (navigator.geolocation) {
-          toastr.success('Geolocation is supported!');
-      }
-      else {
-          toastr.error('Geolocation is not supported for this Browser/OS version yet.');
-      }  
-      
+  initializeGMap() {    
 
       navigator.geolocation.getCurrentPosition((position) => {  
           this.setState({locationLoaded: true, pendingRequest: false, curLoc: { coords:{ lat: position.coords.latitude, lng: position.coords.longitude }}});
@@ -68,17 +59,19 @@ class ClientMapDash extends React.Component {
           toastr.error('Your position is not currently available. Error code: ' + error.code);
         } else if(error == 1) {
           toastr.error("Please allow Pelican to view your location.");
+          this.props.history.replace('/geolocation-error');
         } else if(error == 3) {
           toastr.error("The geolocation api timed out.");
-        } else {
-          toastr.error('Unknown error occurred. Error code: ' + error.code);
-        } 
+        }
+
       }, {timeout: 2500, enableHighAccuracy: true, maximumAge: 75000});
 
       this.watchId = navigator.geolocation.watchPosition((position) => {   
         this.setState({locationLoaded: true, pendingRequest: false, curLoc: { coords: {lat: position.coords.latitude, lng: position.coords.longitude}}});
-      }, (err) => { 
-          console.log(err);
+      }, (err) => {  
+          if(err.code == 1) { 
+            this.props.history.replace('/geolocation-error');
+          }
       }, {timeout: 2500, enableHighAccuracy: true, maximumAge: 75000});
 
   }
@@ -115,8 +108,7 @@ class ClientMapDash extends React.Component {
       driverId: null,
       items: []
     }, this.opts)
-    .then((response) => {   
-      console.log(response);
+    .then((response) => {    
       this.setState({activeOrder:  response.data});
       this.watchForOrderInProgress();
     }).catch(request => {   
@@ -130,8 +122,7 @@ class ClientMapDash extends React.Component {
     return axios.post('/api/v1/order/commit', {
       order: order
     }, this.opts)
-    .then((response) => {   
-      console.log(response);
+    .then((response) => {    
       this.setState({activeOrder:  response.data});
     }).catch(request => {   
       console.log(request);
@@ -140,8 +131,7 @@ class ClientMapDash extends React.Component {
 
   retrieveOrder() { 
     return axios.get('/api/v1/order', this.opts)
-    .then((response) => {   
-      console.log(response);
+    .then((response) => {    
       this.setState({activeOrder: response.data}); 
       this.watchForOrderInProgress();
     }).catch(request => {   
@@ -152,8 +142,7 @@ class ClientMapDash extends React.Component {
   checkOrderLocation() { 
     const order = Object.assign({}, this.state.activeOrder);  
     return axios.get('/api/v1/order/location/', this.opts)
-    .then((response) => {   
-      console.log(response);
+    .then((response) => {    
       this.setState({activeOrder: response.data}); 
     }).catch(request => {   
       console.log(request);
@@ -169,8 +158,7 @@ class ClientMapDash extends React.Component {
       lat: this.state.curLoc.coords.lat, 
       lng: this.state.curLoc.coords.lng
     }, this.opts)
-    .then((response) => {   
-      console.log(response);
+    .then((response) => {    
       this.setState({activeOrder: response.data}); 
     }).catch(request => {   
       console.log(request);
@@ -183,8 +171,7 @@ class ClientMapDash extends React.Component {
     return axios.post('/api/v1/order/status', {
       order: order
     },this.opts)
-    .then((response) => {   
-      console.log(response);
+    .then((response) => {    
       this.setState({activeOrder: response.data}); 
     }).catch(request => {   
       console.log(request);
@@ -211,18 +198,15 @@ class ClientMapDash extends React.Component {
   }
 
   showRelevantMap() {
-    const user = utils.decodeToken(localStorage.getItem("token")); 
-    console.log(user); 
+    const user = utils.decodeToken(localStorage.getItem("token"));  
     if(user.accountType == "client") { 
 
       if(this.state.activeOrder) {
-        console.log("Active order, showing delivery map");
         return <ClientMap 
           onSelect={this.selectStore}
           curLoc={this.state.curLoc}
           activeOrder={this.state.activeOrder}/>;
       }else if(!this.state.stores) {
-        console.log("No active order, showing orders map");
         axios.get('/api/v1/store').then(res => {   
           this.setState({stores: res.data});
           return <ClientOrderMap
@@ -231,7 +215,6 @@ class ClientMapDash extends React.Component {
             stores={this.state.stores}/>;
         }).catch(e => console.log(e));
       }else {
-        console.log("No active order, showing orders map");
           return <ClientOrderMap
             onSelect={this.selectStore}
             curLoc={this.state.curLoc}
@@ -250,12 +233,7 @@ class ClientMapDash extends React.Component {
     const orderStatusChange = orderExists && this.state.activeOrder.status !== nextState.activeOrder.status;
     const locationLoaded = this.state.locationLoaded !== nextState.locationLoaded;
     const curLocLoaded = this.state.curLoc === false && nextState.curLoc !== false;
-
-    console.log("Update request started, emitting nextProps", Object.assign({}, nextProps));
-    console.log("Update request started, emitting nextState", Object.assign({}, nextState));
-    console.log("Update request started, emitting this.state", Object.assign({}, this.state));
-    console.log("Update request started, emitting this.props", Object.assign({}, this.props)); 
-
+ 
     if(orderStatusChange) {
       return true;
     }else if(locationLoaded || curLocLoaded) {

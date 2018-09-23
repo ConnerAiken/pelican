@@ -1,7 +1,6 @@
 var classMethods = {  };
   
-export default  function(sequelize, DataTypes) {
-    console.log(Object.keys(sequelize.models));
+export default  function(sequelize, DataTypes) { 
     return sequelize.define('UserInfo', { 
         id: { type: DataTypes.BIGINT, autoIncrement: true,  primaryKey: true }, 
         userId: {

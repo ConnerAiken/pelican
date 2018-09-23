@@ -7,16 +7,14 @@ const router = express.Router();
 
 router.post('/submit', function(req, res) {  
   const token = req.body && req.body.token ? req.body.token : req.headers['token']; 
-  const user = utils.decodeToken(token);
-  console.log(token, user);
+  const user = utils.decodeToken(token); 
   const order = {
       items: req.body.items ? JSON.stringify(req.body.items) : null, 
       requestorId: user.id,
       driverId: null,
       storeId: req.body.storeId
   };
-
-  console.log("Creating Order ", order);
+ 
     db.Order.create(order)
     .then(result => res.json(result))
     .catch(err => { 

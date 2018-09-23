@@ -53,17 +53,7 @@ class DriverMapDash extends React.Component {
     console.log(this.state);
   }
 
-  initializeGMap() {   
-      console.log("Initializing gMap");
-      // check for Geolocation support
-      if (navigator.geolocation) {
-          toastr.success('Geolocation is supported!');
-      }
-      else {
-          toastr.error('Geolocation is not supported for this Browser/OS version yet.');
-      }  
-      
-
+  initializeGMap() {     
       navigator.geolocation.getCurrentPosition((position) => {  
           this.setState({locationLoaded: true, pendingRequest: false, curLoc: { coords:{ lat: position.coords.latitude, lng: position.coords.longitude }}});
       }, (error) => {
@@ -71,17 +61,19 @@ class DriverMapDash extends React.Component {
           toastr.error('Your position is not currently available. Error code: ' + error.code);
         } else if(error == 1) {
           toastr.error("Please allow Pelican to view your location.");
+          this.props.history.replace('/geolocation-error');
         } else if(error == 3) {
           toastr.error("The geolocation api timed out.");
-        } else {
-          toastr.error('Unknown error occurred. Error code: ' + error.code);
-        } 
+        }
+
       }, {timeout: 2500, enableHighAccuracy: true, maximumAge: 75000});
 
       this.watchId = navigator.geolocation.watchPosition((position) => {   
         this.setState({locationLoaded: true, pendingRequest: false, curLoc: { coords: {lat: position.coords.latitude, lng: position.coords.longitude}}});
       }, (err) => { 
-          console.log(err);
+        if(err.code == 1) { 
+          this.props.history.replace('/geolocation-error');
+        }
       }, {timeout: 2500, enableHighAccuracy: true, maximumAge: 75000});
 
   }
@@ -211,12 +203,10 @@ class DriverMapDash extends React.Component {
     if(user.accountType == "client") { 
 
       if(this.state.activeOrder) {
-        console.log("Active order, showing delivery map");
         return <ClientMap
           curLoc={this.state.curLoc}
           activeOrder={this.state.activeOrder}/>;
       }else if(!this.state.stores) {
-        console.log("No active order, showing orders map");
         axios.get('/api/v1/store').then(res => {   
           this.setState({stores: res.data});
           return <ClientOrderMap
@@ -224,7 +214,6 @@ class DriverMapDash extends React.Component {
             stores={this.state.stores}/>;
         }).catch(e => console.log(e));
       }else {
-        console.log("No active order, showing orders map");
           return <ClientOrderMap
             curLoc={this.state.curLoc}
             stores={this.state.stores}/>;
@@ -241,12 +230,7 @@ class DriverMapDash extends React.Component {
     const orderExists = this.state.activeOrder && nextState.activeOrder;
     const orderStatusChange = orderExists && this.state.activeOrder.status !== nextState.activeOrder.status;
     const locationLoaded = this.state.locationLoaded !== nextState.locationLoaded;
-    const curLocLoaded = this.state.curLoc === false && nextState.curLoc !== false;
-
-    console.log("Update request started, emitting nextProps", Object.assign({}, nextProps));
-    console.log("Update request started, emitting nextState", Object.assign({}, nextState));
-    console.log("Update request started, emitting this.state", Object.assign({}, this.state));
-    console.log("Update request started, emitting this.props", Object.assign({}, this.props)); 
+    const curLocLoaded = this.state.curLoc === false && nextState.curLoc !== false; 
 
     if(orderStatusChange) {
       return true;

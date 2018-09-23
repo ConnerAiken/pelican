@@ -5,8 +5,7 @@ import './../../../node_modules/toastr/build/toastr.css';
 export default { 
     decodeToken(token) {
         const components = token.split('.');
-        const base64url = components[1];
-        console.log(components);
+        const base64url = components[1]; 
         try {
             //Convert base 64 url to base 64
             var base64 = base64url.replace('-', '+').replace('_', '/')
@@ -58,7 +57,6 @@ export default {
             'token': localStorage.getItem('token')
           }
         };
-        
-        console.log(this.state);
+         
     }
 }

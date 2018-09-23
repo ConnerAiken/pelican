@@ -15,9 +15,7 @@ class Cart extends React.Component {
     utils.initializeProtectedComponent.call(this, utils); 
   } 
  
-  render() {
-    console.log("Rendering cart");
-
+  render() { 
     return (
       <Container className="container dashboard" fluid={true}> 
       <Row id="header">

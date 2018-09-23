@@ -1,4 +1,30 @@
 #storeMenu {
     color: black;
     max-width: 90%;
+
+    .rt-td:last-child {
+        text-align: center;
+    } 
+
+    .hidden {
+        display: none;
+    }
+
+    .modal-title {
+        width: 100%;
+    }
+
 }
+
+#closeBtn {
+    &:hover {
+        cursor: pointer;
+    }
+}
+#menuBtn {
+    margin-left: 17%;
+    margin-top: 15px;
+    position: fixed;
+    top: 0;
+    left: 0;
+} 

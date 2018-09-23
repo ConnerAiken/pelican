@@ -1,7 +1,6 @@
 var classMethods = {  };
   
-export default  function(sequelize, DataTypes) {
-    console.log(Object.keys(sequelize.models));
+export default  function(sequelize, DataTypes) { 
     return sequelize.define('AuthLog', { 
         id: { type: DataTypes.BIGINT, autoIncrement: true,  primaryKey: true }, 
         ip: DataTypes.STRING,

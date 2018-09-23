@@ -16,17 +16,13 @@ function base64Encode(file) {
   return new Buffer(bitmap).toString('base64');
 } 
 
-router.get('/verification', function(req, res) {
-  console.log("Sending verification form");
-  console.log(req);
+router.get('/verification', function(req, res) { 
   return res.status(200).json({success: true});
 }); 
 
 router.post('/verification', function(req, res) {
   const user = jwt.decode(req.headers.token);
-  
-  console.log(user);
-
+   
   db.User.findOne({ where: {email: user.email}})
   .then(user => {
     console.log("Verifying user: "+user.email);

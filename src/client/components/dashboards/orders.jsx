@@ -15,9 +15,7 @@ class Orders extends React.Component {
     utils.initializeProtectedComponent.call(this, utils); 
   } 
  
-  render() {
-    console.log("Rendering orders");
-
+  render() { 
     return (
       <Container className="container dashboard" fluid={true}> 
       <Row id="header">

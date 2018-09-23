@@ -1,16 +1,12 @@
-import jwt from "jsonwebtoken";
-import db from "../libs/db";
-import bcrypt from "bcrypt";
+import db from "../libs/db"; 
 import express from "express"; 
 import axios from "axios";
 
 const router = express.Router(); 
  
-router.get('/', function(req, res) {  
-  console.log("/store endpoint detected");
+router.get('/', function(req, res) {   
   
-  db.Store.findAll().then(function(stores) { 
-    console.log("Found "+stores.length+" stores.");
+  db.Store.findAll().then(function(stores) {  
     if(stores.length == 0) {
        return res.status(401).json({
           failed: 'Could not find any stores'
@@ -32,9 +28,20 @@ router.get('/products/:apiId', function(req, res) {
       'X-GB-CompanyId': req.params.apiId
     }
   
-  }).then(result => {   
-    return res.json({success: true, data: result.data});
   })
+  .then(result => res.json({success: true, data: result.data}))
+  .catch(e => console.log(e));
+});
+ 
+router.get('/strains/:apiId', function(req, res) {    
+  axios.get('https://api.greenbits.com/api/v1/strains?mj=true&by_active=true&limit=100', {   
+    headers: {
+      'Authorization': 'Token token="7tJv4mJ8PF0enhBZlRRfDQ"',
+      'Content-Type': 'application/json',
+      'X-GB-CompanyId': req.params.apiId
+    } 
+  })
+  .then(result => res.json({success: true, data: result.data}))
   .catch(e => console.log(e));
 });
 
@@ -46,10 +53,8 @@ router.get('/productTypes/:apiId', function(req, res) {
       'X-GB-CompanyId': req.params.apiId
     } 
   })
-  .then(result => { 
-    return res.json({success: true, data: result.data});
-  })
-  .catch(e => console.log(e));
+  .then(result => res.json({success: true, data: result.data}))
+  .catch(e => console.log(e)); 
 });
 
 export default router;

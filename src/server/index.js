@@ -62,8 +62,7 @@ if(process.env.NODE_ENV != "development") {
         utils.log(`Server has started and is listening on port 443!`)
     });
  
-    httpApp.get('*', function(req, res) {   
-        console.log("Redirecting from http to https");
+    httpApp.get('*', function(req, res) {    
         res.redirect('https://' + req.headers.host + req.url); 
     }); 
 

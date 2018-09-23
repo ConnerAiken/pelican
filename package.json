@@ -17,7 +17,9 @@
     "db:update": "NODE_ENV=production babel-node src/server/scripts/updateDb.js",
     "db:test": "NODE_ENV=development babel-node src/server/scripts/updateDb.js",
     "upgradeDeps": "ncu -u",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "test:e2e": "wdio wdio.conf.js",
+    "test:e2e:local": "wdio wdio.conf.js -b http://localhost:8080"
   },
   "repository": {
     "type": "git",
@@ -75,11 +77,16 @@
     "sass-loader": "^7.0.3",
     "style-loader": "^0.22.1",
     "url-loader": "^1.1.1",
+    "wdio-dot-reporter": "0.0.10",
+    "wdio-mocha-framework": "^0.6.3",
+    "wdio-mochawesome-reporter": "^2.0.1",
+    "wdio-selenium-standalone-service": "0.0.10",
     "webpack": "^4.17.1",
     "webpack-cli": "^3.0.8",
     "webpack-dev-server": "^3.1.7"
   },
   "dependencies": {
+    "@rajatsehgal/add-to-home-screen": "0.0.7",
     "atob": "^2.1.2",
     "axios": "^0.18.0",
     "bcrypt": "^3.0.0",
@@ -88,6 +95,7 @@
     "express-fileupload": "^0.4.0",
     "file-loader": "^2.0.0",
     "file-upload-with-preview": "^2.1.1",
+    "font-awesome": "^4.7.0",
     "greenlock-express": "^2.4.6",
     "helmet": "^3.13.0",
     "history": "^4.7.2",
@@ -106,8 +114,10 @@
     "react-router-dom": "^4.3.1",
     "react-table": "^6.8.6",
     "reactstrap": "^6.4.0",
+    "selenium-standalone": "^6.15.3",
     "sequelize": "^4.38.1",
     "simple-oauth2": "^2.2.1",
-    "toastr": "^2.1.4"
+    "toastr": "^2.1.4",
+    "webdriverio": "^4.13.2"
   }
 }

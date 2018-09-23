@@ -37,8 +37,7 @@ class Verify extends React.Component {
        form[e.target.name] = e.target.value; 
        this.setState({form, error: false});
     }else { 
-        form[e.target.name] = false;
-        console.log(form);
+        form[e.target.name] = false; 
         this.setState({form, error: true}); 
     }       
 
@@ -60,9 +59,7 @@ class Verify extends React.Component {
     .catch(err => console.log(err) && toastr.error(err) && this.setState({pendingRequest: false})); 
   }
  
-  render() {
-    console.log("Rendering verification");
-
+  render() { 
     return (
       <Container className="container dashboard" fluid={true}> 
       <Row id="header">

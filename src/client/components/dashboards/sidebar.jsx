@@ -3,7 +3,7 @@ import React from "react";
 import { Container, Row, Col, Button } from 'reactstrap'; 
 import { withRouter, Redirect } from 'react-router-dom';
 import "./sidebar.scss";
-import utils from "./../../assets/utils"; 
+import utils from "./../../assets/utils";  
  
 // Src: https://bootstrapious.com/p/bootstrap-sidebar
 
@@ -13,22 +13,35 @@ class Sidebar extends React.Component {
     super(props);   
     
     this.toggleSidebar = this.toggleSidebar.bind(this);
+    this.listenForCartEvents = this.listenForCartEvents.bind(this);
 
     this.state = {
-        collapsed: false
+        collapsed: false,
+        cartCount: 0
     };
 
     utils.initializeProtectedComponent.call(this, utils); 
-    console.log(this.state);
+    this.listenForCartEvents(); 
   }
 
-  checkToken() {   
-    axios.get('/api/v1/health-check', this.opts)
-    .then(function(response) {   
-      console.log(response);
-    }).catch(request => {   
-      console.log(request);
-    });
+  listenForCartEvents() { 
+    document.querySelector("#root").addEventListener('cart::added', e => {  
+        if(!this.state) return;
+
+        const cartCount = this.state.cartCount ? this.state.cartCount + 1 : 1; 
+        this.setState({cartCount});
+    }, false);
+    document.querySelector("#root").addEventListener('cart::removed', e => {  
+        if(!this.state) return; 
+        document.querySelector(`[id='${ele.row.id}']`).classList.toggle("hidden");
+        const cartCount = this.state.cartCount ? this.state.cartCount - 1 : 0; 
+        this.setState({cartCount});
+    }, false);
+    document.querySelector("#root").addEventListener('cart::emptied', e => {  
+        if(!this.state) return;
+
+        this.setState({cartCount: 0});
+    }, false);
   }
    
   handleNavChange(route) { 
@@ -39,8 +52,7 @@ class Sidebar extends React.Component {
       this.setState({collapsed: !this.state.collapsed});
   }
 
-  render() {
-      console.log(this.props.history);
+  render() { 
     return (
       <Container className="container navbar" fluid={true}> 
       <Row>     
@@ -72,7 +84,7 @@ class Sidebar extends React.Component {
                 <a href="#"><i className="fa fa-home"></i>&nbsp;&nbsp;&nbsp;Home</a>
             </li>
             <li className={this.props.history.location.pathname == "/cart" ? "active" : "inactive" }  onClick={this.handleNavChange.bind(this, '/cart')}>
-                <a href="#"><i className="fa fa-shopping-cart"></i>&nbsp;&nbsp;&nbsp;My Cart</a>
+                <a href="#"><i className="fa fa-shopping-cart"></i>&nbsp;&nbsp;&nbsp;My Cart ({this.state.cartCount})</a>
             </li> 
             <li className={this.props.history.location.pathname == "/payment" ? "active" : "inactive" }  onClick={this.handleNavChange.bind(this, '/payment')}>
                 <a href="#"><i className="fa fa-credit-card"></i>&nbsp;&nbsp;&nbsp;Payment</a>

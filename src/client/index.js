@@ -1,10 +1,12 @@
-import React from "react"; 
-import ReactDOM from "react-dom";
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";  
-import ReactPiwik from 'react-piwik'; 
+
 import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 import 'toastr/build/toastr.css';    
+
+import React from "react"; 
+import ReactDOM from "react-dom";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";  
+import ReactPiwik from 'react-piwik';  
 
 import Cart from "./components/views/cart.jsx";   
 import Dash from "./components/views/dashboard.jsx"; 
@@ -18,6 +20,7 @@ import Share from "./components/views/share.jsx";
 import Signup from "./components/views/signup.jsx";  
 import PrivacyPolicy from "./components/views/privacyPolicy.jsx"; 
 import Verify from "./components/views/verify.jsx"; 
+import geolocationError from "./components/views/geolocationError"; 
 
 window['NODE_ENV'] = process.env.NODE_ENV;
 
@@ -45,6 +48,7 @@ ReactDOM.render(
             <Route path="/signup" component={Signup} />
             <Route path="/privacy" component={PrivacyPolicy} />
             <Route path="/verify" component={Verify} />
+            <Route path="/geolocation-error" component={geolocationError} />
         </Switch> 
     </BrowserRouter>
 , document.querySelector("#root"));

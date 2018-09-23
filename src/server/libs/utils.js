@@ -38,10 +38,8 @@ export default {
         
         if (options.exit) process.exit();
     },
-    verifyToken(req, res, next) {   
-        console.log("Verifying token..."); 
-        var token = req.body && req.body.token ? req.body.token : req.headers['token'];  
-        console.log("Token: "+token); 
+    verifyToken(req, res, next) {    
+        var token = req.body && req.body.token ? req.body.token : req.headers['token'];   
         if (token) {
             jwt.verify(token, process.env.appSecret, function(err) {
                 if (err) { 
@@ -74,8 +72,7 @@ export default {
             var utf8 = atob(base64)
             //Then parse that into JSON
             var json = JSON.parse(utf8)
-
-            console.log(json);
+ 
             //Then make that JSON look pretty
             var json_string = JSON.stringify(json, null, 4)
         } catch (err) {

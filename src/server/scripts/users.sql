@@ -1,0 +1,2 @@
+INSERT INTO users (id, resetToken, resetExpired, verified, phone, email, password, accountType, createdAt, updatedAt) VALUES
+	(1, NULL, NULL, 1, '2069004735', 'conner@fittedtech.com', '$2b$10$DiOPc7L9tciva6ITlT6vge6t6owqfkMv3zb3e1vOtrgT.vtG4blt6', 'client', '2018-09-23 02:00:46', '2018-09-23 02:02:56');

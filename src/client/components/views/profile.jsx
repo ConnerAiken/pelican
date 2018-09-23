@@ -18,9 +18,7 @@ class Profile extends React.Component {
     utils.initializeProtectedComponent.call(this, utils); 
   }
   
-  render() { 
-    console.log("Rendering profile view");
-
+  render() {  
     if(this.state.user && this.state.user.accountType == "driver") {
       return (
       <React.Fragment>
