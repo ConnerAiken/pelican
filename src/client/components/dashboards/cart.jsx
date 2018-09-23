@@ -1,7 +1,5 @@
 // Node.JS
-import React from "react"; 
-import toastr from "toastr";
-import axios from "axios";  
+import React from "react";  
 import { Container, Row, Col, Button } from 'reactstrap'; 
 import { withRouter } from 'react-router-dom';
 import LoadingScreen from "../loadingScreen";

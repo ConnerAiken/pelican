@@ -97,6 +97,12 @@ class ClientMapDash extends React.Component {
 
   selectStore(store) {  
     this.setState({store});
+    document.querySelector("#root").dispatchEvent(new Event(
+      'store::selected',
+      {
+        detail: store
+      }
+    )); 
   }
   saveStore(store) {  
     this.setState({store: false});

@@ -14,28 +14,64 @@ class Sidebar extends React.Component {
     
     this.toggleSidebar = this.toggleSidebar.bind(this);
     this.listenForCartEvents = this.listenForCartEvents.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
 
     this.state = {
         collapsed: false,
-        cartCount: 0
+        cartCount: 0,
+        cart: []
     };
 
     utils.initializeProtectedComponent.call(this, utils); 
     this.listenForCartEvents(); 
   }
 
-  listenForCartEvents() { 
-    document.querySelector("#root").addEventListener('cart::added', e => {  
-        if(!this.state) return;
+hydrateStateWithLocalStorage() {
+    const stateInStorage = JSON.parse(localStorage.getItem('sidebar'));
+    const state = _.extend(this.state, stateInStorage);
+    this.setState({state});
+}
 
-        const cartCount = this.state.cartCount ? this.state.cartCount + 1 : 1; 
-        this.setState({cartCount});
+saveStateToLocalStorage() {
+    const state = {...this.state};
+    delete state.user;
+    localStorage.setItem('sidebar', JSON.stringify(state));
+}
+ 
+
+componentDidMount() { 
+    this.hydrateStateWithLocalStorage();  
+    window.addEventListener(
+      "beforeunload",
+      this.saveStateToLocalStorage.bind(this)
+    );
+}
+
+componentWillUnmount() { 
+    window.removeEventListener(
+      "beforeunload",
+      this.saveStateToLocalStorage.bind(this)
+    ); 
+    this.saveStateToLocalStorage();
+}
+
+  listenForCartEvents() { 
+    // Use localstorage here..
+    document.querySelector("#root").addEventListener('cart::added', e => {  
+        if(!this.state) return;  
+
+        const cart = this.state.cart.slice(0); 
+        cart.push(e); 
+        this.setState({cartCount: cart.length, cart});
+
     }, false);
     document.querySelector("#root").addEventListener('cart::removed', e => {  
         if(!this.state) return; 
-        document.querySelector(`[id='${ele.row.id}']`).classList.toggle("hidden");
-        const cartCount = this.state.cartCount ? this.state.cartCount - 1 : 0; 
-        this.setState({cartCount});
+
+        document.querySelector(`[id='${ele.row.id}']`).classList.toggle("hidden");  
+        cart = this.state.cart.slice(0).filter(item => item.id != e.original.id); 
+        this.setState({cartCount: cart.length, cart});
+
     }, false);
     document.querySelector("#root").addEventListener('cart::emptied', e => {  
         if(!this.state) return;
@@ -52,6 +88,11 @@ class Sidebar extends React.Component {
       this.setState({collapsed: !this.state.collapsed});
   }
 
+  handleLogout() {
+    this.Auth.logout();
+    this.props.history.replace('/login');
+  }
+
   render() { 
     return (
       <Container className="container navbar" fluid={true}> 
@@ -63,6 +104,7 @@ class Sidebar extends React.Component {
             <h3>Pelican</h3>
             {this.state.user.profileImage && <img className="img-responsive img-circle" src={"data:image/png;base64,"+this.state.user.profileImage} style={{width: '75px'}} />} 
             <p>{this.state.user.firstName} {this.state.user.lastName}</p>  
+            <a id="logoutLink" href="#" onClick={this.handleLogout}><i className="fa fa-sign-out"></i>&nbsp;&nbsp;Logout</a>
         </div>
 
         <ul className="list-unstyled components"> 

@@ -29,6 +29,7 @@ class Store extends React.Component {
     });
 
     this.fetchInventory();
+    this.listenForExternalOpen();
   } 
 
   toggle() {
@@ -36,6 +37,13 @@ class Store extends React.Component {
       visible: !this.state.visible
     });
   }
+ 
+  listenForExternalOpen() { 
+    document.querySelector("#root").addEventListener('store::selected', e => {  
+        if(!this.state) return;  
+        this.setState({visible: true});
+    }, false); 
+  } 
 
   addToCart(ele) {    
     // Dispatch cart added event and toggle the button
@@ -85,6 +93,7 @@ class Store extends React.Component {
           <ModalBody> 
               <ReactTable 
                 data={this.state.products}
+                
                 columns={[
                   {
                     Header: "Product",

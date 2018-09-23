@@ -16,6 +16,12 @@
 		padding: 20px;
 	}
 	
+	#logoutLink {
+		&:hover {
+			color: orange;
+			text-decoration: none;
+		}
+	}
 	a[data-toggle="collapse"] {
 		position: relative;
 	}
