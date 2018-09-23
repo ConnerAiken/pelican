@@ -88,6 +88,9 @@ class Sidebar extends React.Component {
             <li className={this.props.history.location.pathname == "/help" ? "active" : "inactive" }  onClick={this.handleNavChange.bind(this, '/help')}>
                 <a href="#"><i className="fa fa-question-circle-o"></i>&nbsp;&nbsp;&nbsp;Help</a>
             </li> 
+            <li className="inactive" onClick={() => this.Auth.logout() && this.props.history.replace('/login')}>
+                <a href="#"><i className="fa fa-sign-out"></i>&nbsp;&nbsp;&nbsp;Logout</a>
+            </li> 
         </ul>
         </Col> 
       </Row> 

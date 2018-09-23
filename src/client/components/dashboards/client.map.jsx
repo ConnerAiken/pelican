@@ -26,8 +26,9 @@ class ClientMapDash extends React.Component {
     this.updateOrder = this.updateOrder.bind(this);
     this.updateOrderLocation = this.updateOrderLocation.bind(this); 
     this.checkOrderLocation = this.checkOrderLocation.bind(this);
-    this.toggleSidebar = this.toggleSidebar.bind(this);
-    this.selectStore = this.selectStore.bind(this);
+    this.toggleSidebar = this.toggleSidebar.bind(this); 
+    this.selectStore = this.selectStore.bind(this); 
+    this.saveStore = this.saveStore.bind(this); 
 
     utils.initializeProtectedComponent.call(this, utils); 
 
@@ -47,19 +48,7 @@ class ClientMapDash extends React.Component {
   toggleSidebar() {
     document.querySelector('#nav').classList.toggle("active");
   }
-
-  checkToken() {   
-    axios.get('/api/v1/health-check', this.opts)
-    .then(function(response) {   
-      console.log(response);
-    }).catch(request => {   
-      console.log(request);
-    });
-  }
-  
-  componentDidUpdate() { 
-    console.log(this.state);
-  }
+ 
 
   initializeGMap() {   
       console.log("Initializing gMap");
@@ -113,9 +102,11 @@ class ClientMapDash extends React.Component {
     this.setState({destination: e}); 
   }
 
-  selectStore(store) {
-    console.log(store);
+  selectStore(store) {  
     this.setState({store});
+  }
+  saveStore(store) {  
+    this.setState({store: false});
   }
 
   submitOrder() {
@@ -226,7 +217,8 @@ class ClientMapDash extends React.Component {
 
       if(this.state.activeOrder) {
         console.log("Active order, showing delivery map");
-        return <ClientMap
+        return <ClientMap 
+          onSelect={this.selectStore}
           curLoc={this.state.curLoc}
           activeOrder={this.state.activeOrder}/>;
       }else if(!this.state.stores) {
@@ -234,6 +226,7 @@ class ClientMapDash extends React.Component {
         axios.get('/api/v1/store').then(res => {   
           this.setState({stores: res.data});
           return <ClientOrderMap
+            onSelect={this.selectStore}
             curLoc={this.state.curLoc}
             stores={this.state.stores}/>;
         }).catch(e => console.log(e));
@@ -297,7 +290,7 @@ class ClientMapDash extends React.Component {
       </Row>
       {this.state.pendingRequest ? <LoadingScreen/> : null}
       {this.state.curLoc && this.showRelevantMap()} 
-      {this.state.store ? <Store info={this.state.store}/> : null}
+      {this.state.store ? <Store onSave={this.saveStore} info={this.state.store}/> : null}
       </Container> 
     );
   }

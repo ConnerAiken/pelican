@@ -47,7 +47,7 @@ export default class AuthService {
 
     setToken(idToken) { 
         // Saves user token to localStorage
-        localStorage.setItem('token', idToken)
+        return localStorage.setItem('token', idToken)
     }
 
     getToken() { 
@@ -57,7 +57,7 @@ export default class AuthService {
 
     logout() {
         // Clear user token and profile data from localStorage
-        localStorage.removeItem('token');
+        return localStorage.removeItem('token');
     }
 
     getProfile() {

@@ -23,9 +23,19 @@ router.get('/verification', function(req, res) {
 }); 
 
 router.post('/verification', function(req, res) {
-  console.log("Sending verification form");
-  console.log(req);
-  return res.status(200).json({success: true});
+  const user = jwt.decode(req.headers.token);
+  
+  console.log(user);
+
+  db.User.findOne({ where: {email: user.email}})
+  .then(user => {
+    console.log("Verifying user: "+user.email);
+    user.verified = true;
+    return user.save();
+  })
+  .then(result => res.json(result)) 
+  .catch(err => res.json(err));
+   
 }); 
 
 router.post('/register', function(req, res) {  
@@ -129,21 +139,19 @@ router.post('/login', function(req, res) {
               plain: true
             });
 
-            const userObj = {
+            const tokenData = {
+              email: user.email,
               id: user.id,
               accountType: user.accountType,
-              email: user.email
+              verified: user.verified
             }
-
-            delete user.password; 
-            userInfo.licenseImageBase64 = false;
-            userInfo.vehicleImageBase64 = false;
-            userInfo.profileImage = userInfo.profileImageBase64; 
-             
+            
+            const token = jwt.sign(tokenData, process.env.appSecret, {expiresIn: 5000});
+ 
             return res.status(200).json({
               success: 'Welcome to Pelican Delivers', 
-              token: jwt.sign(userObj, process.env.appSecret, {expiresIn: 5000}),
-              userInfo
+              token,
+              profileImage: userInfo.profileImageBase64
            });
           }).catch(error => {  
             console.log(error);

@@ -41,7 +41,7 @@ Remaining  hours: 35.5
 2h (Thursday sep 20 - 8:30-10:30am) => Research on sequelize.js and reviewing designs
 1.5h (Friday sep 21 - 8:30-10:00am) => Working on verification workflow
 .25h (Friday sep 21 - 1:30pm-1:45pm) => Trulioo sync
-1h (Saturday sep 22 - 1:00pm-x) => Researching greenbits
+4h (Saturday sep 22 - 1:00pm-5pm) => Researching greenbits, setting up sample call in UI. Ran into CORS issue /w greenbits.
 
 ## SSL Certificates
 

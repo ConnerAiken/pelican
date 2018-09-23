@@ -51,8 +51,12 @@ class Verify extends React.Component {
     this.Auth.fetch('/api/v1/user/verification', {
         method: 'POST',
         body: JSON.stringify(this.state.form)
+    }) 
+    .then(res => {
+      toastr.success("Verification submitted.. Please login again.");
+      this.Auth.logout();
+      this.props.history.replace('/login');
     })
-    .then(res => toastr.success("Verification submitted..") && this.props.history.replace('/dashboard'))
     .catch(err => console.log(err) && toastr.error(err) && this.setState({pendingRequest: false})); 
   }
  
