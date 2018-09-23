@@ -143,6 +143,8 @@ router.post('/login', function(req, res) {
               email: user.email,
               id: user.id,
               accountType: user.accountType,
+              firstName: userInfo.firstName,
+              lastName: userInfo.lastName,
               verified: user.verified
             }
             
