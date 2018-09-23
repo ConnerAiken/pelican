@@ -74,7 +74,10 @@ class Login extends React.Component {
     this.setState({pendingRequest: true}); 
     this.Auth.login(this.state.email, this.state.password)
               .then(res => toastr.success("Logging in..") && this.props.history.replace('/dashboard'))
-              .catch(err => console.log(err) && toastr.error(err) && this.setState({pendingRequest: false}));
+              .catch(err => {
+                toastr.error(err);
+                this.setState({pendingRequest: false});
+              });
   }
  
   componentWillMount(){

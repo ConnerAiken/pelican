@@ -40,9 +40,9 @@
 2h (Thursday sep 20 - 8:30-10:30am) => Research on sequelize.js and reviewing designs
 1.5h (Friday sep 21 - 8:30-10:00am) => Working on verification workflow
 .25h (Friday sep 21 - 1:30pm-1:45pm) => Trulioo sync
-6h (Saturday sep 22 - 1:00pm-7:15pm) => Researching greenbits, setting up sample call in UI. Ran into CORS issue /w greenbits so created a server-api wrapper. Setting up authentication logging. Adding base64 encoded profile image to sidebar.
+6.5h (Saturday sep 22 - 1:00pm-7:30pm) => Researching greenbits, setting up sample call in UI. Ran into CORS issue /w greenbits so created a server-api wrapper. Setting up authentication logging. Adding base64 encoded profile image to sidebar.
 
-Remaining  hours: 27.75
+Remaining  hours: 27.25
 
 ## SSL Certificates
 
