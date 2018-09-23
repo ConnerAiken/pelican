@@ -19,6 +19,7 @@ class Sidebar extends React.Component {
     };
 
     utils.initializeProtectedComponent.call(this, utils); 
+    console.log(this.state);
   }
 
   checkToken() {   
@@ -48,7 +49,7 @@ class Sidebar extends React.Component {
 
         <div className="sidebar-header"> 
             <h3>Pelican</h3>
-            {this.state.user.profileImage && <img className="img-responsive img-circle" src={this.state.user.profileImage} style={{width: '75px'}} />} 
+            {this.state.user.profileImage && <img className="img-responsive img-circle" src={"data:image/png;base64,"+this.state.user.profileImage} style={{width: '75px'}} />} 
             <p>{this.state.user.firstName} {this.state.user.lastName}</p>  
         </div>
 

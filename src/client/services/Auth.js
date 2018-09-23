@@ -21,6 +21,7 @@ export default class AuthService {
             })
         }).then(res => { 
             this.setToken(res.token) // Setting the token in localStorage
+            this.setProfileImage(res.profileImage);
             return Promise.resolve(res);
         })
     }
@@ -45,9 +46,19 @@ export default class AuthService {
         }
     }
 
+    setProfileImage(base64String) { 
+        // Saves user token to localStorage
+        return localStorage.setItem('profileImage', base64String)
+    }
+
     setToken(idToken) { 
         // Saves user token to localStorage
         return localStorage.setItem('token', idToken)
+    }
+
+    getProfileImage() { 
+        // Saves user token to localStorage
+        return localStorage.getItem('profileImage')
     }
 
     getToken() { 
@@ -63,8 +74,7 @@ export default class AuthService {
     getProfile() {
         // Using jwt-decode npm package to decode the token
         return decode(this.getToken());
-    }
-
+    } 
 
     fetch(url, options) {
         // performs api calls sending the required authentication headers

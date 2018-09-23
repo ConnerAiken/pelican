@@ -13,6 +13,11 @@ export default function(sequelize, DataTypes) {
           allowNull: true,
           defaultValue: "greenbits"
         },
+        apiId: {
+          type: DataTypes.TEXT,
+          allowNull: true,
+          defaultValue: null
+        },
         apiKey: {
           type: DataTypes.TEXT,
           allowNull: true,

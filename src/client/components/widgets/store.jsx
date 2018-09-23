@@ -19,30 +19,34 @@ class Store extends React.Component {
     utils.initializeProtectedComponent.call(this, utils);    
 
     this.state = _.extend(this.state, {
-      inventory: this.fetchInventory(),
+      products: [],
+      products: [],
       pages: null,
       loading: true,
       pendingRequest: true
     });
- 
+
+    this.fetchInventory();
   } 
 
   fetchInventory() { 
     this.setState({pendingRequest: true});
     
-    fetch('https://api.greenbits.com/api/v1/products?mj=true&by_active=true&limit=10', { 
-      method: 'GET', 
-      headers: new Headers({
-        'Authorization': 'Token token="7tJv4mJ8PF0enhBZlRRfDQ"',
-        'Content-Type': 'application/json'
-      })
-    })
-    .then((response) => { 
-      debugger;  
-      console.log(response);
-      this.setState({inventory: response.data, pendingRequest: false}); 
-    }).catch(request => {   
-      debugger;
+    this.Auth.fetch('/api/v1/store/productTypes/239e77a5-d1c4-4510-962e-2de706d33af0') 
+    .then(response => this.setState({productTypes: response.data.product_types}))
+    .then(response => this.Auth.fetch('/api/v1/store/products/239e77a5-d1c4-4510-962e-2de706d33af0')) 
+    .then((response) => {  
+
+      const products = [...response.data.products].map(product => {
+        product.price = (product.sell_price / 100).toLocaleString("en-US", {style:"currency", currency:"USD"});
+        product.category = _.find(this.state.productTypes, {id: product.product_type_id}); 
+        product.category = product.category ? product.category.name : "Unknown";
+        return product;
+      });
+
+      this.setState({products: products, pendingRequest: false});  
+      console.log(products);
+    }).catch(request => {    
       console.log(request);
     });  
   }
@@ -55,39 +59,36 @@ class Store extends React.Component {
           <ModalHeader>{this.props.info.name} - {this.props.info.city}, {this.props.info.state}</ModalHeader>
           <ModalBody> 
               <ReactTable
-                data={[]}
+                noDataText="Loading data.."
+                data={this.state.products}
                 columns={[
                   {
-                    Header: "Product Name",
-                    columns: [
-                      {
-                        Header: "First Name",
-                        accessor: "firstName"
-                      }
-                    ]
-                  },
+                    Header: "Product",
+                    accessor: "name"
+                  },  
                   {
-                    Header: "Price",
-                    columns: [
-                      {
-                        Header: "First Name",
-                        accessor: "firstName"
-                      }
-                    ]
-                  },
+                    Header: "Category",
+                    accessor: "category"
+                  },  
                   {
-                    Header: 'Actions',
-                    columns: [
-                      {
-                        Header: "First Name",
-                        accessor: "firstName"
-                      }
-                    ]
+                    Header: "Vendor",
+                    accessor: "vendor"
+                  },  
+                  {
+                    Header: "Price",   
+                    accessor: d => (d.sell_price / 100).toLocaleString("en-US", {style:"currency", currency:"USD"}),
+                    id: "sell_price",
+                    sortMethod: (a, b) => { 
+                      a = parseFloat(a.replace(/[^\d\.]/,''));
+                      b = parseFloat(b.replace(/[^\d\.]/,''));
+                      return a-b;
+                    }
                   }
                 ]}  
-              filterable
+              filterable={true}
+              sortable={true}
               defaultPageSize={10}
-              className="-striped -highlight"
+              className="-striped -highlight" 
               />
           </ModalBody>
           <ModalFooter>

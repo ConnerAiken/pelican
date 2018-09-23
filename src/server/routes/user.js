@@ -133,7 +133,7 @@ router.post('/login', function(req, res) {
         }
         
         if(result) {  
-          db.UserInfo.findOne({where: {userId: user.id}}).then(userInfo => { 
+          return db.UserInfo.findOne({where: {userId: user.id}}).then(userInfo => { 
             // Construct token object
             userInfo = userInfo.get({
               plain: true
@@ -147,15 +147,28 @@ router.post('/login', function(req, res) {
             }
             
             const token = jwt.sign(tokenData, process.env.appSecret, {expiresIn: 5000});
- 
-            return res.status(200).json({
-              success: 'Welcome to Pelican Delivers', 
-              token,
-              profileImage: userInfo.profileImageBase64
-           });
+            
+           return db.AuthLog.create({
+              userId: user.id,
+              ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
+              type: "login::success"
+            }).then(result => { 
+                return res.status(200).json({
+                  success: 'Welcome to Pelican Delivers', 
+                  token,
+                  profileImage: userInfo.profileImageBase64
+                });
+            }) 
+
           }).catch(error => {  
-            console.log(error);
-            return res.status(500).json({error: error});
+            db.AuthLog.create({
+              userId: user.id,
+              ip: req.ip,
+              type: "login::failure"
+            }).then(result => { 
+              console.log(error);
+              return res.status(500).json({error: error});
+            });
           }); 
         }else { 
           return res.status(401).json({

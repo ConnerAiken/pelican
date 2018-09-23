@@ -44,6 +44,7 @@ export default {
         this.Auth = new AuthService();
         this.state.pendingRequest = false;
         this.state.user = this.Auth.getProfile();
+        this.state.user.profileImage = this.Auth.getProfileImage();
 
         this.componentWillMount = () => {
             if(!this.Auth.loggedIn())

@@ -21,8 +21,7 @@
 3h (1:15pm-4:15pm - 8/30/18) -> Refining ansible deploy scripts pt 2, start of JWT authentication and setting up SSL    certificates /w express (not automatically renewing at this point) 
 
 
-# Billing Period Four 76 hours banked for 4 weeks - (9/4/2018)    
-Remaining  hours: 35.5
+# Billing Period Four 76 hours banked for 4 weeks - (9/4/2018)     
 
 1.5h (Mon - 11am-12:30pm) -> Upgrading babel, researching on iOS html/css requirements.   
 1h (Mon - 1:45pm-2:45pm -> attempting to make scroll viewport work correctly in iphone, build process changes for docker   
@@ -41,7 +40,9 @@ Remaining  hours: 35.5
 2h (Thursday sep 20 - 8:30-10:30am) => Research on sequelize.js and reviewing designs
 1.5h (Friday sep 21 - 8:30-10:00am) => Working on verification workflow
 .25h (Friday sep 21 - 1:30pm-1:45pm) => Trulioo sync
-4h (Saturday sep 22 - 1:00pm-5pm) => Researching greenbits, setting up sample call in UI. Ran into CORS issue /w greenbits.
+6h (Saturday sep 22 - 1:00pm-7:15pm) => Researching greenbits, setting up sample call in UI. Ran into CORS issue /w greenbits so created a server-api wrapper. Setting up authentication logging. Adding base64 encoded profile image to sidebar.
+
+Remaining  hours: 27.75
 
 ## SSL Certificates
 
