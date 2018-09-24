@@ -19,8 +19,7 @@ class ClientProfile extends React.Component {
     this.handleSave = this.handleSave.bind(this); 
     this.handleLicenseImage = this.handleLicenseImage.bind(this);
     this.handleProfileImage = this.handleProfileImage.bind(this);
-    this.handleVehicleImage = this.handleVehicleImage.bind(this);
-    this.handleBrowse = this.handleBrowse.bind(this); 
+    this.handleVehicleImage = this.handleVehicleImage.bind(this); 
     this.regex = {  
       firstName: /(.*[a-z]){3}/i,
       lastName: /(.*[a-z]){3}/i, 

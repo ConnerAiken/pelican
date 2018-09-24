@@ -41,10 +41,10 @@
 1.5h (Friday sep 21 - 8:30-10:00am) => Working on verification workflow
 .25h (Friday sep 21 - 1:30pm-1:45pm) => Trulioo sync
 6.5h (Saturday sep 22 - 1:00pm-7:30pm) => Researching greenbits, setting up sample call in UI. Ran into CORS issue /w greenbits so created a server-api wrapper. Setting up authentication logging. Adding base64 encoded profile image to sidebar.
-4h (Sundary sep 23 10:30am-2:30pm) -> Setting up e2e testing suite, setting up more focused sql seed scripts on db model updates and adding THC/CBD % to menus. Ability to
+4.25h (Sundary sep 23 10:30am-2:30pm, 5:15pm-5:30pm) -> Setting up e2e testing suite, setting up more focused sql seed scripts on db model updates and adding THC/CBD % to menus. Ability to
 add items to a invisible cart and it populates number in sidebar. Creating geolocation permission errors page. Adding new store icon to map. Adding actual item passing to cart through local storage.
 
-Remaining  hours: 23.75
+Remaining  hours: 23.5
 
 ## SSL Certificates
 

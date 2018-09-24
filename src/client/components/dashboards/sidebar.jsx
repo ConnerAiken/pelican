@@ -103,8 +103,7 @@ componentWillUnmount() {
         <div className="sidebar-header"> 
             <h3>Pelican</h3>
             {this.state.user.profileImage && <img className="img-responsive img-circle" src={"data:image/png;base64,"+this.state.user.profileImage} style={{width: '75px'}} />} 
-            <p>{this.state.user.firstName} {this.state.user.lastName}</p>  
-            <a id="logoutLink" href="#" onClick={this.handleLogout}><i className="fa fa-sign-out"></i>&nbsp;&nbsp;Logout</a>
+            <p>{this.state.user.firstName} {this.state.user.lastName}</p>   
         </div>
 
         <ul className="list-unstyled components"> 
@@ -143,7 +142,7 @@ componentWillUnmount() {
             <li className={this.props.history.location.pathname == "/help" ? "active" : "inactive" }  onClick={this.handleNavChange.bind(this, '/help')}>
                 <a href="#"><i className="fa fa-question-circle-o"></i>&nbsp;&nbsp;&nbsp;Help</a>
             </li> 
-            <li className="inactive" onClick={() => this.Auth.logout() && this.props.history.replace('/login')}>
+            <li className="inactive" onClick={this.handleLogout}>
                 <a href="#"><i className="fa fa-sign-out"></i>&nbsp;&nbsp;&nbsp;Logout</a>
             </li> 
         </ul>
