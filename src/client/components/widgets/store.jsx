@@ -17,7 +17,8 @@ class Store extends React.Component {
   constructor(props) {
     super(props);   
     utils.initializeProtectedComponent.call(this, utils); 
-    this.toggle = this.toggle.bind(this);   
+    this.toggle = this.toggle.bind(this);  
+    this.goToCart = this.goToCart.bind(this);
 
     this.state = _.extend(this.state, {
       products: [],
@@ -37,7 +38,10 @@ class Store extends React.Component {
       visible: !this.state.visible
     });
   }
- 
+  
+  goToCart() {
+    this.history.props.replace('/cart'); 
+  }
   listenForExternalOpen() { 
     document.querySelector("#root").addEventListener('store::selected', e => {  
         if(!this.state) return;  
@@ -153,6 +157,7 @@ class Store extends React.Component {
           <ModalFooter>
             <Button color="primary" onClick={this.toggle}>Save Cart</Button> 
           </ModalFooter>
+        <Button id="menuBtn" color="warning" onClick={this.goToCart}><i style={{color: 'white'}} className="fa fa-shopping-cart"></i></Button>
         </Modal> : this.props.info ? <Button id="menuBtn" color="warning" onClick={this.toggle}><i style={{color: 'white'}} className="fa fa-list-alt"></i></Button> : null} 
       </React.Fragment>
     );
