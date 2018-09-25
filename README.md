@@ -1,5 +1,14 @@
 # Pelican Delivers
 
+[![Build Status](https://travis-ci.com/ConnerAiken/pelican.svg?token=pBXBM77UiMSriwAnV8zB&branch=master)](https://travis-ci.com/ConnerAiken/pelican)
+
+Pelican Delivers is a marijuana delivery application for legal state-licensed products. It is a nodejs express web server mixed with a react front-end. The express
+serves content from Pelican Deliver's own database and wrapper endpoints that communicate with APIs such as Trulioo, Greenbits and more. This application is dockerized
+and can be deployed to any machine that hosts docker. It also uses ansible to automate deployments. See the ansible playbooks for more details/configuration.
+
+If my time has passed and you are maintaining/developing this application, I would advise you to use a blank ubuntu VM with digital ocean and run the
+playbook against it. It should install all pre-requesites and launch the application. The playbooks do not setup any form of DNS to the machine however. You will need to google domain setup and point the nameservers to your hosting provider.
+
 ## SSL Certificates
 
 ### Usage

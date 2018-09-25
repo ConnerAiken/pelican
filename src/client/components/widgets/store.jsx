@@ -93,7 +93,12 @@ class Store extends React.Component {
       <React.Fragment> 
       {this.state.pendingRequest ? <LoadingScreen/> : null} 
         {this.state.visible ? <Modal size={'lg'} autoFocus={true} id="storeMenu" isOpen={true}  className={this.props.className}>
-          <ModalHeader>{this.props.info.name} - {this.props.info.city}, {this.props.info.state} <i id="closeBtn" className="fa fa-close pull-right" style={{color: 'grey'}} onClick={this.toggle}></i></ModalHeader>
+          <ModalHeader>{this.props.info.name} - {this.props.info.city}, {this.props.info.state} 
+          <Button id="closeBtn" className="pull-right" color="danger" onClick={this.toggle}><i id="closeBtn" className="fa fa-close" style={{color: 'grey'}}
+          ></i></Button>&nbsp;
+         <Button id="cartBtn" className="pull-right" color="warning" onClick={this.goToCart}><i style={{color: 'white'}} className="fa fa-shopping-cart"></i></Button>
+
+         </ModalHeader>
           <ModalBody> 
               <ReactTable 
                 data={this.state.products}
@@ -156,8 +161,7 @@ class Store extends React.Component {
           </ModalBody>
           <ModalFooter>
             <Button color="primary" onClick={this.toggle}>Save Cart</Button> 
-          </ModalFooter>
-        <Button id="menuBtn" color="warning" onClick={this.goToCart}><i style={{color: 'white'}} className="fa fa-shopping-cart"></i></Button>
+          </ModalFooter> 
         </Modal> : this.props.info ? <Button id="menuBtn" color="warning" onClick={this.toggle}><i style={{color: 'white'}} className="fa fa-list-alt"></i></Button> : null} 
       </React.Fragment>
     );

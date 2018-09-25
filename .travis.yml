@@ -3,16 +3,16 @@ sudo: false
 notifications:
   email:
     onfailure: change
-    onsuccess: change
-addons:
-  sshknownhosts:
-     - 142.93.19.150
+    onsuccess: change 
 branches:
   only:
      - master
+cache:
+  directories:
+    - "node_modules"
 node_js:
    - "9"
 install:
   - npm install
 script:
-  - npm run build
+  - npm run build 
