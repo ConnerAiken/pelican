@@ -40,7 +40,7 @@ class Store extends React.Component {
   }
   
   goToCart() {
-    this.history.props.replace('/cart'); 
+    this.props.history.replace('/cart'); 
   }
   listenForExternalOpen() { 
     document.querySelector("#root").addEventListener('store::selected', e => {  
@@ -50,9 +50,10 @@ class Store extends React.Component {
   } 
 
   addToCart(ele) {    
+    console.log(ele.row);
     // Dispatch cart added event and toggle the button
     document.querySelector(`[id='${ele.row.id}']`).classList.toggle("hidden");  
-    document.querySelector("#root").dispatchEvent(new Event(
+    document.querySelector("#root").dispatchEvent(new CustomEvent(
       'cart::added',
       {
         detail: ele.row
@@ -64,11 +65,11 @@ class Store extends React.Component {
   fetchInventory() { 
     this.setState({pendingRequest: true});
      
-    this.Auth.fetch('/api/v1/store/productTypes/239e77a5-d1c4-4510-962e-2de706d33af0')  
+    this.Auth.fetch(`/api/v1/store/productTypes/${this.props.info.id}`)  
     .then(response => this.setState({productTypes: response.data.product_types}))
-    .then(response => this.Auth.fetch('/api/v1/store/strains/239e77a5-d1c4-4510-962e-2de706d33af0'))  
+    .then(response => this.Auth.fetch(`/api/v1/store/strains/${this.props.info.id}`))  
     .then(response => this.setState({strains: response.data.strains}))
-    .then(response => this.Auth.fetch('/api/v1/store/products/239e77a5-d1c4-4510-962e-2de706d33af0')) 
+    .then(response => this.Auth.fetch(`/api/v1/store/products/${this.props.info.id}`)) 
     .then((response) => {  
 
       const products = [...response.data.products].map(product => {
@@ -93,11 +94,10 @@ class Store extends React.Component {
       <React.Fragment> 
       {this.state.pendingRequest ? <LoadingScreen/> : null} 
         {this.state.visible ? <Modal size={'lg'} autoFocus={true} id="storeMenu" isOpen={true}  className={this.props.className}>
-          <ModalHeader>{this.props.info.name} - {this.props.info.city}, {this.props.info.state} 
-          <Button id="closeBtn" className="pull-right" color="danger" onClick={this.toggle}><i id="closeBtn" className="fa fa-close" style={{color: 'grey'}}
-          ></i></Button>&nbsp;
-         <Button id="cartBtn" className="pull-right" color="warning" onClick={this.goToCart}><i style={{color: 'white'}} className="fa fa-shopping-cart"></i></Button>
-
+          <ModalHeader>
+              {this.props.info.name} - {this.props.info.city}, {this.props.info.state} 
+              <Button id="closeBtn" className="pull-right" color="danger" onClick={this.toggle} style={{color: 'white'}}><i id="closeBtn" className="fa fa-close"></i></Button>
+              <Button id="cartBtn" className="pull-right" color="warning" onClick={this.goToCart} style={{color: 'white', marginRight: '.25%'}}><i className="fa fa-shopping-cart"></i></Button>
          </ModalHeader>
           <ModalBody> 
               <ReactTable 

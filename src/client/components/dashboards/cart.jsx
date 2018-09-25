@@ -25,6 +25,19 @@ class Cart extends React.Component {
         <Col xs={{size: 4}} sm={{size: 4}} md={{size: 4}} lg={{size: 4}}> 
         </Col>
       </Row>
+      <Row>
+        <Col xs={{size: 4}} sm={{size: 4}} md={{size: 4}} lg={{size: 4}}>   
+        </Col>
+        <Col xs={{size: 4}} sm={{size: 4}} md={{size: 4}} lg={{size: 4}}> 
+            <pre style={{color: 'white'}}>
+              <code>
+                {JSON.stringify(JSON.parse(localStorage.getItem('sidebar')).cart, null, 2)}
+              </code>
+            </pre>
+        </Col>
+        <Col xs={{size: 4}} sm={{size: 4}} md={{size: 4}} lg={{size: 4}}> 
+        </Col>
+      </Row>
       {this.state.pendingRequest ? <LoadingScreen/> : null} 
       </Container> 
     );

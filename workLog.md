@@ -45,7 +45,8 @@
 add items to a invisible cart and it populates number in sidebar. Creating geolocation permission errors page. Adding new store icon to map. Adding actual item passing to cart through local storage.
 
 .5h (Tuesday Sep 25th 8:30-9:00am) - Closer look at greenbits api, calling to verify token lifetime
-.5h (Tuesday Sep 25th 9:30am-x) - Image asset preparation, progressive web app enhancements, continous integration changes
+
+.5h (Tuesday Sep 25th 9:30am-x) - Image asset preparation, progressive web app enhancements, continous integration changes. Setting up dynamic store endpoint queries (previousyl they were all hardcoded to one store). Working on adding a store.
 
 
 Remaining  hours: 22.5  

@@ -12,7 +12,11 @@ import userRoutes from "./routes/user";
 import storeRoutes from "./routes/store"; 
 import orderRoutes from "./routes/order"; 
 import uploadRoutes from "./routes/upload"; 
-import inventoryRoutes from "./routes/inventory";  
+import inventoryRoutes from "./routes/inventory"; 
+
+require('add-to-homescreen/dist/addtohomescreen.min.js');
+require('add-to-homescreen/dist/style/addtohomescreen.css');
+addToHomescreen();
  
  
 utils.loadENV();   

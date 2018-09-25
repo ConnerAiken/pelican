@@ -28,7 +28,9 @@ class Sidebar extends React.Component {
 
 hydrateStateWithLocalStorage() {
     const stateInStorage = JSON.parse(localStorage.getItem('sidebar'));
+    const cartInStorage = JSON.parse(localStorage.getItem('cart'));
     const state = _.extend(this.state, stateInStorage);
+    state.cart = _.extend(this.state.cart, cartInStorage);
     this.setState({state});
 }
 
@@ -36,6 +38,7 @@ saveStateToLocalStorage() {
     const state = {...this.state};
     delete state.user;
     localStorage.setItem('sidebar', JSON.stringify(state));
+    localStorage.setItem('cart', JSON.stringify(state.cart));
 }
  
 
@@ -58,10 +61,11 @@ componentWillUnmount() {
   listenForCartEvents() { 
     // Use localstorage here..
     document.querySelector("#root").addEventListener('cart::added', e => {  
-        if(!this.state) return;  
+        if(!this.state || !e.detail) return;    
 
         const cart = this.state.cart.slice(0); 
-        cart.push(e); 
+        cart.push(e.detail); 
+
         this.setState({cartCount: cart.length, cart});
 
     }, false);
@@ -70,6 +74,7 @@ componentWillUnmount() {
 
         document.querySelector(`[id='${ele.row.id}']`).classList.toggle("hidden");  
         cart = this.state.cart.slice(0).filter(item => item.id != e.original.id); 
+
         this.setState({cartCount: cart.length, cart});
 
     }, false);
@@ -77,6 +82,7 @@ componentWillUnmount() {
         if(!this.state) return;
 
         this.setState({cartCount: 0});
+        
     }, false);
   }
    

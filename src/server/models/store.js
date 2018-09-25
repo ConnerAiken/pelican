@@ -15,12 +15,12 @@ export default function(sequelize, DataTypes) {
         },
         apiId: {
           type: DataTypes.TEXT,
-          allowNull: true,
+          allowNull: false,
           defaultValue: null
         },
         apiKey: {
           type: DataTypes.TEXT,
-          allowNull: true,
+          allowNull: false,
           defaultValue: null
         },
         lat: {
@@ -33,8 +33,18 @@ export default function(sequelize, DataTypes) {
           allowNull: true,
           defaultValue: null
         },
+        
     }, {  tableName: 'stores',
-        classMethods: classMethods
+        classMethods: classMethods,
+        scopes: {
+          withoutCreds: {
+            attributes: { exclude: [
+              'apiKey',
+              'apiId',
+              'apiType'
+            ] },
+          }
+        }
     });
 };
 

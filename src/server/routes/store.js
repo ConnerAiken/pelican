@@ -6,7 +6,7 @@ const router = express.Router();
  
 router.get('/', function(req, res) {   
   
-  db.Store.findAll().then(function(stores) {  
+  db.Store.scope('withoutCreds').findAll().then(function(stores) {  
     if(stores.length == 0) {
        return res.status(401).json({
           failed: 'Could not find any stores'
@@ -18,43 +18,45 @@ router.get('/', function(req, res) {
     console.log(error);
     return res.status(500).json({error: error});
   });
-});
- 
-router.get('/products/:apiId', function(req, res) {    
-  axios.get('https://api.greenbits.com/api/v1/products?mj=true&by_active=true&limit=100', {   
-    headers: {
-      'Authorization': 'Token token="7tJv4mJ8PF0enhBZlRRfDQ"',
-      'Content-Type': 'application/json',
-      'X-GB-CompanyId': req.params.apiId
-    }
   
-  })
-  .then(result => res.json({success: true, data: result.data}))
-  .catch(e => console.log(e));
 });
  
-router.get('/strains/:apiId', function(req, res) {    
-  axios.get('https://api.greenbits.com/api/v1/strains?mj=true&by_active=true&limit=100', {   
+router.get('/products/:storeId', function(req, res) {     
+  db.Store.findOne({ where: {id: req.params.storeId}})
+  .then(store => axios.get('https://api.greenbits.com/api/v1/products?mj=true&by_active=true&limit=100', {   
     headers: {
-      'Authorization': 'Token token="7tJv4mJ8PF0enhBZlRRfDQ"',
+      'Authorization': `Token token="${store.apiKey}"`,
       'Content-Type': 'application/json',
-      'X-GB-CompanyId': req.params.apiId
-    } 
-  })
-  .then(result => res.json({success: true, data: result.data}))
-  .catch(e => console.log(e));
-});
-
-router.get('/productTypes/:apiId', function(req, res) {    
-  axios.get('https://api.greenbits.com/api/v1/product_types', {   
-    headers: {
-      'Authorization': 'Token token="7tJv4mJ8PF0enhBZlRRfDQ"',
-      'Content-Type': 'application/json',
-      'X-GB-CompanyId': req.params.apiId
-    } 
-  })
+      'X-GB-CompanyId': store.apiId
+    }}))
   .then(result => res.json({success: true, data: result.data}))
   .catch(e => console.log(e)); 
+});
+ 
+router.get('/strains/:storeId', function(req, res) {    
+  db.Store.findOne({ where: {id: req.params.storeId}})
+  .then(store => axios.get('https://api.greenbits.com/api/v1/strains?mj=true&by_active=true&limit=100', {   
+    headers: {
+      'Authorization': `Token token="${store.apiKey}"`,
+      'Content-Type': 'application/json',
+      'X-GB-CompanyId': store.apiId
+    }}))
+  .then(result => res.json({success: true, data: result.data}))
+  .catch(e => console.log(e)); 
+ 
+});
+
+router.get('/productTypes/:storeId', function(req, res) {    
+  db.Store.findOne({ where: {id: req.params.storeId}})
+  .then(store => axios.get('https://api.greenbits.com/api/v1/product_types', {   
+    headers: {
+      'Authorization': `Token token="${store.apiKey}"`,
+      'Content-Type': 'application/json',
+      'X-GB-CompanyId': store.apiId
+    }}))
+  .then(result => res.json({success: true, data: result.data}))
+  .catch(e => console.log(e)); 
+
 });
 
 export default router;
