@@ -22,6 +22,7 @@ before_install:
   - sudo pip install ansible
 
 install: 
+  - npm install  
   - npm run build    
   - npm run deploy
 
