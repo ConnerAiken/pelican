@@ -54,15 +54,16 @@ class Store extends React.Component {
   } 
 
   addToCart(ele) {     
-    // Dispatch cart added event and toggle the button
-    document.querySelector(`[id='${ele.row.id}']`).classList.toggle("hidden");  
+    ele.store = this.props.info;
+    
+    // Dispatch cart added event and toggle the button 
     document.querySelector("#root").dispatchEvent(new CustomEvent(
       'cart::added',
       {
-        detail: ele.row
+        detail: ele
       }
     ));   
-    utils.alert("Added \""+ele.row.name+"\" to your cart.");
+    utils.alert("Added \""+ele.name+"\" to your cart.");
   }
 
   fetchInventory() { 
@@ -83,6 +84,8 @@ class Store extends React.Component {
         product.category = product.category ? product.category.name : "";
         product.test_results_thc = product.test_results_thc ? product.test_results_thc : "";
         product.test_results_cbd = product.test_results_cbd ? product.test_results_cbd : "";
+        product.quantity = 1;
+
         return product;
       });
 
@@ -150,8 +153,8 @@ class Store extends React.Component {
                     accessor: 'id',
                     sortable: false,
                     filterable: false,
-                    Cell: row => (
-                      <Button id={row.row.id} onClick={this.addToCart.bind(this, row)}><i className="fa fa-plus"></i></Button>
+                    Cell: ele => (
+                      <Button id={ele.row._original.id} onClick={this.addToCart.bind(this, ele.row._original)}><i className="fa fa-plus"></i></Button>
                     )
                   }
                 ]}  

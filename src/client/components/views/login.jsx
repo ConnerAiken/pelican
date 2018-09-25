@@ -122,7 +122,7 @@ class Login extends React.Component {
                   <Row>  
                     <Col xs={{size: 6, offset: 0}} sm={{size: 6, offset: 0}} md={{size: 6, offset: 0}} lg={{size: 6, offset: 0}}>
                       <br/>
-                      <Button style={{backgroundColor: 'orange'}} color="warning" block={true} type="submit"  id="login-btn">
+                      <Button style={{backgroundColor: 'rgb(247, 111, 64)'}} color="warning" block={true} type="submit"  id="login-btn">
                         LOGIN
                       </Button>
                     </Col>

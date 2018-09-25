@@ -21,8 +21,7 @@ class Sidebar extends React.Component {
         cart: []
     };
 
-    utils.initializeProtectedComponent.call(this, utils); 
-    this.listenForCartEvents(); 
+    utils.initializeProtectedComponent.call(this, utils);  
   }
 
     hydrateStateWithLocalStorage() {
@@ -50,6 +49,7 @@ class Sidebar extends React.Component {
     
 
     componentDidMount() { 
+        this.listenForCartEvents(); 
         this.hydrateStateWithLocalStorage();  
         window.addEventListener(
         "beforeunload",
@@ -66,22 +66,27 @@ class Sidebar extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if(!_.isEqual(prevState, this.state)) {
-            this.saveStateToLocalStorage();
-        }
+        this.saveStateToLocalStorage();
     }
 
   listenForCartEvents() { 
-    // Use localstorage here..
+      
     document.querySelector("#root").addEventListener('cart::added', e => {  
         if(!this.state || !e.detail) return;    
 
         const cart = this.state.cart.slice(0); 
-        cart.push(e.detail); 
+        const existingProductIndex = _.findIndex(cart, {id: e.detail.id});
+
+        if(existingProductIndex != -1) {
+            cart[existingProductIndex].quantity += 1; 
+        }else {
+            cart.push(e.detail); 
+        }
   
         this.setState({cart}); 
 
     }, false);
+
     document.querySelector("#root").addEventListener('cart::removed', e => {  
         if(!this.state || !e.detail) return;    
 
@@ -91,11 +96,52 @@ class Sidebar extends React.Component {
         this.setState({cart}); 
 
     }, false);
+    
     document.querySelector("#root").addEventListener('cart::cleared', e => {  
         if(!this.state) return;
  
         this.setState({cart: []}); 
     }, false);
+
+    document.querySelector("#root").addEventListener('cart::incremented', e => {  
+        if(!this.state) return;
+
+        const cart = this.state.cart.slice(0);
+
+        cart.forEach(item => {
+            if(item.id == e.detail.id) {
+                item.quantity += 1;
+            }
+        })
+
+        this.setState({cart});  
+
+    }, false);
+
+    document.querySelector("#root").addEventListener('cart::decremented', e => {  
+        if(!this.state) return;
+ 
+        if(e.detail.quantity == 1) {
+
+            const pendingItem = e.detail;  
+            const cart = this.state.cart.slice(0).filter(item => item.id != pendingItem.id)
+      
+            this.setState({cart}); 
+
+        }else {
+            const cart = this.state.cart.slice(0);
+
+            cart.forEach(item => { 
+                if(item.id == e.detail.id) {
+                    item.quantity -= 1;
+                }
+            })
+
+            this.setState({cart}); 
+        } 
+    }, false);
+
+     
   }
    
   handleNavChange(route) { 

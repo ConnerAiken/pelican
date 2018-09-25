@@ -46,7 +46,7 @@ add items to a invisible cart and it populates number in sidebar. Creating geolo
 
 .5h (Tuesday Sep 25th 8:30-9:00am) - Closer look at greenbits api, calling to verify token lifetime
 
-.5h (Tuesday Sep 25th 9:30am-x) - Image asset preparation, progressive web app enhancements, continous integration changes. Setting up dynamic store endpoint queries (previousyl they were all hardcoded to one store). Working on adding a store.
+5.5h (Tuesday Sep 25th 9:30am-3:00pm) - Image asset preparation, progressive web app enhancements, continous integration changes. Setting up dynamic store endpoint queries (previousyl they were all hardcoded to one store). Working on cart view/add/remove logic.
 
 
-Remaining  hours: 22.5  
+Remaining  hours: 14 hours

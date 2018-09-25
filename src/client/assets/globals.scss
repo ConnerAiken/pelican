@@ -1,5 +1,16 @@
+$orange: rgb(247, 111, 64);
+
+
 .hover-select {
-   &:hover {
-       cursor: pointer;
-   } 
-}
+    &:hover {
+        cursor: pointer;
+    } 
+ }
+ 
+
+.no-hover {
+    &:hover {
+        cursor: default !important;
+    } 
+ }
+   
