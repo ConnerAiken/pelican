@@ -149,7 +149,7 @@ componentWillUnmount() {
                 <a href="#"><i className="fa fa-question-circle-o"></i>&nbsp;&nbsp;&nbsp;Help</a>
             </li> 
             <li className="inactive" onClick={this.handleLogout}>
-                <a href="#"><i className="fa fa-sign-out"></i>&nbsp;&nbsp;&nbsp;Logout</a>
+                <a href="#"><i className="fa fa-power-off"></i>&nbsp;&nbsp;&nbsp;Sign Out</a>
             </li> 
         </ul>
         </Col> 

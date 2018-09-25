@@ -22,6 +22,11 @@ import PrivacyPolicy from "./components/views/privacyPolicy.jsx";
 import Verify from "./components/views/verify.jsx"; 
 import geolocationError from "./components/views/geolocationError"; 
 
+require('add-to-homescreen/dist/addtohomescreen.min.js');
+require('add-to-homescreen/dist/style/addtohomescreen.css');
+addToHomescreen();
+ 
+ 
 window['NODE_ENV'] = process.env.NODE_ENV;
 
 const piwik = new ReactPiwik({

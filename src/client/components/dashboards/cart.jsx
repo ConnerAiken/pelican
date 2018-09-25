@@ -14,6 +14,7 @@ class Cart extends React.Component {
   } 
  
   render() { 
+    console.log(this.props.history);
     return (
       <Container className="container dashboard" fluid={true}> 
       <Row id="header">
@@ -23,6 +24,7 @@ class Cart extends React.Component {
             <h3>My Cart</h3>
         </Col>
         <Col xs={{size: 4}} sm={{size: 4}} md={{size: 4}} lg={{size: 4}}> 
+            <i className="fa fa-trash pull-right" onClick={this.clearCart}></i>
         </Col>
       </Row>
       <Row>
