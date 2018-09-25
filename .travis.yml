@@ -15,11 +15,11 @@ branches:
 cache:
   directories:
     - "node_modules"  
-    
+
 before_install:
   # Make sure everything's up to date.
   - sudo apt-get update -qq  
-  - pip install ansible
+  - sudo pip install ansible
 
 install: 
   - npm run build    
