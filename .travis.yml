@@ -15,15 +15,15 @@ branches:
 cache:
   directories:
     - "node_modules"  
+env:
+  ANSIBLE_HOST_KEY_CHECKING: false
 
-before_install:
-  # Make sure everything's up to date.
+before_install: 
   - sudo apt-get update -qq  
   - sudo pip install ansible
 
 install: 
   - npm install  
   - npm run build    
-  - npm run deploy
-
+  - npm run deploy # needs ssh key config
  
