@@ -17,8 +17,7 @@ class Sidebar extends React.Component {
     this.handleLogout = this.handleLogout.bind(this);
 
     this.state = {
-        collapsed: false,
-        cartCount: 0,
+        collapsed: false, 
         cart: []
     };
 
@@ -26,37 +25,51 @@ class Sidebar extends React.Component {
     this.listenForCartEvents(); 
   }
 
-hydrateStateWithLocalStorage() {
-    const stateInStorage = JSON.parse(localStorage.getItem('sidebar'));
-    const cartInStorage = JSON.parse(localStorage.getItem('cart'));
-    const state = _.extend(this.state, stateInStorage);
-    state.cart = _.extend(this.state.cart, cartInStorage);
-    this.setState({state});
-}
+    hydrateStateWithLocalStorage() {
+        const stateInStorage = JSON.parse(localStorage.getItem('sidebar'));
+        const cartInStorage = JSON.parse(localStorage.getItem('cart'));
+        const state = {};
+        
+        _.extend(state, this.state);
+        _.extend(this.state, stateInStorage);
+        _.extend(this.state.cart, cartInStorage); 
 
-saveStateToLocalStorage() {
-    const state = {...this.state};
-    delete state.user;
-    localStorage.setItem('sidebar', JSON.stringify(state));
-    localStorage.setItem('cart', JSON.stringify(state.cart));
-}
- 
+        this.setState(state);
+    }
 
-componentDidMount() { 
-    this.hydrateStateWithLocalStorage();  
-    window.addEventListener(
-      "beforeunload",
-      this.saveStateToLocalStorage.bind(this)
-    );
-}
+    saveStateToLocalStorage() {
+        const state = Object.assign({}, this.state);
 
-componentWillUnmount() { 
-    window.removeEventListener(
-      "beforeunload",
-      this.saveStateToLocalStorage.bind(this)
-    ); 
-    this.saveStateToLocalStorage();
-}
+        localStorage.setItem('cart', JSON.stringify(state.cart));
+
+        delete state.user;
+        delete state.cart;
+    
+        localStorage.setItem('sidebar', JSON.stringify(state)); 
+    }
+    
+
+    componentDidMount() { 
+        this.hydrateStateWithLocalStorage();  
+        window.addEventListener(
+        "beforeunload",
+        this.saveStateToLocalStorage.bind(this)
+        );
+    }
+
+    componentWillUnmount() { 
+        window.removeEventListener(
+        "beforeunload",
+        this.saveStateToLocalStorage.bind(this)
+        ); 
+        this.saveStateToLocalStorage();
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if(!_.isEqual(prevState, this.state)) {
+            this.saveStateToLocalStorage();
+        }
+    }
 
   listenForCartEvents() { 
     // Use localstorage here..
@@ -65,24 +78,23 @@ componentWillUnmount() {
 
         const cart = this.state.cart.slice(0); 
         cart.push(e.detail); 
-
-        this.setState({cartCount: cart.length, cart});
+  
+        this.setState({cart}); 
 
     }, false);
     document.querySelector("#root").addEventListener('cart::removed', e => {  
-        if(!this.state) return; 
+        if(!this.state || !e.detail) return;    
 
-        document.querySelector(`[id='${ele.row.id}']`).classList.toggle("hidden");  
-        cart = this.state.cart.slice(0).filter(item => item.id != e.original.id); 
-
-        this.setState({cartCount: cart.length, cart});
+        const pendingItem = e.detail;  
+        const cart = this.state.cart.slice(0).filter(item => item.id != pendingItem.id)
+  
+        this.setState({cart}); 
 
     }, false);
-    document.querySelector("#root").addEventListener('cart::emptied', e => {  
+    document.querySelector("#root").addEventListener('cart::cleared', e => {  
         if(!this.state) return;
-
-        this.setState({cartCount: 0});
-        
+ 
+        this.setState({cart: []}); 
     }, false);
   }
    
@@ -96,7 +108,7 @@ componentWillUnmount() {
 
   handleLogout() {
     this.Auth.logout();
-    this.props.history.replace('/login');
+    this.props.history.push('/login');
   }
 
   render() { 
@@ -117,39 +129,39 @@ componentWillUnmount() {
                 <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a>
                 <ul class="collapse list-unstyled" id="homeSubmenu">
                     <li>
-                        <a href="#">Home 1</a>
+                        <a >Home 1</a>
                     </li>
                     <li>
-                        <a href="#">Home 2</a>
+                        <a >Home 2</a>
                     </li>
                     <li>
-                        <a href="#">Home 3</a>
+                        <a >Home 3</a>
                     </li>
                 </ul>
             </li>  */}
             <li className={this.props.history.location.pathname == "/dashboard" ? "active" : "inactive" } onClick={this.handleNavChange.bind(this, '/dashboard')}>
-                <a href="#"><i className="fa fa-home"></i>&nbsp;&nbsp;&nbsp;Home</a>
+                <a ><i className="fa fa-home"></i>&nbsp;&nbsp;&nbsp;Home</a>
             </li>
             <li className={this.props.history.location.pathname == "/cart" ? "active" : "inactive" }  onClick={this.handleNavChange.bind(this, '/cart')}>
-                <a href="#"><i className="fa fa-shopping-cart"></i>&nbsp;&nbsp;&nbsp;My Cart ({this.state.cartCount})</a>
+                <a ><i className="fa fa-shopping-cart"></i>&nbsp;&nbsp;&nbsp;My Cart ({this.state.cart.length})</a>
             </li> 
             <li className={this.props.history.location.pathname == "/payment" ? "active" : "inactive" }  onClick={this.handleNavChange.bind(this, '/payment')}>
-                <a href="#"><i className="fa fa-credit-card"></i>&nbsp;&nbsp;&nbsp;Payment</a>
+                <a ><i className="fa fa-credit-card"></i>&nbsp;&nbsp;&nbsp;Payment</a>
             </li>
             <li className={this.props.history.location.pathname == "/profile" ? "active" : "inactive" }  onClick={this.handleNavChange.bind(this, '/profile')}>
-                <a href="#"><i className="fa fa-user-circle-o"></i>&nbsp;&nbsp;&nbsp;Profile</a>
+                <a ><i className="fa fa-user-circle-o"></i>&nbsp;&nbsp;&nbsp;Profile</a>
             </li>
             <li className={this.props.history.location.pathname == "/histories" ? "active" : "inactive" }  onClick={this.handleNavChange.bind(this, '/histories')}>
-                <a href="#"><i className="fa fa-history"></i>&nbsp;&nbsp;&nbsp;Histories</a>
+                <a ><i className="fa fa-history"></i>&nbsp;&nbsp;&nbsp;Histories</a>
             </li> 
             <li className={this.props.history.location.pathname == "/share" ? "active" : "inactive" }  onClick={this.handleNavChange.bind(this, '/share')}>
-                <a href="#"><i className="fa fa-share-alt"></i>&nbsp;&nbsp;&nbsp;Share</a>
+                <a ><i className="fa fa-share-alt"></i>&nbsp;&nbsp;&nbsp;Share</a>
             </li>
             <li className={this.props.history.location.pathname == "/help" ? "active" : "inactive" }  onClick={this.handleNavChange.bind(this, '/help')}>
-                <a href="#"><i className="fa fa-question-circle-o"></i>&nbsp;&nbsp;&nbsp;Help</a>
+                <a ><i className="fa fa-question-circle-o"></i>&nbsp;&nbsp;&nbsp;Help</a>
             </li> 
             <li className="inactive" onClick={this.handleLogout}>
-                <a href="#"><i className="fa fa-power-off"></i>&nbsp;&nbsp;&nbsp;Sign Out</a>
+                <a ><i className="fa fa-power-off"></i>&nbsp;&nbsp;&nbsp;Sign Out</a>
             </li> 
         </ul>
         </Col> 

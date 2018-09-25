@@ -61,7 +61,7 @@ class DriverMapDash extends React.Component {
           toastr.error('Your position is not currently available. Error code: ' + error.code);
         } else if(error == 1) {
           toastr.error("Please allow Pelican to view your location.");
-          this.props.history.replace('/geolocation-error');
+          this.props.history.push('/geolocation-error');
         } else if(error == 3) {
           toastr.error("The geolocation api timed out.");
         }
@@ -72,7 +72,7 @@ class DriverMapDash extends React.Component {
         this.setState({locationLoaded: true, pendingRequest: false, curLoc: { coords: {lat: position.coords.latitude, lng: position.coords.longitude}}});
       }, (err) => { 
         if(err.code == 1) { 
-          this.props.history.replace('/geolocation-error');
+          this.props.history.push('/geolocation-error');
         }
       }, {timeout: 2500, enableHighAccuracy: true, maximumAge: 75000});
 

@@ -21,17 +21,19 @@ class Store extends React.Component {
     this.goToCart = this.goToCart.bind(this);
 
     this.state = _.extend(this.state, {
-      products: [],
-      cartItems: [],
+      products: [],  
       pages: null,
       loading: true,
       pendingRequest: true,
       visible: true
     });
-
-    this.fetchInventory();
+ 
     this.listenForExternalOpen();
   } 
+
+  componentDidMount() {
+    this.fetchInventory();
+  }
 
   toggle() {
     this.setState({
@@ -40,8 +42,10 @@ class Store extends React.Component {
   }
   
   goToCart() {
-    this.props.history.replace('/cart'); 
+    this.toggle();
+    this.props.history.push('/cart'); 
   }
+
   listenForExternalOpen() { 
     document.querySelector("#root").addEventListener('store::selected', e => {  
         if(!this.state) return;  
@@ -49,8 +53,7 @@ class Store extends React.Component {
     }, false); 
   } 
 
-  addToCart(ele) {    
-    console.log(ele.row);
+  addToCart(ele) {     
     // Dispatch cart added event and toggle the button
     document.querySelector(`[id='${ele.row.id}']`).classList.toggle("hidden");  
     document.querySelector("#root").dispatchEvent(new CustomEvent(
@@ -58,7 +61,7 @@ class Store extends React.Component {
       {
         detail: ele.row
       }
-    )); 
+    ));   
     utils.alert("Added \""+ele.row.name+"\" to your cart.");
   }
 
@@ -97,7 +100,6 @@ class Store extends React.Component {
           <ModalHeader>
               {this.props.info.name} - {this.props.info.city}, {this.props.info.state} 
               <Button id="closeBtn" className="pull-right" color="danger" onClick={this.toggle} style={{color: 'white'}}><i id="closeBtn" className="fa fa-close"></i></Button>
-              <Button id="cartBtn" className="pull-right" color="warning" onClick={this.goToCart} style={{color: 'white', marginRight: '.25%'}}><i className="fa fa-shopping-cart"></i></Button>
          </ModalHeader>
           <ModalBody> 
               <ReactTable 
@@ -159,8 +161,8 @@ class Store extends React.Component {
               className="-striped -highlight" 
               />
           </ModalBody>
-          <ModalFooter>
-            <Button color="primary" onClick={this.toggle}>Save Cart</Button> 
+          <ModalFooter>   
+            <Button id="cartBtn" className="pull-right" color="success" onClick={this.goToCart}>View Cart</Button> 
           </ModalFooter> 
         </Modal> : this.props.info ? <Button id="menuBtn" color="warning" onClick={this.toggle}><i style={{color: 'white'}} className="fa fa-list-alt"></i></Button> : null} 
       </React.Fragment>

@@ -264,7 +264,7 @@ class Signup extends React.Component {
                   <Col xs={12} sm={12} md={12} lg={12}> 
                     <p>Address Line 1</p>
                     <Input valid={this.state.form.addressLine1  != false} invalid={this.state.form.addressLine1 === false}  required onChange={this.handleFormChange} name="addressLine1" id="addressLine1" type="text" placeholder=""/>
-                    <a href="#" id="map-link">Pick to map</a>
+                    <a  id="map-link">Pick to map</a>
                     {this.state.form.addressLine1 === false ? <p>Street address, P.O. box, company name</p> : null}
                   </Col>
                   <Col xs={12} sm={12} md={12} lg={12}> 

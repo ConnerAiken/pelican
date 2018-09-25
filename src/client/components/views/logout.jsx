@@ -13,7 +13,7 @@ class Logout extends React.Component {
  
   render() { 
     this.Auth.logout();
-    this.props.history.replace('/login'); 
+    this.props.history.push('/login'); 
     return <p style={{padding: '5%', textAlign: 'center'}}>Logging out..</p>;
   }
 

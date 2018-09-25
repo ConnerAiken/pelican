@@ -2,6 +2,7 @@
 import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 import 'toastr/build/toastr.css';    
+import './assets/globals.scss';
 
 import React from "react"; 
 import ReactDOM from "react-dom";

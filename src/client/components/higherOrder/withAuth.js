@@ -15,7 +15,7 @@ export default function withAuth(AuthComponent) {
 
         componentWillMount() {
             if (!Auth.loggedIn()) {
-                this.props.history.replace('/login')
+                this.props.history.push('/login')
             }
             else {
                 try {
@@ -27,12 +27,12 @@ export default function withAuth(AuthComponent) {
                     })
 
                     if (Auth.loggedIn() && !profile.verified) {
-                        this.props.history.replace('/verify') 
+                        this.props.history.push('/verify') 
                     }
                 }
                 catch(err){
                     Auth.logout()
-                    this.props.history.replace('/login')
+                    this.props.history.push('/login')
                 }
             }
         }

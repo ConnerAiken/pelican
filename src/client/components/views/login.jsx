@@ -57,10 +57,10 @@ class Login extends React.Component {
     this.setState({password: e.target.value});
   } 
   handlePrivacyPolicy(e) {  
-    this.props.history.replace('/privacy'); 
+    this.props.history.push('/privacy'); 
   }
   handleRegister(e) {  
-    this.props.history.replace('/signup'); 
+    this.props.history.push('/signup'); 
   }
 
   handleLogin(e) {
@@ -73,7 +73,7 @@ class Login extends React.Component {
 
     this.setState({pendingRequest: true}); 
     this.Auth.login(this.state.email, this.state.password)
-              .then(res => toastr.success("Logging in..") && this.props.history.replace('/dashboard'))
+              .then(res => toastr.success("Logging in..") && this.props.history.push('/dashboard'))
               .catch(err => {
                 toastr.error(err);
                 this.setState({pendingRequest: false});
@@ -82,7 +82,7 @@ class Login extends React.Component {
  
   componentWillMount(){
       if(this.Auth.loggedIn())
-          this.props.history.replace('/dashboard');
+          this.props.history.push('/dashboard');
   }
 
 
@@ -108,7 +108,7 @@ class Login extends React.Component {
       <Container id="main" className="container home" fluid={true}>
           <Row>
             <Col xs={{size: 12}} sm={{size: 12}} md={{size: 8, offset: 2}} lg={{size: 8, offset: 2}} className="text-center"> 
-                <a id="privacy-link" href="#" onClick={this.handlePrivacyPolicy}>
+                <a id="privacy-link"  onClick={this.handlePrivacyPolicy}>
                   PRIVACY POLICY
                 </a> 
             </Col>
@@ -128,7 +128,7 @@ class Login extends React.Component {
                     </Col>
                     <Col xs={{size: 6, offset: 0}} sm={{size: 6, offset: 0}} md={{size: 6, offset: 0}} lg={{size: 6, offset: 0}} style={{textAlign: 'right', divor: 'white'}}>
                       <br/>
-                      <a id="forgot-link" onClick={this.handleForgotPassword} href="#">Forgot Password?</a>
+                      <a id="forgot-link" onClick={this.handleForgotPassword} >Forgot Password?</a>
                     </Col>
                   </Row> 
                 </form> 

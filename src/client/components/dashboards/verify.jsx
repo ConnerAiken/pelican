@@ -54,7 +54,7 @@ class Verify extends React.Component {
     .then(res => {
       toastr.success("Verification submitted.. Please login again.");
       this.Auth.logout();
-      this.props.history.replace('/login');
+      this.props.history.push('/login');
     })
     .catch(err => console.log(err) && toastr.error(err) && this.setState({pendingRequest: false})); 
   }

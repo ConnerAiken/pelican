@@ -47,7 +47,7 @@ export default {
 
         this.componentWillMount = () => {
             if(!this.Auth.loggedIn())
-                this.props.history.replace('/login');
+                this.props.history.push('/login');
         }
         
 
