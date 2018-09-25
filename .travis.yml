@@ -25,5 +25,5 @@ before_install:
 install: 
   - npm install  
   - npm run build    
-  - npm run deploy # needs ssh key config
+  # - npm run deploy # needs ssh key config
  
