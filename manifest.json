@@ -1,0 +1,9 @@
+{
+    "name": "Pelican Delivers",
+    "short_name": "Pelican",
+    "theme_color": "#3d5e4c",
+    "background_color": "#ffa500",
+    "display": "minimal-ui",
+    "scope": "/",
+    "start_url": "/login"
+  }
