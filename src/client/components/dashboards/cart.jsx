@@ -163,28 +163,28 @@ class Cart extends React.Component {
     return (
       <Container className="container dashboard" fluid={true}> 
       <Row id="header">
-        <Col xs={{size: 4}} sm={{size: 4}} md={{size: 4}} lg={{size: 4}}>   
+        <Col xs={{size: 1}} sm={{size: 2}} md={{size: 4}} lg={{size: 4}}>   
             <i className="fa fa-arrow-left fa-2x pull-left hover-select" onClick={this.goBack}></i>
         </Col>
-        <Col xs={{size: 4}} sm={{size: 4}} md={{size: 4}} lg={{size: 4}} style={{textAlign: 'center'}}> 
+        <Col xs={{size: 10}} sm={{size: 8}} md={{size: 4}} lg={{size: 4}} style={{textAlign: 'center'}}> 
             <h3>My Cart</h3>
         </Col>
-        <Col xs={{size: 4}} sm={{size: 4}} md={{size: 4}} lg={{size: 4}}> 
+        <Col xs={{size: 1}} sm={{size: 2}} md={{size: 4}} lg={{size: 4}}> 
             <i className="fa fa-trash fa-2x pull-right hover-select" onClick={this.clearCart}></i>
         </Col>
       </Row> 
       {this.showCartItems()} 
       {this.state.items.length > 0 ? 
         <Row style={{marginTop: '2.5%'}}>
-          <Col xs={{size: 4}} sm={{size: 4}} md={{size: 2}} lg={{size: 2}}>   
+        <Col xs={{size: 1}} sm={{size: 2}} md={{size: 4}} lg={{size: 4}}> 
           </Col>
-          <Col xs={{size: 4}} sm={{size: 4}} md={{size: 8}} lg={{size: 8}}>   
+        <Col xs={{size: 10}} sm={{size: 8}} md={{size: 4}} lg={{size: 4}} style={{textAlign: 'center'}}> 
             <ButtonGroup style={{width: '100%'}}>
               <Button outline style={{width: '50%', color: 'white',background: 'none', border: 'none'}}>Total: <span style={{color: 'rgb(247, 111, 64)'}}>{(this.state.total / 100).toLocaleString("en-US", {style:"currency", currency:"USD"})}</span></Button>
               <Button style={{width: '50%', color: 'white', backgroundColor: 'rgb(247, 111, 64)', borderColor: 'rgb(247, 111, 64)'}} onClick={this.handlePurchase}>BUY NOW</Button>
             </ButtonGroup>
           </Col>
-          <Col xs={{size: 4}} sm={{size: 4}} md={{size: 2}} lg={{size: 2}}>  
+        <Col xs={{size: 1}} sm={{size: 2}} md={{size: 4}} lg={{size: 4}}> 
           </Col>
         </Row> 
       : null}
