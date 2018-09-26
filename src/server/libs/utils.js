@@ -3,10 +3,28 @@ import dotenv from "dotenv";
 import path from "path";
 import jwt from "jsonwebtoken";
 import atob from "atob";
+import mcache from "memory-cache";
 
 const whiteListedRoutes = ['/api/v1/user/login', '/api/v1/user/register', '/api/v1/store', '/api/v1/upload', '/api/v1/user/verify'];
 
 export default {
+    cache(duration) {
+        return (req, res, next) => {
+            let key = '_express_'+req.originalUrl || req.url;
+            let cachedBody = mcache.get(key);
+            if(cachedBody) {
+                res.send(cachedBody);
+                return;
+            }else {
+                res.sendResponse = res.send;
+                res.send = (body) => {
+                    mcache.put(key, body, duration * 1000);
+                    res.sendResponse(body);
+                }
+                next();
+            }
+        }
+    },
     log(msg, type = 0) {
         if(type === 1) {
             console.warn(`[${process.env.appName}] ${msg}`);

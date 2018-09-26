@@ -66,9 +66,17 @@ export default class AuthService {
         return localStorage.getItem('token')
     }
 
-    logout() { 
-        // Clear user token and profile data from localStorage
-        return localStorage.clear();
+    logout() {  
+        // Get a token from api server using the fetch api 
+        return this.fetch(`${this.domain}/api/v1/user/logout`, {
+            method: 'POST'
+        }).then(res => { 
+            localStorage.clear();
+            return Promise.resolve(res);
+        }).catch(e => {
+            localStorage.clear();
+            return Promise.reject(e);
+        })
     }
 
     getProfile() {

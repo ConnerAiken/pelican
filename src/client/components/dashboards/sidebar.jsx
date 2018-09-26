@@ -153,8 +153,9 @@ class Sidebar extends React.Component {
   }
 
   handleLogout() {
-    this.Auth.logout();
-    this.props.history.push('/login');
+    this.Auth.logout().then(e => { 
+        this.props.history.push('/login');
+    });
   }
 
   render() { 

@@ -1,10 +1,11 @@
 import db from "../libs/db"; 
 import express from "express"; 
 import axios from "axios";
+import utils from "./../libs/utils";
 
 const router = express.Router(); 
  
-router.get('/', function(req, res) {   
+router.get('/', utils.cache(180), function(req, res) {   
   
   db.Store.scope('withoutCreds').findAll().then(function(stores) {  
     if(stores.length == 0) {
@@ -21,7 +22,7 @@ router.get('/', function(req, res) {
   
 });
  
-router.get('/products/:storeId', function(req, res) {     
+router.get('/products/:storeId', utils.cache(180), function(req, res) {     
   db.Store.findOne({ where: {id: req.params.storeId}})
   .then(store => axios.get('https://api.greenbits.com/api/v1/products?mj=true&by_active=true&limit=100', {   
     headers: {
@@ -33,7 +34,7 @@ router.get('/products/:storeId', function(req, res) {
   .catch(e => console.log(e)); 
 });
  
-router.get('/strains/:storeId', function(req, res) {    
+router.get('/strains/:storeId', utils.cache(180), function(req, res) {    
   db.Store.findOne({ where: {id: req.params.storeId}})
   .then(store => axios.get('https://api.greenbits.com/api/v1/strains?mj=true&by_active=true&limit=100', {   
     headers: {
@@ -46,7 +47,7 @@ router.get('/strains/:storeId', function(req, res) {
  
 });
 
-router.get('/productTypes/:storeId', function(req, res) {    
+router.get('/productTypes/:storeId', utils.cache(180), function(req, res) {    
   db.Store.findOne({ where: {id: req.params.storeId}})
   .then(store => axios.get('https://api.greenbits.com/api/v1/product_types', {   
     headers: {

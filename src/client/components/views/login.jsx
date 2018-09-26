@@ -107,7 +107,7 @@ class Login extends React.Component {
     return (
       <Container id="main" className="container home" fluid={true}>
           <Row>
-            <Col xs={{size: 12}} sm={{size: 12}} md={{size: 8, offset: 2}} lg={{size: 8, offset: 2}} className="text-center"> 
+            <Col xs={{size: 12}} sm={{size: 12}} md={{size: 8, offset: 2}} lg={{size: 8, offset: 2}} className="text-center" id="header-col"> 
                 <a id="privacy-link"  onClick={this.handlePrivacyPolicy}>
                   PRIVACY POLICY
                 </a> 
@@ -122,7 +122,7 @@ class Login extends React.Component {
                   <Row>  
                     <Col xs={{size: 6, offset: 0}} sm={{size: 6, offset: 0}} md={{size: 6, offset: 0}} lg={{size: 6, offset: 0}}>
                       <br/>
-                      <Button style={{backgroundColor: 'rgb(247, 111, 64)'}} color="warning" block={true} type="submit"  id="login-btn">
+                      <Button style={{backgroundColor: 'rgb(247, 111, 64)', borderColor: 'rgb(247, 111, 64)', color: 'white'}} color="warning" block={true} type="submit"  id="login-btn">
                         LOGIN
                       </Button>
                     </Col>

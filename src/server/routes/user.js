@@ -4,7 +4,8 @@ import bcrypt from "bcrypt";
 import express from "express";
 import path from "path";
 import fs from "fs";
-import _ from "lodash";
+import _ from "lodash"; 
+import geoip from "geoip-lite";
 
 const router = express.Router(); 
 const appData = {};
@@ -34,7 +35,7 @@ router.post('/verification', function(req, res) {
    
 }); 
 
-router.post('/register', function(req, res) {  
+router.post('/register', function(req, res) {   
   
   if(Object.keys(req.body).length < 5) {
     return res.status(500).json({
@@ -112,8 +113,24 @@ router.post('/register', function(req, res) {
 
    });
 });
+router.post('/logout', function(req, res) {    
+  const user = jwt.decode(req.headers.token);
+
+  return db.AuthLog.create({
+    userId: user.id,
+    ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
+    type: "logout::success"
+  }).then(result => { 
+      return res.status(200).json({
+        success: 'Logged out'
+      });
+  }) 
+});
+
 
 router.post('/login', function(req, res) {   
+  const geo = geoip.lookup(req.headers['x-forwarded-for'] || req.connection.remoteAddress) ? geoip.lookup(req.headers['x-forwarded-for'] || req.connection.remoteAddress) : {};
+
   db.User.findOne({ where: {email: req.body.email}}).then(function(user) {  
     if(!user) {
        return res.status(401).json({
@@ -129,6 +146,7 @@ router.post('/login', function(req, res) {
         }
         
         if(result) {  
+          // Consolidate this into the upmost query with a join
           return db.UserInfo.findOne({where: {userId: user.id}}).then(userInfo => { 
             // Construct token object
             userInfo = userInfo.get({
@@ -144,11 +162,14 @@ router.post('/login', function(req, res) {
               verified: user.verified
             }
             
-            const token = jwt.sign(tokenData, process.env.appSecret, {expiresIn: 5000});
-            
+            const token = jwt.sign(tokenData, process.env.appSecret, {expiresIn: 5000});  
+
            return db.AuthLog.create({
               userId: user.id,
               ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
+              city: geo.city || null,
+              region: geo.region || null,
+              country: geo.country || null,
               type: "login::success"
             }).then(result => { 
                 return res.status(200).json({
@@ -158,26 +179,48 @@ router.post('/login', function(req, res) {
                 });
             }) 
 
-          }).catch(error => {  
+          }).catch(error => {   
             db.AuthLog.create({
               userId: user.id,
-              ip: req.ip,
-              type: "login::failure"
-            }).then(result => { 
-              console.log(error);
+              ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
+              city: geo.city || null,
+              region: geo.region || null,
+              country: geo.country || null,
+              type: "login::errorLogging"
+            }).then(result => {  
               return res.status(500).json({error: error});
             });
+
           }); 
-        }else { 
-          return res.status(401).json({
-            failed: 'Unauthorized Access'
-          });
+        }else {  
+          db.AuthLog.create({
+            userId: user.id,
+            ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
+            city: geo.city || null,
+            region: geo.region || null,
+            country: geo.country || null,
+            type: "login::badPassword"
+          }).then(result => { 
+            return res.status(401).json({
+              error: 'Unauthorized Access'
+            });
+          }); 
         }
      });
      
-  }).catch(error => {  
-    console.log(error);
-    return res.status(500).json({error: error});
+  }).catch(error => {    
+    db.AuthLog.create({
+      userId: user.id,
+      ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
+      city: geo.city || null,
+      region: geo.region || null,
+      country: geo.country || null,
+      type: "login::badPassword"
+    }).then(result => { 
+      return res.status(500).json({
+        error: 'Invalid credentials'
+      }); 
+    }); 
   });
 });
 

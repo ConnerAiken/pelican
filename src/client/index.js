@@ -21,11 +21,7 @@ import Share from "./components/views/share.jsx";
 import Signup from "./components/views/signup.jsx";  
 import PrivacyPolicy from "./components/views/privacyPolicy.jsx"; 
 import Verify from "./components/views/verify.jsx"; 
-import geolocationError from "./components/views/geolocationError"; 
-
-require('add-to-homescreen/dist/addtohomescreen.min.js');
-require('add-to-homescreen/dist/style/addtohomescreen.css');
-addToHomescreen();
+import geolocationError from "./components/views/geolocationError";  
  
  
 window['NODE_ENV'] = process.env.NODE_ENV;
