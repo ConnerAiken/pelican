@@ -72,9 +72,11 @@ export default class AuthService {
             method: 'POST'
         }).then(res => { 
             localStorage.clear();
+            this.props.history.replace('/login');
             return Promise.resolve(res);
         }).catch(e => {
             localStorage.clear();
+            this.props.history.replace('/login');
             return Promise.reject(e);
         })
     }
