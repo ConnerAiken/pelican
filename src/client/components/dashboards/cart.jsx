@@ -112,15 +112,15 @@ class Cart extends React.Component {
         </Media>  
         <Row className="card-metadata-wrapper">
           <hr/>
-          <Col xs={{size: 6}} sm={{size: 6}} md={{size: 6}} lg={{size: 6}}>  
+          <Col xs={{size: 6}}  sm={{size: 6}} md={{size: 6}} lg={{size: 6}}>  
               <p style={{textAlign: 'left'}}><i className="fa fa-map-marker"></i>&nbsp;&nbsp;{item.store.name}</p>
           </Col>  
-          <Col xs={{size: 6}} sm={{size: 6}} md={{size: 6}} lg={{size: 6}}> 
+          <Col xs={{size: 6}}  sm={{size: 6}} md={{size: 6}} lg={{size: 6}}> 
               <p style={{textAlign: 'right'}}><i className="fa fa-car"></i>&nbsp;&nbsp;Shipping&nbsp;&nbsp;&nbsp;&nbsp;<span className="pull-right" style={{color: 'rgb(247, 111, 64)'}}>$15</span></p>
           </Col> 
         </Row>
         <Row className="card-actions-wrapper">
-          <Col xs={{size: 6}} sm={{size: 6}} md={{size: 6}} lg={{size: 6}}>   
+          <Col xs={{size: 6}}  sm={{size: 6}} md={{size: 6}} lg={{size: 6}}>   
               <p style={{textAlign: 'left'}}><i className="fa fa-money"></i>&nbsp;&nbsp;Total</p>
           </Col> 
           <Col xs={{size: 6}} sm={{size: 6}} md={{size: 6}} lg={{size: 6}}>   
@@ -142,12 +142,12 @@ class Cart extends React.Component {
     if(cartItems.length == 0) {
       return (
         <Row>
-          <Col xs={{size: 4}} sm={{size: 4}} md={{size: 2}} lg={{size: 2}}>   
+          <Col xs={{size: 1}} sm={{size: 1}} md={{size: 2}} lg={{size: 2}}>   
           </Col>
-          <Col xs={{size: 4}} sm={{size: 4}} md={{size: 8}} lg={{size: 8}}> 
+          <Col xs={{size: 10}} sm={{size: 10}} md={{size: 8}} lg={{size: 8}}> 
             <p style={{textAlign: 'center'}}>You do not have any items in your cart.</p>
           </Col>
-          <Col xs={{size: 4}} sm={{size: 4}} md={{size: 2}} lg={{size: 2}}>  
+          <Col xs={{size: 1}} sm={{size: 1}} md={{size: 2}} lg={{size: 2}}>  
           </Col>
         </Row> 
         ); 
@@ -155,12 +155,12 @@ class Cart extends React.Component {
   
     return (
       <Row>
-        <Col xs={{size: 4}} sm={{size: 4}} md={{size: 2}} lg={{size: 2}}>   
+        <Col xs={{size: 1}} sm={{size: 1}} md={{size: 2}} lg={{size: 2}}>   
         </Col>
-        <Col xs={{size: 4}} sm={{size: 4}} md={{size: 8}} lg={{size: 8}}> 
+        <Col xs={{size: 10}} sm={{size: 10}} md={{size: 8}} lg={{size: 8}}> 
           {cartItems}
         </Col>
-        <Col xs={{size: 4}} sm={{size: 4}} md={{size: 2}} lg={{size: 2}}>  
+        <Col xs={{size: 1}} sm={{size: 1}} md={{size: 2}} lg={{size: 2}}>  
         </Col>
       </Row> 
       );
@@ -170,22 +170,22 @@ class Cart extends React.Component {
     return (
       <Container className="container dashboard" fluid={true} id="cartContainer"> 
       <Row id="header">
-        <Col xs={{size: 1}} sm={{size: 2}} md={{size: 4}} lg={{size: 4}}>   
+        <Col xs={{size: 1}} sm={{size: 1}} md={{size: 4}} lg={{size: 4}}>   
             <i className="fa fa-arrow-left fa-2x pull-left hover-select" onClick={this.goBack}></i>
         </Col>
-        <Col xs={{size: 10}} sm={{size: 8}} md={{size: 4}} lg={{size: 4}} style={{textAlign: 'center'}}> 
+        <Col xs={{size: 10}} sm={{size: 10}} md={{size: 4}} lg={{size: 4}} style={{textAlign: 'center'}}> 
             <h3>My Cart</h3>
         </Col>
-        <Col xs={{size: 1}} sm={{size: 2}} md={{size: 4}} lg={{size: 4}}> 
+        <Col xs={{size: 1}} sm={{size: 1}} md={{size: 4}} lg={{size: 4}}> 
             <i className="fa fa-trash fa-2x pull-right hover-select" onClick={this.clear}></i>
         </Col>
       </Row> 
       {this.showCartItems()} 
       {this.props.cart.length > 0 ? 
         <Row>
-        <Col xs={{size: 1}} sm={{size: 2}} md={{size: 2}} lg={{size: 2}}> 
+        <Col xs={{size: 1}} sm={{size: 1}} md={{size: 2}} lg={{size: 2}}> 
           </Col>
-        <Col xs={{size: 10}} sm={{size: 8}} md={{size: 8}} lg={{size: 8}} style={{textAlign: 'center'}}> 
+        <Col xs={{size: 10}} sm={{size: 10}} md={{size: 8}} lg={{size: 8}} style={{textAlign: 'center'}}> 
             <ButtonGroup style={{width: '100%'}}>
               <Button outline style={{width: '50%', color: 'white',background: 'none', border: 'none'}}>
               <small>(Shipping: <span style={{color: 'rgb(247, 111, 64)'}}>{this.calcShipping()}</span>)</small><br/>
@@ -194,7 +194,7 @@ class Cart extends React.Component {
               <Button style={{width: '50%', color: 'white', backgroundColor: 'rgb(247, 111, 64)', borderColor: 'rgb(247, 111, 64)'}} onClick={this.handlePurchase}>BUY NOW</Button>
             </ButtonGroup>
           </Col>
-        <Col xs={{size: 1}} sm={{size: 2}} md={{size: 2}} lg={{size: 2}}> 
+        <Col xs={{size: 1}}  sm={{size: 1}} md={{size: 2}} lg={{size: 2}}> 
           </Col>
         </Row> 
       : null}
