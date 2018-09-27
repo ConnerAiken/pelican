@@ -30,7 +30,14 @@ router.get('/products/:storeId', utils.cache(180), function(req, res) {
       'Content-Type': 'application/json',
       'X-GB-CompanyId': store.apiId
     }}))
-  .then(result => res.json({success: true, data: result.data}))
+   .then(result => { 
+      result.data.products.forEach(item => {
+          item.price = (item.sell_price / 100).toLocaleString("en-US", {style:"currency", currency:"USD"});
+          item.quantity = 1;
+      });
+      return result;
+   })
+   .then(result => res.json({success: true, data: result.data.products}))
   .catch(e => console.log(e)); 
 });
  
@@ -41,8 +48,8 @@ router.get('/strains/:storeId', utils.cache(180), function(req, res) {
       'Authorization': `Token token="${store.apiKey}"`,
       'Content-Type': 'application/json',
       'X-GB-CompanyId': store.apiId
-    }}))
-  .then(result => res.json({success: true, data: result.data}))
+    }})) 
+    .then(result => res.json({success: true, data: result.data.strains}))
   .catch(e => console.log(e)); 
  
 });
@@ -54,8 +61,8 @@ router.get('/productTypes/:storeId', utils.cache(180), function(req, res) {
       'Authorization': `Token token="${store.apiKey}"`,
       'Content-Type': 'application/json',
       'X-GB-CompanyId': store.apiId
-    }}))
-  .then(result => res.json({success: true, data: result.data}))
+    }})) 
+    .then(result => res.json({success: true, data: result.data.product_types}))
   .catch(e => console.log(e)); 
 
 });

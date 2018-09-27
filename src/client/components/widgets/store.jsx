@@ -5,12 +5,26 @@ import LoadingScreen from "../loadingScreen";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Card, Media, CardBody, CardFooter, CardTitle, CardText, Row, Col, Container, CardSubtitle } from 'reactstrap';
 import utils from "./../../assets/utils";
   
+
+import { connect } from "react-redux";
+import { addCartItem, removeCartItem, incrementCartItem, decrementCartItem, clearCart } from "./../../actions/index";
+
+
 import { withRouter, Redirect } from 'react-router-dom';
 import "./store.scss";
 
 import ReactTable from "react-table";
 import "react-table/react-table.css";
 import _ from "lodash";
+
+
+const mapStateToProps = state => {
+  return { 
+          store: state.store,
+          cart: state.cart
+         };
+};
+
 
 class Store extends React.Component {
 
@@ -21,6 +35,7 @@ class Store extends React.Component {
     this.goToCart = this.goToCart.bind(this);
 
     this.state = _.extend(this.state, {
+      cart: [],
       products: [],  
       pages: null,
       loading: true,
@@ -53,16 +68,8 @@ class Store extends React.Component {
     }, false); 
   } 
 
-  addToCart(ele) {     
-    ele.store = this.props.info;
-    
-    // Dispatch cart added event and toggle the button 
-    document.querySelector("#root").dispatchEvent(new CustomEvent(
-      'cart::added',
-      {
-        detail: ele
-      }
-    ));   
+  addCartItem(ele) {      
+    this.props.dispatch(addCartItem(ele)); 
     utils.alert("Added \""+ele.name+"\" to your cart.");
   }
 
@@ -70,23 +77,19 @@ class Store extends React.Component {
     this.setState({pendingRequest: true});
      
     this.Auth.fetch(`/api/v1/store/productTypes/${this.props.info.id}`)  
-    .then(response => this.setState({productTypes: response.data.product_types}))
+    .then(response => this.setState({productTypes: response.data}))
     .then(response => this.Auth.fetch(`/api/v1/store/strains/${this.props.info.id}`))  
-    .then(response => this.setState({strains: response.data.strains}))
+    .then(response => this.setState({strains: response.data}))
     .then(response => this.Auth.fetch(`/api/v1/store/products/${this.props.info.id}`)) 
-    .then((response) => {  
-
-      const products = [...response.data.products].map(product => {
-        product.price = (product.sell_price / 100).toLocaleString("en-US", {style:"currency", currency:"USD"});
+    .then((response) => {   
+      const products = [...response.data].map(product => { 
         product.category = _.find(this.state.productTypes, {id: product.product_type_id}); 
         product.strain = _.find(this.state.strains, {id: product.strain_id}); 
         product.strain = product.strain ? product.strain.name : "";
         product.category = product.category ? product.category.name : "";
         product.test_results_thc = product.test_results_thc ? product.test_results_thc : "";
-        product.test_results_cbd = product.test_results_cbd ? product.test_results_cbd : "";
-        product.quantity = 1;
+        product.test_results_cbd = product.test_results_cbd ? product.test_results_cbd : ""; 
         product.store = this.props.info;
-
         return product;
       });
 
@@ -103,56 +106,52 @@ class Store extends React.Component {
         {this.state.visible ? <Modal size={'lg'} autoFocus={true} id="storeMenu" isOpen={true}  className={this.props.className}>
           <ModalHeader>
               {this.props.info.name} - {this.props.info.city}, {this.props.info.state} 
-              <Button id="closeBtn" className="pull-right" color="danger" onClick={this.toggle} style={{color: 'white'}}><i id="closeBtn" className="fa fa-close"></i></Button>
+              <Button id="closeBtn" className="pull-right" color="danger" onClick={this.toggle} style={{color: 'white'}}>
+                 <i id="closeBtn" className="fa fa-close"></i>
+              </Button>
          </ModalHeader>
           <ModalBody> 
             <Row>
-              <Col classsName="d-lg-none d-md-none" xs={12} sm={12} md={12} lg={12}> 
+              <Col className="d-lg-none" xs={12} sm={12} md={12} lg={12}> 
                     {this.state.products.map(item => {
                       return (
-                        <Card style={{color: 'black', marginTop: '.25%', marginBottom: '.25%'}} key={`${item.id}-${Math.random()}`}>
-                          <CardBody>
-                            <Media>
-                              <Media left href="#" style={{padding: '0 2.5% 2.5% 0'}}>
-                                <Media object src="https://via.placeholder.com/150x150"  style={{width: '65px'}} alt="Generic placeholder image" />
+                        <React.Fragment key={Math.random()}>  
+                            <Media className="card-title-wrapper">
+                              <Media left href="#" className="align-self-center">
+                                <Media object className="img-fluid" src="https://via.placeholder.com/150x150"  style={{width: '65px'}} alt="Generic placeholder image" />
                               </Media>
                               <Media body>
-                                <CardTitle>{item.name}</CardTitle>
-                                <CardSubtitle style={{paddingBottom: '2.5%'}}> 
-                                        {item.category && item.vendor ? `${item.category} by ${item.vendor}` : item.category ? item.category : ""} <br/> <br/>   
-                                              <Row>
-                                                <Col xs={{size: 6}} sm={{size: 6}} md={{size: 6}} lg={{size: 6}}></Col> 
-                                                <Col xs={{size: 6}} sm={{size: 6}} md={{size: 6}} lg={{size: 6}}>   
-                                                    <p style={{textAlign: 'right', color: 'rgb(247, 111, 64)'}}>{item.price}</p>
-                                                </Col> 
-                                              </Row>   
-                                </CardSubtitle>
+                                <div className="card-title">
+                                  <span>{item.name}</span>
+                                </div>
+                                <div className="card-subtitle"> 
+                                  <span>{item.category && item.vendor ? `${item.category} by ${item.vendor}` : item.category ? item.category : ""}</span>
+                                  <span className="float-right" style={{color: 'rgb(247, 111, 64)'}}>{item.price}</span>
+                                </div>
                                 </Media>
-                            </Media>
-                            <CardText style={{paddingTop: '2.5%', borderTop: '1px solid grey'}}>
-                                <Row>
-                                  <Col xs={{size: 6}} sm={{size: 6}} md={{size: 6}} lg={{size: 6}}>   
-                                      <p style={{textAlign: 'left'}}><i class="fa fa-map-marker"></i>&nbsp;&nbsp;{item.store.name}</p>
-                                  </Col> 
-                                  <Col xs={{size: 6}} sm={{size: 6}} md={{size: 6}} lg={{size: 6}}> 
-                                      <p style={{textAlign: 'right'}}><i class="fa fa-car"></i>&nbsp;&nbsp;Shipping&nbsp;&nbsp;&nbsp;&nbsp;<span className="pull-right" style={{color: 'rgb(247, 111, 64)'}}>$15</span></p>
-                                  </Col> 
-                                </Row>
-                                <Row>
-                                  <Col xs={{size: 6}} sm={{size: 6}} md={{size: 6}} lg={{size: 6}}>   
-                                      <p style={{textAlign: 'left'}}><i class="fa fa-money"></i>&nbsp;&nbsp;Total</p>
-                                  </Col> 
-                                  <Col xs={{size: 6}} sm={{size: 6}} md={{size: 6}} lg={{size: 6}}>   
-                                      <Button size={"sm"} className="pull-right no-hover" style={{color: 'white', backgroundColor: 'rgb(247, 111, 64)', borderColor: 'rgb(247, 111, 64)'}} color="warning"><b>{((item.sell_price * item.quantity) / 100).toLocaleString("en-US", {style:"currency", currency:"USD"})}</b></Button>
-                                  </Col> 
-                                </Row> 
-                            </CardText> 
-                          </CardBody>
-                        </Card>
+                            </Media> 
+                          <Row className="card-metadata-wrapper">
+                            <Col xs={{size: 6}} sm={{size: 6}} md={{size: 6}} lg={{size: 6}}>   
+                                <p style={{textAlign: 'left'}}><i className="fa fa-map-marker"></i>&nbsp;&nbsp;{item.store.name}</p>
+                            </Col> 
+                            <Col xs={{size: 6}} sm={{size: 6}} md={{size: 6}} lg={{size: 6}}> 
+                                <p style={{textAlign: 'right'}}><i className="fa fa-car"></i>&nbsp;&nbsp;Shipping&nbsp;&nbsp;&nbsp;&nbsp;<span className="pull-right" style={{color: 'rgb(247, 111, 64)'}}>$15</span></p>
+                            </Col> 
+                          </Row>
+                          <Row className="card-actions-wrapper">
+                            <Col xs={{size: 6}} sm={{size: 6}} md={{size: 6}} lg={{size: 6}}>   
+                                <p style={{textAlign: 'left'}}><i className="fa fa-money"></i>&nbsp;&nbsp;Total</p>
+                            </Col> 
+                            <Col xs={{size: 6}} sm={{size: 6}} md={{size: 6}} lg={{size: 6}}>   
+                                <Button onClick={this.addCartItem.bind(this, item)} size={"sm"} className="pull-right hover-select" style={{color: 'white', backgroundColor: 'rgb(247, 111, 64)', borderColor: 'rgb(247, 111, 64)'}} color="warning"><b>{((item.sell_price * item.quantity) / 100).toLocaleString("en-US", {style:"currency", currency:"USD"})}</b></Button>
+                            </Col> 
+                          </Row> 
+                        <br/>
+                        </React.Fragment> 
                       );
                     })} 
               </Col>
-              <Col classsName="d-sm-none d-xs-none"  xs={12} sm={12} md={12} lg={12}>
+              <Col className="d-none d-lg-block"  xs={12} sm={12} md={12} lg={12}>
               <ReactTable 
                   data={this.state.products}
                   
@@ -202,7 +201,7 @@ class Store extends React.Component {
                       sortable: false,
                       filterable: false,
                       Cell: ele => (
-                        <Button id={ele.row._original.id} onClick={this.addToCart.bind(this, ele.row._original)}><i className="fa fa-plus"></i></Button>
+                        <Button id={ele.row._original.id} onClick={this.addCartItem.bind(this, ele.row._original)}><i className="fa fa-plus"></i></Button>
                       )
                     }
                   ]}  
@@ -215,7 +214,7 @@ class Store extends React.Component {
             </Row> 
           </ModalBody>
           <ModalFooter>   
-            <Button id="cartBtn" className="pull-right" color="success" onClick={this.goToCart}>View Cart</Button> 
+            <Button id="cartBtn" className="pull-right" color="success" onClick={this.goToCart}>View Cart ({this.props.cart.length})</Button> 
           </ModalFooter> 
         </Modal> : this.props.info ? <Button id="menuBtn" color="warning" onClick={this.toggle}><i style={{color: 'white'}} className="fa fa-list-alt"></i></Button> : null} 
       </React.Fragment>
@@ -223,4 +222,7 @@ class Store extends React.Component {
   }
 };
 
-export default withRouter(Store);
+
+Store = connect(mapStateToProps)(withRouter(Store));
+
+export default Store;

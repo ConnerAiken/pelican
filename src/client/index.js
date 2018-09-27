@@ -23,21 +23,15 @@ import PrivacyPolicy from "./components/views/privacyPolicy.jsx";
 import Verify from "./components/views/verify.jsx"; 
 import geolocationError from "./components/views/geolocationError";     
 
+window['NODE_ENV'] = process.env.NODE_ENV; 
 // ===============================================
 // Redux Stuffz
 // =============================
 
 import store from "./store/index";
-import { addToCart } from "./actions/index";
-import { Provider } from "react-redux";
-
-window['NODE_ENV'] = process.env.NODE_ENV;
-window.store = store;
-window.addToCart = addToCart;
-
-store.subscribe(() => console.log('Look ma, I am reacting to Redux!!'))
-console.log("Emitting initial store state", store.getState());
-
+import { addCartItem } from "./actions/index";
+import { Provider } from "react-redux"; 
+ 
 // =============================
 
 // ===============================================

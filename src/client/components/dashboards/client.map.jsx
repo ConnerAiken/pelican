@@ -14,6 +14,17 @@ import Store from "./../widgets/store";
 import { withRouter, Redirect } from 'react-router-dom';
 import "./client.map.scss";
  
+import { connect } from "react-redux";
+import { selectStore } from "./../../actions/index";
+
+
+const mapStateToProps = state => {
+  return { 
+          store: state.store,
+          cart: state.cart
+         };
+};
+
 
 class ClientMapDash extends React.Component {
 
@@ -96,13 +107,8 @@ class ClientMapDash extends React.Component {
   }
 
   selectStore(store) {  
-    this.setState({store});
-    document.querySelector("#root").dispatchEvent(new CustomEvent(
-      'store::selected',
-      {
-        detail: store
-      }
-    )); 
+    this.props.dispatch(selectStore(store));
+    this.setState({store}); 
   }
   saveStore(store) {  
     this.setState({store: false});
@@ -280,4 +286,8 @@ class ClientMapDash extends React.Component {
   }
 };
 
-export default withRouter(ClientMapDash);
+
+
+ClientMapDash = connect(mapStateToProps)(withRouter(ClientMapDash));
+
+export default ClientMapDash;

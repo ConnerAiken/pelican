@@ -1,6 +1,6 @@
 #storeMenu {
     color: black;
-    max-width: 90%;
+    max-width: 95%;
 
     .rt-td:last-child {
         text-align: center;
@@ -14,6 +14,95 @@
         width: 100%;
     }
 
+    .card-title-wrapper {
+        padding: 2%;
+    }
+    
+    .media-body {
+        padding-left: 2%;
+    }
+
+    .modal-body,
+    .modal-title,
+    .modal-footer,
+    .modal-content {
+        background-color: #3d5e4c; 
+        color: white;
+    }
+
+    .card-title-wrapper {
+        background-color: white; 
+        color: black; 
+    }
+    .card-title {
+        font-weight: bold;
+    }
+
+    .card-actions-wrapper {
+        padding: 1% 0% 0% 1%;
+    }
+
+    .card-metadata-wrapper {
+        padding: 1% 1% 0% 1%;
+    } 
+
+    .card-item {
+        margin-bottom: 2.5%;
+    }
+
+    // Small devices (landscape phones, 576px and up)
+    @media (max-width: 576px) { 
+        #closeBtn { font-size: 12px; }
+        .modal-title { font-size: 14px; }
+        .card-title { font-size: 12px; }
+        .card-subtitle,
+        .card-metadata-wrapper,
+        .card-actions-wrapper { font-size: 10px; }
+        .productImg { width: 75px; }
+    }
+
+    @media (min-width: 576px) { 
+        #closeBtn { font-size: 12px; }
+        .modal-title { font-size: 14px; }
+        .card-title { font-size: 12px; }
+        .card-subtitle,
+        .card-metadata-wrapper,
+        .card-actions-wrapper { font-size: 10px; }
+        .productImg { width: 75px; }
+    }
+
+    // Medium devices (tablets, 768px and up)
+    @media (min-width: 768px) { 
+        #closeBtn { font-size: 12px; }
+        .modal-title { font-size: 16px; }
+        .card-title { font-size: 14px; }
+        .card-subtitle,
+        .card-metadata-wrapper,
+        .card-actions-wrapper { font-size: 12px; }
+        .productImg { width: 75px; }
+    }
+
+    // Large devices (desktops, 992px and up)
+    @media (min-width: 992px) { 
+        #closeBtn { font-size: 12px; }
+        .modal-title { font-size: 18px; }
+        .card-title { font-size: 16px; }
+        .card-subtitle,
+        .card-metadata-wrapper,
+        .card-actions-wrapper { font-size: 14px; }
+        .productImg { width: 100px; }
+    }
+
+    // Extra large devices (large desktops, 1200px and up)
+    @media (min-width: 1200px) { 
+        #closeBtn { font-size: 12px; }
+        .modal-title { font-size: 20px; }
+        .card-title { font-size: 18px; }
+        .card-subtitle,
+        .card-metadata-wrapper,
+        .card-actions-wrapper { font-size: 16px; }
+        .productImg { width: 125px; }
+    }
 }
 
 #closeBtn {
@@ -27,4 +116,4 @@
     position: fixed;
     top: 0;
     left: 0;
-} 
+}  

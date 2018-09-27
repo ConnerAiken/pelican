@@ -3,7 +3,7 @@ import React from "react";
 import { Container, Row, Col, Button, Card, ButtonGroup, CardText, CardBody, CardTitle, CardSubtitle, Media } from 'reactstrap'; 
 import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
-import { addToCart, removeFromCart, incrementCartItem, decrementCartItem } from "./../../actions/index";
+import { addCartItem, removeCartItem, incrementCartItem, decrementCartItem, clearCart } from "./../../actions/index";
 import LoadingScreen from "../loadingScreen";
 import utils from "./../../assets/utils";
 import "./cart.scss";
@@ -21,72 +21,68 @@ class Cart extends React.Component {
 
     utils.initializeProtectedComponent.call(this, utils); 
 
-    this.clearCart = this.clearCart.bind(this);
+    this.clear = this.clear.bind(this);
     this.goBack = this.goBack.bind(this);
     this.removeItem = this.removeItem.bind(this);
     this.handlePurchase = this.handlePurchase.bind(this);
 
-    this.state = {
-      items: [],
-      total: 0
+    this.state = { 
+      total: 0,
+      shippingCost: 1500
     }; 
   } 
 
-  componentDidMount() {
-    this.setState({items: JSON.parse(localStorage.getItem('cart'))});
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    const cartItems = JSON.parse(localStorage.getItem('cart')); 
-
-    if(!_.isEqual(this.state.items, cartItems)) {
-      this.setState({items: JSON.parse(localStorage.getItem('cart'))})
-    }
-  }
   
   goBack() {
     this.props.history.goBack();
   }
 
-  clearCart() { 
-    document.querySelector("#root").dispatchEvent(new Event('cart::cleared'));  
-    this.forceUpdate();
+  clear() {  
+    this.props.dispatch(clearCart());   
+    console.log(this.props);
   }
 
-  removeItem(item) {
-    document.querySelector("#root").dispatchEvent(new CustomEvent(
-      'cart::removed',
-      {
-        detail: item
-      }
-    )); 
-    this.forceUpdate();
+  removeItem(pendingItem) {
+    this.props.dispatch(removeCartItem(pendingItem));  
+    console.log(this.props);
   }
 
   incrementProduct(pendingItem) {
-    this.props.dispatch(addToCart(pendingItem));  
+    this.props.dispatch(incrementCartItem(pendingItem));  
     console.log(this.props);
-
-    document.querySelector("#root").dispatchEvent(new CustomEvent(
-      'cart::incremented',
-      {
-        detail: pendingItem
-      }
-    )); 
-    this.forceUpdate(); 
   }
 
   decrementProduct(pendingItem) { 
-    this.props.dispatch(removeFromCart(pendingItem));  
+    this.props.dispatch(decrementCartItem(pendingItem));  
     console.log(this.props);
+  }
 
-    document.querySelector("#root").dispatchEvent(new CustomEvent(
-      'cart::decremented',
-      {
-        detail: pendingItem
-      }
-    )); 
-    this.forceUpdate(); 
+  componentDidUpdate(prevProps, prevState) {
+    if(!_.isEqual(prevProps.cart, this.props.cart)) { 
+      this.setShippingCost();
+    } 
+  }
+
+  setShippingCost() {
+    let finalCost = 1500; 
+    this.setState({shippingCost: finalCost})
+  }
+
+  calcTotal() {
+    let total = this.state.shippingCost ? this.state.shippingCost : 0;
+
+    this.props.cart.forEach(item => {
+        total += (item.sell_price * item.quantity);
+    });
+
+    return (total / 100).toLocaleString("en-US", {style:"currency", currency:"USD"});
+  }
+
+
+  calcShipping() {
+    let total = this.state.shippingCost ? this.state.shippingCost : 0; 
+
+    return (total / 100).toLocaleString("en-US", {style:"currency", currency:"USD"});
   }
 
   generateCartItem(item) {
@@ -95,7 +91,7 @@ class Cart extends React.Component {
         <CardBody>
           <Media>
             <Media left href="#" style={{padding: '0 2.5% 2.5% 0'}}>
-              <Media object src="https://via.placeholder.com/150x150"  style={{width: '150px'}} alt="Generic placeholder image" />
+              <Media className="productImg" object src="https://via.placeholder.com/150x150" alt="Generic placeholder image" />
             </Media>
             <Media body>
               <CardTitle>{item.name} <i className="fa fa-trash fa-1x pull-right hover-select" style={{color: 'green'}} onClick={this.removeItem.bind(this, item)}></i></CardTitle>
@@ -122,7 +118,7 @@ class Cart extends React.Component {
                     <p style={{textAlign: 'left'}}><i className="fa fa-map-marker"></i>&nbsp;&nbsp;{item.store.name}</p>
                 </Col> 
                 <Col xs={{size: 6}} sm={{size: 6}} md={{size: 6}} lg={{size: 6}}> 
-                    <p style={{textAlign: 'right'}}><i className="fa fa-car"></i>&nbsp;&nbsp;Shipping&nbsp;&nbsp;&nbsp;&nbsp;<span className="pull-right" style={{color: 'rgb(247, 111, 64)'}}>$15</span></p>
+                    <p style={{textAlign: 'right', display: 'none'}}><i className="fa fa-car"></i>&nbsp;&nbsp;Shipping&nbsp;&nbsp;&nbsp;&nbsp;<span className="pull-right" style={{color: 'rgb(247, 111, 64)'}}>$15</span></p>
                 </Col> 
               </Row>
               <Row>
@@ -144,7 +140,7 @@ class Cart extends React.Component {
   }
   
   showCartItems() {
-    const cartItems = this.state.items.slice(0).map(item => this.generateCartItem(item));
+    const cartItems = this.props.cart.slice(0).map(item => this.generateCartItem(item));
 
     if(cartItems.length == 0) {
       return (
@@ -184,17 +180,20 @@ class Cart extends React.Component {
             <h3>My Cart</h3>
         </Col>
         <Col xs={{size: 1}} sm={{size: 2}} md={{size: 4}} lg={{size: 4}}> 
-            <i className="fa fa-trash fa-2x pull-right hover-select" onClick={this.clearCart}></i>
+            <i className="fa fa-trash fa-2x pull-right hover-select" onClick={this.clear}></i>
         </Col>
       </Row> 
       {this.showCartItems()} 
-      {this.state.items.length > 0 ? 
+      {this.props.cart.length > 0 ? 
         <Row style={{marginTop: '2.5%'}}>
         <Col xs={{size: 1}} sm={{size: 2}} md={{size: 4}} lg={{size: 4}}> 
           </Col>
         <Col xs={{size: 10}} sm={{size: 8}} md={{size: 4}} lg={{size: 4}} style={{textAlign: 'center'}}> 
             <ButtonGroup style={{width: '100%'}}>
-              <Button outline style={{width: '50%', color: 'white',background: 'none', border: 'none'}}>Total: <span style={{color: 'rgb(247, 111, 64)'}}>{(this.state.total / 100).toLocaleString("en-US", {style:"currency", currency:"USD"})}</span></Button>
+              <Button outline style={{width: '50%', color: 'white',background: 'none', border: 'none'}}>
+              <small>(Shipping: <span style={{color: 'rgb(247, 111, 64)'}}>{this.calcShipping()}</span>)</small><br/>
+              <b>Total: <span style={{color: 'rgb(247, 111, 64)'}}>{this.calcTotal()}</span></b>
+              </Button>
               <Button style={{width: '50%', color: 'white', backgroundColor: 'rgb(247, 111, 64)', borderColor: 'rgb(247, 111, 64)'}} onClick={this.handlePurchase}>BUY NOW</Button>
             </ButtonGroup>
           </Col>
