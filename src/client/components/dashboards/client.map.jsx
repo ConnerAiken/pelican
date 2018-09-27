@@ -40,6 +40,7 @@ class ClientMapDash extends React.Component {
     this.toggleSidebar = this.toggleSidebar.bind(this); 
     this.selectStore = this.selectStore.bind(this); 
     this.saveStore = this.saveStore.bind(this); 
+    this.handleMapMounted = this.handleMapMounted.bind(this);
 
     utils.initializeProtectedComponent.call(this, utils); 
 
@@ -203,6 +204,14 @@ class ClientMapDash extends React.Component {
 
   } 
 
+  handleMapMounted(c) { 
+    if (!c || this._mapRef) return;
+
+    this._mapRef = c;
+
+    console.log('Ref set later @ ' + Date.now());
+  }
+
   componentWillUnmount() {
     clearInterval(this.updateLoop);
     clearInterval(this.checkLoop);
@@ -215,6 +224,7 @@ class ClientMapDash extends React.Component {
 
       if(this.state.activeOrder) {
         return <ClientMap 
+        onMapMounted={this.handleMapMounted}
           onSelect={this.selectStore}
           curLoc={this.state.curLoc}
           activeOrder={this.state.activeOrder}/>;
@@ -222,12 +232,14 @@ class ClientMapDash extends React.Component {
         axios.get('/api/v1/store').then(res => {   
           this.setState({stores: res.data});
           return <ClientOrderMap
+            onMapMounted={this.handleMapMounted}
             onSelect={this.selectStore}
             curLoc={this.state.curLoc}
             stores={this.state.stores}/>;
         }).catch(e => console.log(e));
       }else {
           return <ClientOrderMap
+          onMapMounted={this.handleMapMounted}
             onSelect={this.selectStore}
             curLoc={this.state.curLoc}
             stores={this.state.stores}/>;
@@ -235,6 +247,7 @@ class ClientMapDash extends React.Component {
        
     }else if(user.accountType == "driver") { 
       return <Directions
+      onMapMounted={this.handleMapMounted}
       curLoc={this.state.curLoc} 
       input={this.state.destination}/> 
     } 
@@ -278,7 +291,7 @@ class ClientMapDash extends React.Component {
             {this.state.user && this.state.user.accountType == "driver" && this.state.activeOrder && this.state.activeOrder.status == 3 && <Button onClick={this.updateOrder}>Mark Delivered</Button>}
         </Col>
       </Row>
-      {this.state.pendingRequest ? <LoadingScreen/> : null}
+      {this.state.pendingRequest || !this._mapRef ? <LoadingScreen/> : null} 
       {this.state.curLoc && this.showRelevantMap()} 
       {this.state.store ? <Store onSave={this.saveStore} info={this.state.store}/> : null}
       </Container> 

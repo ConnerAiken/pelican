@@ -13,15 +13,14 @@ html, body, .dashboard {
 #header > div {
     padding: 2.5%;
 }
+  
  
-.dashboard {
-    & #header {
+#cartContainer {  
+    #header {
         height: 10%;
         margin-bottom: 2.5%;
     } 
-}
- 
-#cartContainer {  
+
     .rt-td:last-child {
         text-align: center;
     } 

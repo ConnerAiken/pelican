@@ -183,9 +183,9 @@ class Cart extends React.Component {
       {this.showCartItems()} 
       {this.props.cart.length > 0 ? 
         <Row>
-        <Col xs={{size: 1}} sm={{size: 2}} md={{size: 4}} lg={{size: 4}}> 
+        <Col xs={{size: 1}} sm={{size: 2}} md={{size: 2}} lg={{size: 2}}> 
           </Col>
-        <Col xs={{size: 10}} sm={{size: 8}} md={{size: 4}} lg={{size: 4}} style={{textAlign: 'center'}}> 
+        <Col xs={{size: 10}} sm={{size: 8}} md={{size: 8}} lg={{size: 8}} style={{textAlign: 'center'}}> 
             <ButtonGroup style={{width: '100%'}}>
               <Button outline style={{width: '50%', color: 'white',background: 'none', border: 'none'}}>
               <small>(Shipping: <span style={{color: 'rgb(247, 111, 64)'}}>{this.calcShipping()}</span>)</small><br/>
@@ -194,7 +194,7 @@ class Cart extends React.Component {
               <Button style={{width: '50%', color: 'white', backgroundColor: 'rgb(247, 111, 64)', borderColor: 'rgb(247, 111, 64)'}} onClick={this.handlePurchase}>BUY NOW</Button>
             </ButtonGroup>
           </Col>
-        <Col xs={{size: 1}} sm={{size: 2}} md={{size: 4}} lg={{size: 4}}> 
+        <Col xs={{size: 1}} sm={{size: 2}} md={{size: 2}} lg={{size: 2}}> 
           </Col>
         </Row> 
       : null}

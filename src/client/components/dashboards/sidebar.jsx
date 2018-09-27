@@ -45,7 +45,7 @@ class Sidebar extends React.Component {
 
   render() { 
     return (
-      <Container className="container navbar" fluid={true}> 
+      <Container className="container" fluid={true}> 
       <Row>     
         <Col xs={12} sm={12} md={12} lg={12} id="nav" className={this.props.sidebar.collapsed ? "inactive": "active"}>
         <Button id="navBtn" onClick={this.toggleSidebar}><i className="fa fa-bars"></i></Button>

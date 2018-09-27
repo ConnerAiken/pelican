@@ -19,9 +19,10 @@ const MapWithADirectionsRenderer = compose(
   withGoogleMap
 )(props => 
   <GoogleMap
+    ref={c => { props.onMapMounted && props.onMapMounted(c) }}
     defaultZoom={7}
     defaultCenter={new google.maps.LatLng(props.curLoc.coords.lat, props.curLoc.coords.lng)}> 
-    { props.curLoc && <Marker title="Current Location" position={{ lat: props.curLoc.coords.lat, lng: props.curLoc.coords.lng}} /> } 
+    { props.curLoc && <Marker title="Current Location" position={{ lat: props.curLoc.coords.lat, lng: props.curLoc.coords.lng}} /> }   
     {props.stores.slice(0).map(store => <Marker 
                                             onClick={props.onSelect.bind(this, store)} 
                                             value={store} 
