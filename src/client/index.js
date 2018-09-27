@@ -5,7 +5,7 @@ import 'toastr/build/toastr.css';
 import './assets/globals.scss';
 
 import React from "react"; 
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom"; 
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";  
 import ReactPiwik from 'react-piwik';  
 
@@ -21,10 +21,16 @@ import Share from "./components/views/share.jsx";
 import Signup from "./components/views/signup.jsx";  
 import PrivacyPolicy from "./components/views/privacyPolicy.jsx"; 
 import Verify from "./components/views/verify.jsx"; 
-import geolocationError from "./components/views/geolocationError";  
- 
- 
+import geolocationError from "./components/views/geolocationError";     
+
+import store from "./store/index";
+import { addToCart } from "./actions/index";
+
 window['NODE_ENV'] = process.env.NODE_ENV;
+window.store = store;
+window.addToCart = addToCart;
+
+console.log("Emitting initial store state", store.getState());
 
 const piwik = new ReactPiwik({
     url: 'analytics.fittedtech.com',

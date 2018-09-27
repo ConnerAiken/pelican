@@ -50,5 +50,6 @@ add items to a invisible cart and it populates number in sidebar. Creating geolo
 
 .25h (Tuesday Sep 25th 11:45-12:00am) - Debugging/fixing cart view mobile responsive issues
 1.5h (Tuesday Sep 25th 9:15am-10:45am) - Cleaning up login/mobile view of menu, adding memory caching to api
+1h (Tuesday Sep 25th 7:30-8:30pm) - Start of integrating state management framework (redux)
 
-Remaining  hours: 12.25 hours
+Remaining  hours: 11.25 hours
