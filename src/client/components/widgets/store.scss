@@ -79,7 +79,7 @@
         .card-subtitle,
         .card-metadata-wrapper,
         .card-actions-wrapper { font-size: 12px; }
-        .productImg { width: 75px; }
+        .productImg { width: 75px; } 
     }
 
     // Large devices (desktops, 992px and up)
@@ -91,6 +91,14 @@
         .card-metadata-wrapper,
         .card-actions-wrapper { font-size: 14px; }
         .productImg { width: 100px; }
+
+        .modal-body,
+        .modal-title,
+        .modal-footer,
+        .modal-content {
+            color: black;
+            background-color: white;
+        }
     }
 
     // Extra large devices (large desktops, 1200px and up)

@@ -17,10 +17,110 @@ html, body, .dashboard {
 .dashboard {
     & #header {
         height: 10%;
-    }
-
-    & #mapContainer { 
-        height: 90%;
-    }
+        margin-bottom: 2.5%;
+    } 
 }
  
+#cartContainer {  
+    .rt-td:last-child {
+        text-align: center;
+    } 
+
+    .hidden {
+        display: none;
+    }
+
+    .modal-title {
+        width: 100%;
+    }
+
+    .card-title-wrapper {
+        padding: 2%;
+    }
+    
+    .media-body {
+        padding-left: 2%;
+    }
+ 
+    .card-title-wrapper,
+    .card-actions-wrapper,
+    .card-metadata-wrapper {
+        background-color: white; 
+        color: black; 
+        margin: 0;
+    }
+    
+    .card-actions-wrapper {
+        padding: 1% 0% 0% 1%;
+    }
+
+    .card-metadata-wrapper {
+        padding: 1% 1% 0% 1%;
+    } 
+ 
+    .card-title {
+        font-weight: bold;
+        margin-bottom: 0;
+    }
+ 
+    .card-item {
+        margin-bottom: 2.5%;
+    }
+
+    // Small devices (landscape phones, 576px and up)
+    @media (max-width: 576px) {  
+        .modal-title { font-size: 14px; }
+        .card-title { font-size: 12px; }
+        .card-subtitle,
+        .card-metadata-wrapper,
+        .card-actions-wrapper { font-size: 10px; }
+        .productImg { width: 75px; }
+    }
+
+    @media (min-width: 576px) {  
+        .modal-title { font-size: 14px; }
+        .card-title { font-size: 12px; }
+        .card-subtitle,
+        .card-metadata-wrapper,
+        .card-actions-wrapper { font-size: 10px; }
+        .productImg { width: 75px; }
+    }
+
+    // Medium devices (tablets, 768px and up)
+    @media (min-width: 768px) {  
+        .modal-title { font-size: 16px; }
+        .card-title { font-size: 14px; }
+        .card-subtitle,
+        .card-metadata-wrapper,
+        .card-actions-wrapper { font-size: 12px; }
+        .productImg { width: 75px; } 
+    }
+
+    // Large devices (desktops, 992px and up)
+    @media (min-width: 992px) {  
+        .modal-title { font-size: 18px; }
+        .card-title { font-size: 16px; }
+        .card-subtitle,
+        .card-metadata-wrapper,
+        .card-actions-wrapper { font-size: 14px; }
+        .productImg { width: 100px; }
+
+        .modal-body,
+        .modal-title,
+        .modal-footer,
+        .modal-content {
+            color: black;
+            background-color: white;
+        }
+    }
+
+    // Extra large devices (large desktops, 1200px and up)
+    @media (min-width: 1200px) {  
+        .modal-title { font-size: 20px; }
+        .card-title { font-size: 18px; }
+        .card-subtitle,
+        .card-metadata-wrapper,
+        .card-actions-wrapper { font-size: 16px; }
+        .productImg { width: 125px; }
+    }
+}
