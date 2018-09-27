@@ -2,9 +2,17 @@
 import React from "react";  
 import { Container, Row, Col, Button, Card, ButtonGroup, CardText, CardBody, CardTitle, CardSubtitle, Media } from 'reactstrap'; 
 import { withRouter } from 'react-router-dom';
+import { connect } from "react-redux";
+import { addToCart, removeFromCart, incrementCartItem, decrementCartItem } from "./../../actions/index";
 import LoadingScreen from "../loadingScreen";
 import utils from "./../../assets/utils";
 import "./cart.scss";
+ 
+
+const mapStateToProps = state => {
+  return { cart: state.cart };
+};
+
   
 class Cart extends React.Component {
 
@@ -56,6 +64,9 @@ class Cart extends React.Component {
   }
 
   incrementProduct(pendingItem) {
+    this.props.dispatch(addToCart(pendingItem));  
+    console.log(this.props);
+
     document.querySelector("#root").dispatchEvent(new CustomEvent(
       'cart::incremented',
       {
@@ -66,6 +77,9 @@ class Cart extends React.Component {
   }
 
   decrementProduct(pendingItem) { 
+    this.props.dispatch(removeFromCart(pendingItem));  
+    console.log(this.props);
+
     document.querySelector("#root").dispatchEvent(new CustomEvent(
       'cart::decremented',
       {
@@ -105,15 +119,15 @@ class Cart extends React.Component {
           <CardText style={{paddingTop: '2.5%', borderTop: '1px solid grey'}}>
               <Row>
                 <Col xs={{size: 6}} sm={{size: 6}} md={{size: 6}} lg={{size: 6}}>   
-                    <p style={{textAlign: 'left'}}><i class="fa fa-map-marker"></i>&nbsp;&nbsp;{item.store.name}</p>
+                    <p style={{textAlign: 'left'}}><i className="fa fa-map-marker"></i>&nbsp;&nbsp;{item.store.name}</p>
                 </Col> 
                 <Col xs={{size: 6}} sm={{size: 6}} md={{size: 6}} lg={{size: 6}}> 
-                    <p style={{textAlign: 'right'}}><i class="fa fa-car"></i>&nbsp;&nbsp;Shipping&nbsp;&nbsp;&nbsp;&nbsp;<span className="pull-right" style={{color: 'rgb(247, 111, 64)'}}>$15</span></p>
+                    <p style={{textAlign: 'right'}}><i className="fa fa-car"></i>&nbsp;&nbsp;Shipping&nbsp;&nbsp;&nbsp;&nbsp;<span className="pull-right" style={{color: 'rgb(247, 111, 64)'}}>$15</span></p>
                 </Col> 
               </Row>
               <Row>
                 <Col xs={{size: 6}} sm={{size: 6}} md={{size: 6}} lg={{size: 6}}>   
-                    <p style={{textAlign: 'left'}}><i class="fa fa-money"></i>&nbsp;&nbsp;Total</p>
+                    <p style={{textAlign: 'left'}}><i className="fa fa-money"></i>&nbsp;&nbsp;Total</p>
                 </Col> 
                 <Col xs={{size: 6}} sm={{size: 6}} md={{size: 6}} lg={{size: 6}}>   
                     <Button size={"sm"} className="pull-right no-hover" style={{color: 'white', backgroundColor: 'rgb(247, 111, 64)', borderColor: 'rgb(247, 111, 64)'}} color="warning"><b>{((item.sell_price * item.quantity) / 100).toLocaleString("en-US", {style:"currency", currency:"USD"})}</b></Button>
@@ -159,7 +173,7 @@ class Cart extends React.Component {
       );
   }
 
-  render() {  
+  render() {   
     return (
       <Container className="container dashboard" fluid={true}> 
       <Row id="header">
@@ -194,4 +208,6 @@ class Cart extends React.Component {
   }
 };
 
-export default withRouter(Cart);
+Cart = connect(mapStateToProps)(withRouter(Cart));
+
+export default Cart;

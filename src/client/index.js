@@ -23,15 +23,26 @@ import PrivacyPolicy from "./components/views/privacyPolicy.jsx";
 import Verify from "./components/views/verify.jsx"; 
 import geolocationError from "./components/views/geolocationError";     
 
+// ===============================================
+// Redux Stuffz
+// =============================
+
 import store from "./store/index";
 import { addToCart } from "./actions/index";
+import { Provider } from "react-redux";
 
 window['NODE_ENV'] = process.env.NODE_ENV;
 window.store = store;
 window.addToCart = addToCart;
 
+store.subscribe(() => console.log('Look ma, I am reacting to Redux!!'))
 console.log("Emitting initial store state", store.getState());
 
+// =============================
+
+// ===============================================
+// React Stuffz
+// =============================
 const piwik = new ReactPiwik({
     url: 'analytics.fittedtech.com',
     siteId: 1,
@@ -39,27 +50,30 @@ const piwik = new ReactPiwik({
 });  
  
 ReactDOM.render(
-    <BrowserRouter>
-        <Switch>
-            <Route exact path="/" render={() => (
-                <Redirect to="/login"/>
-            )}/>
-            <Route path="/login" component={Login} /> 
-            <Route path="/logout" component={Logout} /> 
-            <Route path="/cart" component={Cart} />
-            <Route path="/dashboard" component={Dash} />
-            <Route path="/histories" component={Histories} />
-            <Route path="/help" component={Help} />
-            <Route path="/profile" component={Profile} />
-            <Route path="/payment" component={Payment} /> 
-            <Route path="/share" component={Share} />  
-            <Route path="/signup" component={Signup} />
-            <Route path="/privacy" component={PrivacyPolicy} />
-            <Route path="/verify" component={Verify} />
-            <Route path="/geolocation-error" component={geolocationError} />
-        </Switch> 
-    </BrowserRouter>
+    <Provider store={store}>
+        <BrowserRouter>
+            <Switch>
+                <Route exact path="/" render={() => (
+                    <Redirect to="/login"/>
+                )}/>
+                <Route path="/login" component={Login} /> 
+                <Route path="/logout" component={Logout} /> 
+                <Route path="/cart" component={Cart} />
+                <Route path="/dashboard" component={Dash} />
+                <Route path="/histories" component={Histories} />
+                <Route path="/help" component={Help} />
+                <Route path="/profile" component={Profile} />
+                <Route path="/payment" component={Payment} /> 
+                <Route path="/share" component={Share} />  
+                <Route path="/signup" component={Signup} />
+                <Route path="/privacy" component={PrivacyPolicy} />
+                <Route path="/verify" component={Verify} />
+                <Route path="/geolocation-error" component={geolocationError} />
+            </Switch> 
+        </BrowserRouter>
+    </Provider>
 , document.querySelector("#root"));
 
 module.hot.accept(); 
  
+// =============================
