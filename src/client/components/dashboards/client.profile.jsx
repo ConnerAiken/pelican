@@ -135,7 +135,7 @@ class ClientProfile extends React.Component {
       </Row>
           <Row className="input-row">
             <Col xs={{size: 10, offset: 1}} sm={{size: 10, offset: 1}} md={{size: 10, offset: 1}} lg={{size: 10, offset: 1}} className="d-flex flex-column justify-content-center align-items-center">
-              { this.state.form.profileImage ? <img src={this.state.form.profileImage}  style={{width: '250px'}}/> : (<span className="fa-stack fa-5x">
+              { this.state.form.profileImage ? <img src={"data:image/png;base64,"+this.state.form.profileImage}  style={{width: '250px'}}/> : (<span className="fa-stack fa-5x">
                 <i className="fa fa-circle fa-stack-2x"></i>
                 <i className="fa fa-user-o fa-stack-1x" style={{color: 'grey'}}></i>
               </span>) }

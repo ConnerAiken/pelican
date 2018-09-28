@@ -6,7 +6,7 @@ export default  function(sequelize, DataTypes) {
         resetToken: DataTypes.STRING,
         resetExpired: DataTypes.DATE, 
         verified: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false },
-        phone: DataTypes.STRING,
+        phone: DataTypes.STRING, 
         email: {
           type: DataTypes.STRING,
           unique: true,

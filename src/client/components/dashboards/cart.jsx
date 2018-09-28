@@ -38,8 +38,9 @@ class Cart extends React.Component {
   }
 
   clear() {  
-    this.props.dispatch(clearCart());   
-    console.log(this.props);
+    if(this.props.cart.length == 0 || !confirm("Are you sure you want to clear your cart?")) return;
+
+    this.props.dispatch(clearCart());    
   }
 
   removeItem(pendingItem) {

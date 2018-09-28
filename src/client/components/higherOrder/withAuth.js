@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
 import AuthService from './../../services/Auth';
+import { connect } from "react-redux";
 
+const mapStateToProps = state => { 
+    return state;
+};
+  
 // https://hptechblogs.com/using-json-web-token-react/
 export default function withAuth(AuthComponent) {
     const Auth = new AuthService('http://localhost:8080');
     
-    return class AuthWrapped extends Component {
+    class AuthWrapped extends Component {
         constructor() {
             super();
             this.state = {
@@ -40,7 +45,7 @@ export default function withAuth(AuthComponent) {
         render() { 
             if (this.state.user) {
                 return (
-                    <AuthComponent history={this.props.history} user={this.state.user} />
+                    <AuthComponent {...this.props}/>
                 )
             }
             else {
@@ -49,4 +54,7 @@ export default function withAuth(AuthComponent) {
         } 
     } 
     
+    AuthWrapped = connect(mapStateToProps)(AuthWrapped);
+
+    return AuthWrapped;
  }

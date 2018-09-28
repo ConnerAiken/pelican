@@ -11,6 +11,7 @@ import ReactPiwik from 'react-piwik';
 
 import Cart from "./components/views/cart.jsx";   
 import Dash from "./components/views/dashboard.jsx"; 
+import DriverStatus from "./components/views/driverStatus.jsx"; 
 import Help from "./components/views/help.jsx";   
 import Histories from "./components/views/histories.jsx";  
 import Login from "./components/views/login";  
@@ -54,6 +55,7 @@ ReactDOM.render(
                 <Route path="/logout" component={Logout} /> 
                 <Route path="/cart" component={Cart} />
                 <Route path="/dashboard" component={Dash} />
+                <Route path="/driverStatus" component={DriverStatus} />
                 <Route path="/histories" component={Histories} />
                 <Route path="/help" component={Help} />
                 <Route path="/profile" component={Profile} />

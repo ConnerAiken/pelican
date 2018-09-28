@@ -10,6 +10,16 @@ export default  function(sequelize, DataTypes) {
             key: 'id',  
           }
         },
+        isAcceptingOrders: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false, 
+            defaultValue: 0
+        },
+        isOnline: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false, 
+            defaultValue: 0
+        }, 
         firstName: DataTypes.STRING, 
         lastName: DataTypes.STRING, 
         addressLine1: DataTypes.STRING, 

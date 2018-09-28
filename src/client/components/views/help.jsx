@@ -4,6 +4,8 @@ import utils from "./../../assets/utils";
 import HelpDash from "./../dashboards/help.jsx"; 
 import Sidebar from "./../dashboards/sidebar.jsx";
 import {withRouter} from "react-router-dom";
+import {Container, Row, Col } from "reactstrap";
+import SidebarBtn from "./../widgets/sidebarBtn.jsx";
 
 import withAuth from "./../higherOrder/withAuth";
 import './help.scss';
@@ -19,23 +21,70 @@ class Help extends React.Component {
   render() { 
     if(this.state.user && this.state.user.accountType == "driver") {
       return (
-      <React.Fragment>
-        <Sidebar/>
-        <HelpDash/>
-      </React.Fragment> 
-      );
+        <Container fluid={true} style={{padding: 0}}>
+          <Row noGutters={true}>  
+          {this.props.sidebar.collapsed ? <SidebarBtn/> : <Col  
+                xs={6} 
+                sm={4} 
+                 md={2} 
+                 lg={2} 
+                 xl={2}>
+              <Sidebar/>
+            </Col>}
+            <Col xs={this.props.sidebar.collapsed ? 12 : 6} 
+                sm={this.props.sidebar.collapsed ? 12 : 8} 
+                md={this.props.sidebar.collapsed ? 12 : 10} 
+                lg={this.props.sidebar.collapsed ? 12 : 10} 
+                xl={this.props.sidebar.collapsed ? 12 : 10}>
+                 <HelpDash/>
+            </Col>
+          </Row> 
+        </Container>
+        );     
     }else if(this.state.user && this.state.user.accountType == "client") {
       return (
-        <React.Fragment>
-          <Sidebar/>
-          <HelpDash/>
-        </React.Fragment>);
+        <Container fluid={true} style={{padding: 0}}>
+          <Row noGutters={true}>  
+          {this.props.sidebar.collapsed ? <SidebarBtn/> : <Col  
+                 xs={6} 
+                 sm={4} 
+                 md={2} 
+                 lg={2} 
+                 xl={2}>
+              <Sidebar/>
+            </Col>}
+            <Col xs={this.props.sidebar.collapsed ? 12 : 6} 
+                 sm={this.props.sidebar.collapsed ? 12 : 8} 
+                 md={this.props.sidebar.collapsed ? 12 : 10} 
+                 lg={this.props.sidebar.collapsed ? 12 : 10} 
+                 xl={this.props.sidebar.collapsed ? 12 : 10}>
+                 <HelpDash/>
+            </Col>
+          </Row> 
+        </Container>
+        );     
     }else if(this.state.user && this.state.user.accountType == "store") {
       return (
-        <React.Fragment>
-          <Sidebar/>
-          <HelpDash/>
-        </React.Fragment>);
+        <Container fluid={true} style={{padding: 0}}>
+          <Row noGutters={true}>  
+          {this.props.sidebar.collapsed ? <SidebarBtn/> : <Col  
+                 xs={6} 
+                 sm={4} 
+                 md={2} 
+                 lg={2} 
+                 xl={2}>
+              <Sidebar/>
+            </Col>}
+            <Col xs={this.props.sidebar.collapsed ? 12 : 6} 
+                 sm={this.props.sidebar.collapsed ? 12 : 8} 
+                 md={this.props.sidebar.collapsed ? 12 : 10} 
+                 lg={this.props.sidebar.collapsed ? 12 : 10} 
+                 xl={this.props.sidebar.collapsed ? 12 : 10}>
+                 <HelpDash/>
+            </Col>
+          </Row> 
+        </Container>
+        );     
     }
 
     return <p>Please Login</p>;

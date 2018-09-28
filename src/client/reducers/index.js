@@ -6,7 +6,8 @@ import {
     DECREMENT_ITEM, 
     CLEAR_CART,
     SELECT_STORE,
-    TOGGLE_SIDEBAR
+    TOGGLE_SIDEBAR,
+    TOGGLE_DRIVER_STATUS
 } from "../constants/actionTypes"; 
 import {
     initialState
@@ -17,7 +18,11 @@ const rootReducer = (state = initialState, action) => {
   let newState = _.cloneDeep(state);
 
   switch (action.type) {
-    
+
+    case TOGGLE_DRIVER_STATUS:
+        newState.isAcceptingOrders = state.isAcceptingOrders == 1 ? 0 : 1;
+        return newState;
+
     case TOGGLE_SIDEBAR:  
         newState.sidebar.collapsed = !state.sidebar.collapsed;
         return newState; 

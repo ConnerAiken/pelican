@@ -1,9 +1,11 @@
 import AuthService from './../services/Auth';
 import toastr from "toastr"; 
-import './../../../node_modules/toastr/build/toastr.css';   
+import './../../../node_modules/toastr/build/toastr.css';    
 
 export default { 
     decodeToken(token) {
+        if(!token) AuthService.logout();
+
         const components = token.split('.');
         const base64url = components[1]; 
         try {

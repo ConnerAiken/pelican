@@ -1,11 +1,6 @@
 #nav {
 	background: rgb(0,110,50);
-	color: #fff;
-	height: 100vh;
-	left: 0;
-	position: fixed;
-	top: 0; 
-	width: 250px;
+	color: #fff; 
 	z-index: 999;
 	color: #fff;
     transition: all 1s;
@@ -68,24 +63,11 @@
 	}
 
 	#navBtn {
-		margin-left: 112%;
-		margin-top: 15px;
-	}
-}
-#nav.inactive {
-	margin-left: -250px;
-}
-
-#nav.active { 
-	
-} 
-
-@media (max-width:768px) {
-	#nav {
-		margin-left: -250px;
-	}
-	#nav.active {
-		margin-left: 0;
+		position: absolute;
+		top: 15px;
+		left: 105%; 
+		z-index: 9999;
 	}
 } 
-  
+ 
+ 

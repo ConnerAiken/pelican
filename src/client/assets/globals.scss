@@ -14,3 +14,10 @@ $orange: rgb(247, 111, 64);
     } 
  }
    
+
+ #root,
+ #root > div,
+ #root > div > div {
+    height: 100%;
+    min-height: 100vh !important;
+ }

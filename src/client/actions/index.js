@@ -1,4 +1,8 @@
-import { ADD_ITEM, REMOVE_ITEM, INCREMENT_ITEM, DECREMENT_ITEM, CLEAR_CART, SELECT_STORE, TOGGLE_SIDEBAR } from "./../constants/actionTypes";
+import { ADD_ITEM, REMOVE_ITEM, INCREMENT_ITEM, DECREMENT_ITEM, CLEAR_CART, SELECT_STORE, TOGGLE_SIDEBAR, TOGGLE_DRIVER_STATUS } from "./../constants/actionTypes";
+
+export const toggleDriverStatus = () => { 
+    return { type: TOGGLE_DRIVER_STATUS, payload: {} };
+};
 
 export const toggleSidebar = () => { 
     return { type: TOGGLE_SIDEBAR, payload: {} };
