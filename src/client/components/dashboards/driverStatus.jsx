@@ -29,13 +29,13 @@ class DriverStatusDash extends React.Component {
  
   render() { 
     return (
-      <Container fluid={true}> 
+      <React.Fragment> 
       <Jumbotron id="header">
         <Row>
           <Col xs={{size: 4}} sm={{size: 4}} md={{size: 4}} lg={{size: 4}}>  
             
           </Col>
-          <Col xs={{size: 4}} sm={{size: 4}} md={{size: 4}} lg={{size: 4}}> 
+          <Col xs={{size: 4}} sm={{size: 4}} md={{size: 4}} lg={{size: 4}}  className="d-flex  flex-column align-items-center"> 
               {this.state.user.profileImage && <img className="img-responsive img-circle" src={"data:image/png;base64,"+this.state.user.profileImage} style={{width: '75px'}} />} 
               <p>{this.state.user.firstName} {this.state.user.lastName}</p>
           </Col>
@@ -47,7 +47,7 @@ class DriverStatusDash extends React.Component {
         <Col xs={{size: 4}} sm={{size: 4}} md={{size: 4}} lg={{size: 4}}>  
           
         </Col>
-        <Col xs={{size: 4}} sm={{size: 4}} md={{size: 4}} lg={{size: 4}}> 
+        <Col xs={{size: 4}} sm={{size: 4}} md={{size: 4}} lg={{size: 4}} className="d-flex  flex-column align-items-center"> 
             <p>You are currently {this.props.isAcceptingOrders == 1 ? "ONLINE" : "OFFLINE"} for deliveries.</p>
 
             <Button block={true} onClick={this.toggleStatus} color={this.props.isAcceptingOrders == 1 ? "primary": "secondary"}>
@@ -58,7 +58,7 @@ class DriverStatusDash extends React.Component {
         </Col>
       </Row>
       {this.state.pendingRequest ? <LoadingScreen/> : null} 
-      </Container> 
+      </React.Fragment> 
     );
   }
 };

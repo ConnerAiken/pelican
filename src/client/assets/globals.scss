@@ -1,5 +1,8 @@
 $orange: rgb(247, 111, 64);
 
+html {
+    overflow-x: hidden;
+}
 
 .hover-select {
     &:hover {

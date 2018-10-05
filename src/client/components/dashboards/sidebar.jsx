@@ -43,7 +43,7 @@ class Sidebar extends React.Component {
     this.setState({pendingRequest: true});
 
     this.Auth.logout().then(e => { 
-        this.props.history.replace('/login');
+        this.props.history.push('/login');
     });
   }
 

@@ -1,4 +1,5 @@
 import _ from "lodash";
+import UserService from "./../services/User";
 import { 
     ADD_ITEM, 
     REMOVE_ITEM, 
@@ -9,6 +10,7 @@ import {
     TOGGLE_SIDEBAR,
     TOGGLE_DRIVER_STATUS
 } from "../constants/actionTypes"; 
+
 import {
     initialState
 } from "../constants/state";
@@ -16,11 +18,13 @@ import {
 const rootReducer = (state = initialState, action) => {
   console.log("[rootReducer] "+action.type+" called.", state);
   let newState = _.cloneDeep(state);
+  let userApi = new UserService();
 
   switch (action.type) {
 
     case TOGGLE_DRIVER_STATUS:
-        newState.isAcceptingOrders = state.isAcceptingOrders == 1 ? 0 : 1;
+        newState.isAcceptingOrders = state.isAcceptingOrders == 1 ? 0 : 1;  
+        userApi.toggleAcceptingOrders(newState);
         return newState;
 
     case TOGGLE_SIDEBAR:  

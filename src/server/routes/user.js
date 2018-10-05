@@ -113,6 +113,32 @@ router.post('/register', function(req, res) {
 
    });
 });
+
+router.get('/isAcceptingOrders', function(req, res) {    
+  const user = jwt.decode(req.headers.token); 
+  db.UserInfo.findOne({ where: {userId: user.id}}).then(function(userInfo) {   
+    return res.status(200).json({
+      success: true,
+      payload: {isAcceptingOrders: userInfo.isAcceptingOrders}
+    });
+  }); 
+});
+
+router.post('/isAcceptingOrders', function(req, res) {    
+  const user = jwt.decode(req.headers.token); 
+  db.UserInfo.findOne({ where: {userId: user.id}}).then(function(userInfo) {  
+      
+    userInfo.isAcceptingOrders = req.body.isAcceptingOrders;
+
+    return userInfo.save().then(result => { 
+        return res.status(200).json({
+          success: 'Logged out'
+        });
+    });
+  });
+
+});
+
 router.post('/logout', function(req, res) {    
   const user = jwt.decode(req.headers.token);
 

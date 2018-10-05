@@ -3,9 +3,7 @@ import toastr from "toastr";
 import './../../../node_modules/toastr/build/toastr.css';    
 
 export default { 
-    decodeToken(token) {
-        if(!token) AuthService.logout();
-
+    decodeToken(token) { 
         const components = token.split('.');
         const base64url = components[1]; 
         try {

@@ -30,9 +30,8 @@ class Cart extends React.Component {
       total: 0,
       shippingCost: 1500
     }; 
-  } 
-
-  
+  }  
+ 
   goBack() {
     this.props.history.goBack();
   }

@@ -26,7 +26,6 @@ class DriverStatus extends React.Component {
   render() {   
     if(this.state.user && this.state.user.accountType == "driver") {
       return (
-      <Container fluid={true} style={{padding: 0}}>
         <Row noGutters={true}>  
         {this.props.sidebar.collapsed ? <SidebarBtn/> : <Col  
                xs={6} 
@@ -45,7 +44,6 @@ class DriverStatus extends React.Component {
             <DriverStatusDash/>
           </Col>
         </Row> 
-      </Container> 
       );
     }else {
       this.props.history.replace('/logout');
