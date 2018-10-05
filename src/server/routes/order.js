@@ -2,14 +2,24 @@ import express from "express";
 import db from "./../libs/db";
 import utils from "./../libs/utils";
 import Sequelize from "sequelize"; 
+import jwt from "jsonwebtoken";
+
 const Op = Sequelize.Op;
 const router = express.Router();  
 
-router.post('/submit', function(req, res) {  
+router.get('/available', function(req, res) { 
+  db.Order.findAll({ where: {driverId: null}}).then(result => {
+    console.log(result);
+    return res.json(result)
+  })
+  .catch(err => res.json(err));
+});
+
+router.post('/', function(req, res) {  
   const token = req.body && req.body.token ? req.body.token : req.headers['token']; 
   const user = utils.decodeToken(token); 
   const order = {
-      items: req.body.items ? JSON.stringify(req.body.items) : null, 
+      items: req.body.cart ? JSON.stringify(req.body.cart) : null, 
       requestorId: user.id,
       driverId: null,
       storeId: req.body.storeId

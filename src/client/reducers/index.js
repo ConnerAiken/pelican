@@ -1,6 +1,7 @@
 import _ from "lodash";
 import UserService from "./../services/User";
 import { 
+    ORDER_SUBMITTED,
     ADD_ITEM, 
     REMOVE_ITEM, 
     INCREMENT_ITEM, 
@@ -21,6 +22,10 @@ const rootReducer = (state = initialState, action) => {
   let userApi = new UserService();
 
   switch (action.type) {
+
+    case ORDER_SUBMITTED:
+        newState.cart = action.payload;
+        return newState;
 
     case TOGGLE_DRIVER_STATUS:
         newState.isAcceptingOrders = state.isAcceptingOrders == 1 ? 0 : 1;  

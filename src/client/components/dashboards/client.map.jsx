@@ -44,13 +44,11 @@ class ClientMapDash extends React.Component {
 
     utils.initializeProtectedComponent.call(this, utils); 
 
-    this.state = { 
-      activeOrder: false,
-      locationLoaded: false, 
-      curLoc: false,
-      destination: null,
-      store: false 
-    }; 
+    this.state.activerOrder = false;
+    this.state.locationLoaded = false;
+    this.state.curLoc = false;
+    this.state.destination = false;
+    this.state.store = false; 
 
     this.retrieveOrder()
     .then(res => this.initializeGMap());
@@ -219,7 +217,8 @@ class ClientMapDash extends React.Component {
   }
 
   showRelevantMap() {
-    const user = utils.decodeToken(localStorage.getItem("token"));  
+    debugger;
+    const user = this.state.user;
     if(user.accountType == "client") { 
 
       if(this.state.activeOrder) {
@@ -291,7 +290,7 @@ class ClientMapDash extends React.Component {
             {this.state.user && this.state.user.accountType == "driver" && this.state.activeOrder && this.state.activeOrder.status == 3 && <Button onClick={this.updateOrder}>Mark Delivered</Button>}
         </Col>
       </Row>
-      {this.state.pendingRequest || !this._mapRef ? <LoadingScreen/> : null} 
+      {this.state.pendingRequest ? <LoadingScreen/> : null} 
       {this.state.curLoc && this.showRelevantMap()} 
       {this.state.store ? <Store onSave={this.saveStore} info={this.state.store}/> : null}
       </Container> 

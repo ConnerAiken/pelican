@@ -15,7 +15,7 @@ import utils from "./../../assets/utils";
 import { connect } from "react-redux";
 import { toggleSidebar } from "./../../actions/index"; 
 const mapStateToProps = state => { 
-    return { cart: state.cart, sidebar: state.sidebar, isAcceptingOrders: state.isAcceptingOrders };
+    return { cart: state.cart || [], sidebar: state.sidebar, isAcceptingOrders: state.isAcceptingOrders };
 }; 
 // ================
   

@@ -1,4 +1,8 @@
-import { ADD_ITEM, REMOVE_ITEM, INCREMENT_ITEM, DECREMENT_ITEM, CLEAR_CART, SELECT_STORE, TOGGLE_SIDEBAR, TOGGLE_DRIVER_STATUS } from "./../constants/actionTypes";
+import { ORDER_SUBMITTED, ADD_ITEM, REMOVE_ITEM, INCREMENT_ITEM, DECREMENT_ITEM, CLEAR_CART, SELECT_STORE, TOGGLE_SIDEBAR, TOGGLE_DRIVER_STATUS } from "./../constants/actionTypes";
+
+export const orderSubmitted = (items) => {
+    return { type: ORDER_SUBMITTED, payload: items };
+};
 
 export const toggleDriverStatus = () => { 
     return { type: TOGGLE_DRIVER_STATUS, payload: {} };

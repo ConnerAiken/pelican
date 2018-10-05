@@ -1,16 +1,18 @@
 // Node.JS
 import React from "react";  
+import axios from "axios";
 import { Container, Row, Col, Button, Card, ButtonGroup, CardText, CardBody, CardTitle, CardSubtitle, Media } from 'reactstrap'; 
 import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
-import { addCartItem, removeCartItem, incrementCartItem, decrementCartItem, clearCart } from "./../../actions/index";
+import { addCartItem, removeCartItem, incrementCartItem, decrementCartItem, clearCart, orderSubmitted } from "./../../actions/index";
 import LoadingScreen from "../loadingScreen";
 import utils from "./../../assets/utils";
 import "./cart.scss";
  
 
 const mapStateToProps = state => {
-  return { cart: state.cart };
+  console.log(state);
+  return { cart: state.cart || [], order: state.order };
 };
 
   
@@ -132,8 +134,13 @@ class Cart extends React.Component {
       );
   }
 
-  handlePurchase() {
-
+  handlePurchase() { 
+    this.setState({pendingRequest: true});  
+    debugger;
+    axios.post('/api/v1/order', {cart: this.props.cart}, this.opts).then((response) => {  
+      this.setState({pendingRequest: false});      
+      this.props.dispatch(orderSubmitted(response.data.payload));   
+    });  
   }
   
   showCartItems() {
