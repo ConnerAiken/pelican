@@ -55,5 +55,6 @@ add items to a invisible cart and it populates number in sidebar. Creating geolo
 3.25h (Thursday Sep 27th 10:45am-2pm) - Responsive menu work
 3.75h (Thursday Sep 27th 4pm-7:45pm) - Tasker online/offline views, sidebar improvements and state management improvements
 2.25h (Friday October 5th 10:30am-12:45pm) - Tasker online/offline db updates, more work on ordering workflow for client/driver. Specifically, order submitting via cart and available order fetching for driver available order view. Research on sequelize joins
+.5h (Friday October 5th 1:30pm-2:00pm) - Updating styling for orders selection screen for drivers
 
-Remaining hours: 2.5 hours
+Remaining hours: 2 hours
