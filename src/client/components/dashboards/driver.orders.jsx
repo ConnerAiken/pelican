@@ -8,6 +8,8 @@ import LoadingScreen from "../loadingScreen";
 import utils from "../../assets/utils";
 import { withRouter, Redirect } from 'react-router-dom';
   
+import "./driver.order.scss";
+
 const mapStateToProps = state => {
   return { 
           store: state.store,
@@ -33,7 +35,7 @@ class DriverOrders extends React.Component {
     }); 
   }
   
-  generateOrder(item) {
+  generateOrder(order) {
     console.log(item);
     return (
       <React.Fragment key={Math.random()}>  
@@ -43,24 +45,24 @@ class DriverOrders extends React.Component {
           </Media>
           <Media body>
             <div className="card-title">
-              <span>{item.name}</span>
+              <p>{order.requestor ? order.requestor.fullName : null}</p>
+              <p>{order.requestor ? order.requestor.phone : null} &nbsp;&nbsp;
+              <i style={{color: 'blue'}} className="fa fa-phone"></i>&nbsp;&nbsp;
+              <i style={{color: 'green'}} className="fa fa-info-circle"></i></p>
             </div>
             <div className="card-subtitle"> 
-              <span>{}</span>
-              <span className="float-right" style={{color: 'rgb(247, 111, 64)'}}>{}</span>
-            </div>
-            <div class="card-buttons clearfix"> 
-            </div>
+              <p><b>Product</b>: {order.items ? order.items.length : 'Unknown'} products</p>
+              <p><b>Price</b>: {order.items ? order.items.length : 'Unknown'} <span style={{color: 'orange'}}>$350</span></p>
+              <p><b>Distance</b>: {order.distance ? 10 + " miles" : 'Unknown'}</p>
+              <p><b>Shipping</b>: <Button size={"sm"} color={"warning"}>{order.shippingCost ? order.shippingCost : 'Unknown'}</Button></p>
+            </div> 
             </Media>
         </Media>  
-        <Row className="card-metadata-wrapper">
-          <hr/>
+        <Row className="card-metadata-wrapper"> 
           <Col xs={{size: 6}}  sm={{size: 6}} md={{size: 6}} lg={{size: 6}}>  
               <p style={{textAlign: 'left'}}><i className="fa fa-map-marker"></i>&nbsp;&nbsp;{}</p>
           </Col>  
-          <Col xs={{size: 6}}  sm={{size: 6}} md={{size: 6}} lg={{size: 6}}> 
-              <p style={{textAlign: 'right'}}><i className="fa fa-car"></i>&nbsp;&nbsp;Shipping&nbsp;&nbsp;&nbsp;&nbsp;<span className="pull-right" style={{color: 'rgb(247, 111, 64)'}}>$15</span></p>
-          </Col> 
+          <Col xs={{size: 6}}  sm={{size: 6}} md={{size: 6}} lg={{size: 6}}></Col> 
         </Row>
       <br/>
     </React.Fragment> 
@@ -74,6 +76,22 @@ class DriverOrders extends React.Component {
   render() {
     return (
       <Container className="container dashboard" fluid={true}> 
+      <Row>
+        <Col xs={{size: 1}} sm={{size: 1}} md={{size: 2}} lg={{size: 2}}>   
+        </Col>
+        <Col xs={{size: 10}} sm={{size: 10}} md={{size: 8}} lg={{size: 8}}> 
+            <i class="fa fa-info-circle"></i>&nbsp;
+            <b>REQUEST</b>&nbsp;
+            <i class="fa fa-info-circle"></i>&nbsp;
+            <i class="fa fa-info-circle"></i>&nbsp;
+            <i class="fa fa-info-circle"></i>&nbsp;
+            <i class="fa fa-info-circle"></i>&nbsp;
+            <br/>
+            <p>You have {this.state.requests.length} buyer's requests.</p>
+        </Col>
+        <Col xs={{size: 1}} sm={{size: 1}} md={{size: 2}} lg={{size: 2}}>  
+        </Col>
+      </Row>  
       <Row>
         <Col xs={{size: 1}} sm={{size: 1}} md={{size: 2}} lg={{size: 2}}>   
         </Col>
