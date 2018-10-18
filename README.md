@@ -69,7 +69,7 @@ See: https://appdividend.com/2018/02/07/node-js-jwt-authentication-tutorial-scra
 Making changes are simple! Follow these steps..
 
 1) `git clone <this_url> && cd <repo_name>`  
-2) `npm install` 
+2) `npm install` then setup your .env file
 3) `npm run dev` 
 4) Access the dev environment via `http://localhost:8080` 
 5) Front end changes are shown instantly, server-side changes currently require restart 
