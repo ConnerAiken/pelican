@@ -60,10 +60,12 @@ class PrivacyPolicy extends React.Component {
                   The HIPAA Privacy Rule establishes standards to protect users of the Service individuals' medical records and other personal health information. The Service has appropriate safeguards to protect the privacy of personal health information, and sets limits and conditions on the uses and disclosures that may be made of such information without patient authorization.
                   <br/>
                   However, we may use your Personal Information, Demographic Information or Usage Information at PELICAN's sole discretion for various purposes, including but not limited to:
-                  <br/>
-                  Processing of transactions; providing special offers catered to users' needs; enabling users to participate in the Service's features; providing users with a customized experience; providing customer support; contacting user regarding any updates or changes to this policy or Terms and Conditions; and for other purposes disclosed at the time you provide your information or as otherwise set forth in this Privacy Policy.
-                  <br/>
-                  We incorporate commercially reasonable safeguards to help protect and secure your Personal Information. However, no data transmission over the Internet, mobile networks, wireless transmission or electronic storage of information can be guaranteed to be 100% secure. Please note that we cannot ensure the security of any information you transmit to us, and you use our Service and provide us with your information at your own risk.
+                  <br/><br/>
+                  <ul>
+                    <li>Processing of transactions; providing special offers catered to users' needs; enabling users to participate in the Service's features; providing users with a customized experience; providing customer support; contacting user regarding any updates or changes to this policy or Terms and Conditions; and for other purposes disclosed at the time you provide your information or as otherwise set forth in this Privacy Policy.</li>
+                    <br/>
+                    <li>We incorporate commercially reasonable safeguards to help protect and secure your Personal Information. However, no data transmission over the Internet, mobile networks, wireless transmission or electronic storage of information can be guaranteed to be 100% secure. Please note that we cannot ensure the security of any information you transmit to us, and you use our Service and provide us with your information at your own risk.</li>
+                  </ul>
                   <br/>
                   <br/>
                   <h4>How and When Do We Disclose Information to Third Parties?</h4>
