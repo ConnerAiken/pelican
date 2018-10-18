@@ -13,135 +13,83 @@ class PrivacyPolicy extends React.Component {
     return (
       <Container id="main" className="container privacyPolicy" fluid={true}>   
       <Row id="top-toolbar">
-        <Col xs={{size: 3, offset: 1}} sm={{size: 3, offset: 1}} md={{size: 3, offset: 1}} lg={{size: 3, offset: 1}} className="d-flex justify-content-start align-items-center">
+        <Col xs={{size: 3, offset: 1}} sm={{size: 3, offset: 1}} md={{size: 3, offset: 1}} lg={{size: 3, offset: 1}} className="d-flex justify-content-start">
             <i className="fa fa-chevron-left fa-2x formIcon" onClick={() => { this.props.history.push('/'); }}/> 
         </Col> 
-        <Col xs={{size: 4}} sm={{size: 4}} md={{size: 4}} lg={{size: 4}} className="d-flex justify-content-center align-items-center"> 
+        <Col xs={{size: 4}} sm={{size: 4}} md={{size: 4}} lg={{size: 4}} className="d-flex justify-content-center"> 
               <h1>Privacy Policy</h1> 
         </Col> 
-        <Col xs={{size: 3}} sm={{size: 3}} md={{size: 3}} lg={{size: 3}} className="d-flex justify-content-end align-items-center"> 
-                  <br/>
-                  <p>Effective date: September 18, 2018</p>
+        <Col xs={{size: 3}} sm={{size: 3}} md={{size: 3}} lg={{size: 3}} className="d-flex justify-content-end"> 
+                <br/><br/>
+                <p>Effective date: October 17th 2018</p>
         </Col> 
       </Row>
       <Row>
         <Col xs={12} sm={12} md={12} lg={12}> 
                   <hr/>
-                  <p>Pelican Delivers LLC ("us", "we", or "our") operates the http://www.pelicandelivers.com website and the Pelican Delivers mobile application (hereinafter referred to as the "Service").</p>
-
-                  <p>This page informs you of our policies regarding the collection, use, and disclosure of personal data when you use our Service and the choices you have associated with that data. Our Privacy Policy  for Pelican Delivers LLC is managed with the help of <a href="https://privacypolicies.com/free-privacy-policy-generator/">Privacy Policies</a>.</p>
-
-                  <p>We use your data to provide and improve the Service. By using the Service, you agree to the collection and use of information in accordance with this policy. Unless otherwise defined in this Privacy Policy, the terms used in this Privacy Policy have the same meanings as in our Terms and Conditions.</p>
-
-
-                  <h2>Information Collection And Use</h2>
-
-                  <p>We collect several different types of information for various purposes to provide and improve our Service to you.</p>
-
-                  <h3>Types of Data Collected</h3>
-
-                  <h4>Personal Data</h4>
-
-                  <p>While using our Service, we may ask you to provide us with certain personally identifiable information that can be used to contact or identify you ("Personal Data"). Personally identifiable information may include, but is not limited to:</p>
-
+                  <h3>Introduction</h3> 
+                  Welcome to Pelican, your number one source for recreational & medical marijuana lead generation services.
+                  <br/>
+                  This "Privacy Policy" governs your use of www.pelicandelivers.com and any other Pelican Delivers, Inc owned and operated website or mobile application; including but not limited to any interactive features or other online services that may post a link to www.pelicandelivers.com (hereinafter referred to "Service").
+                  <br/><br/>
+                  In addition to reviewing this Privacy Policy, please review our Terms and Conditions of Service User Agreement which governs the use of the Service. If you do not agree to abide by the Terms and Conditions of Service, you automatically opt out of the PELICAN platform and are prohibited from using PELICAN. If you agree to abide by the Terms and Conditions of Service User Agreement and subsequently violate the terms of the Agreement, your use of the Service will be terminated. <b>By using our Service, you consent to our Privacy Policy and Terms and Conditions of Service User Agreement and our collection, use and sharing of your information and data, and other activities, as described below.</b>
+                  <br/>
+                  <br/>
+                  <h4>Information Collected</h4>
+                  <br/>
+                  Registering with the Service, requires certain information such as: (1) personally identifiable information, which is information that identifies you personally, including but not limited to your first and last name, email address, home address, Pictures of yourself & your state issued drivers license, date of birth and phone number ("Personal Information"); and (2) demographic information, such as information about your location, age, gender, and spending habits ("Demographic Information"); and (3) medical information regarding your medical marijuana recommendation, including the name and license number of your recommending physician, the contact information of the physician, the method to verify the recommendation's authenticity, the expiration date of the recommendation, the recommendation verification number, and the details of any orders placed through the Service ("Usage Information"). We may collect this information through various forms and in various places on the Service, including if you register for an account, through "contact us" forms, or when you otherwise interact with the Service in any way. If we combine Demographic Information with the Personal Information we collect directly from you on the Service, we will treat the combined data as Personal Information under this Privacy Policy. All Personal Information collected by PELICAN is proprietary information, and is the property of PELICAN.
+                  <br/>
+                  <br/>
+                  <h4>Location-Based Information</h4>
+                  <br/>
+                  Our Service may use location-based services in order to locate you so that we may verify your location, deliver you relevant content based on your location, and share your location with the pre-registered delivery driver, restaurant and dispensary service providers as part of the location-based services we offer.
+                  <br/>
+                  <br/>
+                  <h4>Information Third Parties Provide About You</h4>
+                  <br/>
+                  We may receive information about you from our affiliates, from any other users of the Service, or from any other third parties that may provide us information we deem relevant to your use of the Service. PELICAN may at its sole discretion collect and use this information as Personal Information.
+                  <br/>
+                  <br/>
+                  <h4>Interactions with Third Party Sites</h4>
+                  <br/>
+                  The Service may include functionality that allows certain kinds of interactions between the Service and your account on a third-party web site or application; for example interaction with dispensary, restaurant and payment providers. The use of this functionality may involve the third-party operator providing certain information, including Personal Information, to us. For example, we may provide third-party sites' interfaces or links on the Service to facilitate your sending a communication from the Service. PELICAN may at its sole discretion collect and use this information as Personal Information.
+                  <br/>
+                  <br/>
+                  <h4>The Health Insurance Portability and Accountability Act of 1996 (HIPAA) Compliance</h4>
+                  <br/>
+                  The HIPAA Privacy Rule establishes standards to protect users of the Service individuals' medical records and other personal health information. The Service has appropriate safeguards to protect the privacy of personal health information, and sets limits and conditions on the uses and disclosures that may be made of such information without patient authorization.
+                  <br/>
+                  However, we may use your Personal Information, Demographic Information or Usage Information at PELICAN's sole discretion for various purposes, including but not limited to:
+                  <br/>
+                  Processing of transactions; providing special offers catered to users' needs; enabling users to participate in the Service's features; providing users with a customized experience; providing customer support; contacting user regarding any updates or changes to this policy or Terms and Conditions; and for other purposes disclosed at the time you provide your information or as otherwise set forth in this Privacy Policy.
+                  <br/>
+                  We incorporate commercially reasonable safeguards to help protect and secure your Personal Information. However, no data transmission over the Internet, mobile networks, wireless transmission or electronic storage of information can be guaranteed to be 100% secure. Please note that we cannot ensure the security of any information you transmit to us, and you use our Service and provide us with your information at your own risk.
+                  <br/>
+                  <br/>
+                  <h4>How and When Do We Disclose Information to Third Parties?</h4>
+                  <br/>
+                  We may share non-Personal Information, such as aggregated user statistics, with third parties. We do not share the Personal Information that we collect with third parties for those third parties' direct marketing purposes. We may share the information we have collected about you, including Personal Information, as disclosed at the time you provide your information and as described below or otherwise in this Privacy Policy. The Service may disclose your information as follows:
+                  <br/><br/>
                   <ul>
-                  <li>Email address</li><li>First name and last name</li><li>Phone number</li><li>Address, State, Province, ZIP/Postal code, City</li><li>Cookies and Usage Data</li>
+                      <li>When You Provide Information to Third Parties. You may be presented with an option on our Service to receive certain information and/or marketing offers directly from third parties. If you choose to do so, your Personal Information and other information may be disclosed to such third parties and all information you disclose will be subject to the third party privacy policies and practices of such third parties. We are not responsible for the privacy policies and practices of such third parties and, therefore, you should review such third party privacy policies and practices of such third parties prior to requesting information from or otherwise interacting with them.</li>
+                      <li>Administrative and Legal Reasons. We may disclose Personal and Usage Information when subpoenaed by law enforcement; to protect the Service; and to detect or prevent misuse, fraud, security, or technical issues or where otherwise required to do so by law.</li>
                   </ul>
-
-                  <h4>Usage Data</h4>
-
-                  <p>We may also collect information that your browser sends whenever you visit our Service or when you access the Service by or through a mobile device ("Usage Data").</p>
-                  <p>This Usage Data may include information such as your computer's Internet Protocol address (e.g. IP address), browser type, browser version, the pages of our Service that you visit, the time and date of your visit, the time spent on those pages, unique device identifiers and other diagnostic data.</p>
-                  <p>When you access the Service with a mobile device, this Usage Data may include information such as the type of mobile device you use, your mobile device unique ID, the IP address of your mobile device, your mobile operating system, the type of mobile Internet browser you use, unique device identifiers and other diagnostic data.</p>
-
-                  <h4>Tracking & Cookies Data</h4>
-                  <p>We use cookies and similar tracking technologies to track the activity on our Service and hold certain information.</p>
-                  <p>Cookies are files with small amount of data which may include an anonymous unique identifier. Cookies are sent to your browser from a website and stored on your device. Tracking technologies also used are beacons, tags, and scripts to collect and track information and to improve and analyze our Service.</p>
-                  <p>You can instruct your browser to refuse all cookies or to indicate when a cookie is being sent. However, if you do not accept cookies, you may not be able to use some portions of our Service.</p>
-                  <p>Examples of Cookies we use:</p>
-                  <ul>
-                      <li><strong>Session Cookies.</strong> We use Session Cookies to operate our Service.</li>
-                      <li><strong>Preference Cookies.</strong> We use Preference Cookies to remember your preferences and various settings.</li>
-                      <li><strong>Security Cookies.</strong> We use Security Cookies for security purposes.</li>
-                  </ul>
-
-                  <h2>Use of Data</h2>
-                      
-                  <p>Pelican Delivers LLC uses the collected data for various purposes:</p>    
-                  <ul>
-                      <li>To provide and maintain the Service</li>
-                      <li>To notify you about changes to our Service</li>
-                      <li>To allow you to participate in interactive features of our Service when you choose to do so</li>
-                      <li>To provide customer care and support</li>
-                      <li>To provide analysis or valuable information so that we can improve the Service</li>
-                      <li>To monitor the usage of the Service</li>
-                      <li>To detect, prevent and address technical issues</li>
-                  </ul>
-
-                  <h2>Transfer Of Data</h2>
-                  <p>Your information, including Personal Data, may be transferred to — and maintained on — computers located outside of your state, province, country or other governmental jurisdiction where the data protection laws may differ than those from your jurisdiction.</p>
-                  <p>If you are located outside United States and choose to provide information to us, please note that we transfer the data, including Personal Data, to United States and process it there.</p>
-                  <p>Your consent to this Privacy Policy followed by your submission of such information represents your agreement to that transfer.</p>
-                  <p>Pelican Delivers LLC will take all steps reasonably necessary to ensure that your data is treated securely and in accordance with this Privacy Policy and no transfer of your Personal Data will take place to an organization or a country unless there are adequate controls in place including the security of your data and other personal information.</p>
-
-                  <h2>Disclosure Of Data</h2>
-
-                  <h3>Legal Requirements</h3>
-                  <p>Pelican Delivers LLC may disclose your Personal Data in the good faith belief that such action is necessary to:</p>
-                  <ul>
-                      <li>To comply with a legal obligation</li>
-                      <li>To protect and defend the rights or property of Pelican Delivers LLC</li>
-                      <li>To prevent or investigate possible wrongdoing in connection with the Service</li>
-                      <li>To protect the personal safety of users of the Service or the public</li>
-                      <li>To protect against legal liability</li>
-                  </ul>
-
-                  <h2>Security Of Data</h2>
-                  <p>The security of your data is important to us, but remember that no method of transmission over the Internet, or method of electronic storage is 100% secure. While we strive to use commercially acceptable means to protect your Personal Data, we cannot guarantee its absolute security.</p>
-
-                  <h2>Service Providers</h2>
-                  <p>We may employ third party companies and individuals to facilitate our Service ("Service Providers"), to provide the Service on our behalf, to perform Service-related services or to assist us in analyzing how our Service is used.</p>
-                  <p>These third parties have access to your Personal Data only to perform these tasks on our behalf and are obligated not to disclose or use it for any other purpose.</p>
-
-                  <h3>Analytics</h3>
-                  <p>We may use third-party Service Providers to monitor and analyze the use of our Service.</p>    
-                  <ul>
-                          <li>
-                          <p><strong>Google Analytics</strong></p>
-                          <p>Google Analytics is a web analytics service offered by Google that tracks and reports website traffic. Google uses the data collected to track and monitor the use of our Service. This data is shared with other Google services. Google may use the collected data to contextualize and personalize the ads of its own advertising network.</p>
-                                          <p>For more information on the privacy practices of Google, please visit the Google Privacy & Terms web page: <a href="https://policies.google.com/privacy?hl=en">https://policies.google.com/privacy?hl=en</a></p>
-                      </li>
-                                  <li>
-                          <p><strong>Piwik or Matomo</strong></p>
-                          <p>Piwik or Matomo is a web analytics service. You can visit their Privacy Policy page here: <a href="https://matomo.org/privacy-policy">https://matomo.org/privacy-policy</a></p>
-                      </li>
-                                      </ul>
-
-
-                  <h2>Links To Other Sites</h2>
-                  <p>Our Service may contain links to other sites that are not operated by us. If you click on a third party link, you will be directed to that third party's site. We strongly advise you to review the Privacy Policy of every site you visit.</p>
-                  <p>We have no control over and assume no responsibility for the content, privacy policies or practices of any third party sites or services.</p>
-
-
-                  <h2>Children's Privacy</h2>
-                  <p>Our Service does not address anyone under the age of 18 ("Children").</p>
-                  <p>We do not knowingly collect personally identifiable information from anyone under the age of 18. If you are a parent or guardian and you are aware that your Children has provided us with Personal Data, please contact us. If we become aware that we have collected Personal Data from children without verification of parental consent, we take steps to remove that information from our servers.</p>
-
-
-                  <h2>Changes To This Privacy Policy</h2>
-                  <p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page.</p>
-                  <p>We will let you know via email and/or a prominent notice on our Service, prior to the change becoming effective and update the "effective date" at the top of this Privacy Policy.</p>
-                  <p>You are advised to review this Privacy Policy periodically for any changes. Changes to this Privacy Policy are effective when they are posted on this page.</p>
-
-
-                  <h2>Contact Us</h2>
-                  <p>If you have any questions about this Privacy Policy, please contact us:</p>
-                  <ul>
-                      <li>By email: support@pelicandelivers.com</li>
-                        
-                      <li>By phone number: 2069004735</li>
-                          <li>By mail: Pelican Delivers</li>
-                  </ul>                                
+                  <br/>
+                  <br/>
+                  <h4>Information User Discloses</h4>
+                  <br/>
+                  The Service will contain a community forum and message board where users are able to create user profiles, writings, photographs, ideas, videos, audio recordings, computer graphics, pictures, data, or other content, including Personal Information (collectively, "User Content"). All User Content once posted immediately becomes the property of PELICAN. The Service may display, reproduce, publish, distribute or otherwise use User Content online or offline in any media or format (currently existing or hereafter developed) and may or may not attribute it to you. Others may have access to this User Content and may have the ability to share it. Please think cautiously prior to posting any Personal Information in a public forum. Our Privacy Policy does not apply to any information that you disclose publicly through our Service. We are not responsible for the accuracy, use or misuse of any User Content that you disclose or receive from third parties through the Service.
+                  <br/>
+                  <br/>
+                  <h4>User Information and Communications</h4>
+                  <br/>
+                  The user is responsible for maintaining the truthfulness and accuracy of the information you submit to us, such as the user's contact information and doctor recommendation information provided as part of registration. The Service will disable a user's account if the information provided is determined to be false or no longer current.
+                  <br/>
+                  <br/>
+                  <h4>Changes to the Privacy Policy</h4>
+                  <br/>
+                  The Service has the authority to alter the Privacy Policy at any time without notice to you. However, the Service will not change this Privacy Policy in a manner that materially alters the use of the user's Personal Information as promised at the time it was collected unless required to do so by law.
+                                          
             </Col>
       </Row>
       </Container> 

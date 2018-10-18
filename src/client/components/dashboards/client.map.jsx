@@ -216,9 +216,9 @@ class ClientMapDash extends React.Component {
     navigator.geolocation.clearWatch(this.watchId);
   }
 
-  showRelevantMap() {
-    debugger;
+  showRelevantMap() { 
     const user = this.state.user;
+    
     if(user.accountType == "client") { 
 
       if(this.state.activeOrder) {

@@ -26,7 +26,7 @@ class DriverStatus extends React.Component {
   render() {   
     if(this.state.user && this.state.user.accountType == "driver") {
       return (
-        <Row noGutters={true}>  
+        <Row noGutters={true} className="full-height">  
         {this.props.sidebar.collapsed ? <SidebarBtn/> : <Col  
                xs={6} 
                sm={4} 

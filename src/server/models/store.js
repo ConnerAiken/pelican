@@ -7,7 +7,15 @@ export default function(sequelize, DataTypes) {
         name: DataTypes.TEXT,
         city: DataTypes.TEXT,
         state: DataTypes.TEXT,
-        zipCode: DataTypes.TEXT, 
+        zipCode: DataTypes.TEXT,  
+        visible: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: true },
+        ownerId: {
+          type: DataTypes.BIGINT, 
+          references: { 
+            model: 'users',  
+            key: 'id',  
+          }
+        },
         apiType: {
           type: DataTypes.TEXT,
           allowNull: true,

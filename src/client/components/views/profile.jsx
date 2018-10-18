@@ -23,8 +23,8 @@ class Profile extends React.Component {
   render() {  
     if(this.state.user && this.state.user.accountType == "driver") { 
       return (
-        <Container fluid={true} style={{padding: 0}}>
-          <Row noGutters={true}>  
+        <Container fluid={true} style={{padding: 0}}  className="full-height">
+          <Row noGutters={true}  className="full-height">  
           {this.props.sidebar.collapsed ? <SidebarBtn/> : <Col  
                  xs={6} 
                  sm={4} 
@@ -45,8 +45,8 @@ class Profile extends React.Component {
         );   
     }else if(this.state.user && this.state.user.accountType == "client") {
       return (
-        <Container fluid={true} style={{padding: 0}}>
-          <Row noGutters={true}>  
+        <Container fluid={true} style={{padding: 0}}  className="full-height">
+          <Row noGutters={true}  className="full-height">  
           {this.props.sidebar.collapsed ? <SidebarBtn/> : <Col  
                  xs={6} 
                  sm={4} 
@@ -67,8 +67,8 @@ class Profile extends React.Component {
         );   
     }else if(this.state.user && this.state.user.accountType == "store") {
       return (
-        <Container fluid={true} style={{padding: 0}}>
-          <Row noGutters={true}>  
+        <Container fluid={true} style={{padding: 0}}  className="full-height">
+          <Row noGutters={true}  className="full-height">  
           {this.props.sidebar.collapsed ? <SidebarBtn/> : <Col  
                  xs={6} 
                  sm={4} 

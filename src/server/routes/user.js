@@ -153,23 +153,66 @@ router.post('/logout', function(req, res) {
   }) 
 });
 
+router.get('/stores', function(req, res) {    
+  const user = jwt.decode(req.headers.token); 
+
+  return db.Store.findAll({
+    ownerId: user.id
+  }).then(stores => {  
+    return res.status(200).json(stores);
+  });
+  
+});
+
+router.post('/stores/toggleVisibility', function(req, res) {    
+  const user = jwt.decode(req.headers.token); 
+  const store = req.body.storeId;
+
+  return db.Store.findOne({ where: {
+    ownerId: user.id,
+    id: store
+  }}).then(store => {  
+    store.visible = !store.visible;
+    return store.save(); 
+  }).then(result => res.json(result))  
+  
+});
+
 
 router.post('/login', function(req, res) {   
   const geo = geoip.lookup(req.headers['x-forwarded-for'] || req.connection.remoteAddress) ? geoip.lookup(req.headers['x-forwarded-for'] || req.connection.remoteAddress) : {};
 
-  db.User.findOne({ where: {email: req.body.email}}).then(function(user) {  
-    if(!user) {
-       return res.status(401).json({
-          failed: 'We could not find a user with that email, please use the sign up form.'
-       });
+  db.User.findOne({ where: {email: req.body.email}}).then(function(user) {   
+    if(!user) { 
+       return db.AuthLog.create({
+         userId: null,
+         ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
+         city: geo.city || null,
+         region: geo.region || null,
+         country: geo.country || null,
+         type: "login::unknown::"+req.body.email
+       }).then(result => { 
+          return res.status(401).json({
+            failed: 'We could not find a user with that email, please use the sign up form.'
+          });
+       }); 
     }  
      
      bcrypt.compare(req.body.password, user.password, function(err, result){ 
         if(err) {
-           return res.status(401).json({
-              failed: 'Invalid credentials'
-           });
-        }
+          return db.AuthLog.create({
+            userId: null,
+            ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
+            city: geo.city || null,
+            region: geo.region || null,
+            country: geo.country || null,
+            type: "login::failure"
+          }).then(result => { 
+            return res.status(401).json({
+               failed: 'Invalid credentials'
+            });
+          }); 
+        } 
         
         if(result) {  
           // Consolidate this into the upmost query with a join
@@ -234,19 +277,6 @@ router.post('/login', function(req, res) {
         }
      });
      
-  }).catch(error => {    
-    db.AuthLog.create({
-      userId: user.id,
-      ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
-      city: geo.city || null,
-      region: geo.region || null,
-      country: geo.country || null,
-      type: "login::badPassword"
-    }).then(result => { 
-      return res.status(500).json({
-        error: 'Invalid credentials'
-      }); 
-    }); 
   });
 });
 

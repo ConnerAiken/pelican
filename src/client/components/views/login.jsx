@@ -56,8 +56,8 @@ class Login extends React.Component {
     this.setState({pendingRequest: true}); 
     this.Auth.login(this.state.email, this.state.password)
               .then(res => toastr.success("Logging in..") && this.props.history.push('/dashboard'))
-              .catch(err => {
-                toastr.error(err);
+              .catch(err => { 
+                toastr.error('Invalid credentials');
                 this.setState({pendingRequest: false});
               });
   }
@@ -81,7 +81,7 @@ class Login extends React.Component {
   } 
 
   handleForgotPassword() {
-
+      alert("This functionality has not been completed yet.");
   }
  
   render() {

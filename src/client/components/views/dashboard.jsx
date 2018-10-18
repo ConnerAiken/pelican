@@ -3,6 +3,7 @@ import React from "react";
 import utils from "./../../assets/utils";
 import ClientDash from "./../dashboards/client.map.jsx";
 import DriverDash from "./../dashboards/driver.map.jsx";
+import StoreDash from "./../dashboards/store.mgmt.jsx";
 import Sidebar from "./../dashboards/sidebar";
 import {withRouter} from "react-router-dom"; 
 import withAuth from "./../higherOrder/withAuth";
@@ -22,8 +23,8 @@ class Dash extends React.Component {
   render() {   
     if(this.state.user && this.state.user.accountType == "driver") {
       return (
-        <Container fluid={true} style={{padding: 0}}>
-          <Row noGutters={true}>  
+        <Container fluid={true} style={{padding: 0}} className="full-height">
+          <Row noGutters={true} className="full-height">  
           {this.props.sidebar.collapsed ? <SidebarBtn/> : <Col  
                  xs={6} 
                  sm={4} 
@@ -44,8 +45,8 @@ class Dash extends React.Component {
       );
     }else if(this.state.user && this.state.user.accountType == "client") {
       return (
-        <Container fluid={true} style={{padding: 0}}>
-          <Row noGutters={true}>  
+        <Container fluid={true} style={{padding: 0}} className="full-height">
+          <Row noGutters={true} className="full-height">  
           {this.props.sidebar.collapsed ? <SidebarBtn/> : <Col  
                  xs={6} 
                  sm={4} 
@@ -66,8 +67,8 @@ class Dash extends React.Component {
         );
     }else if(this.state.user && this.state.user.accountType == "store") {
       return (
-        <Container fluid={true} style={{padding: 0}}>
-          <Row noGutters={true}>  
+        <Container fluid={true} style={{padding: 0}} className="full-height">
+          <Row noGutters={true} className="full-height">  
           {this.props.sidebar.collapsed ? <SidebarBtn/> : <Col  
                  xs={6} 
                  sm={4} 
@@ -81,7 +82,7 @@ class Dash extends React.Component {
                  md={this.props.sidebar.collapsed ? 12 : 10} 
                  lg={this.props.sidebar.collapsed ? 12 : 10} 
                  xl={this.props.sidebar.collapsed ? 12 : 10}>
-                 <p>Stores do not need a google maps rendering!</p>
+                 <StoreDash/>
             </Col>
           </Row> 
         </Container>

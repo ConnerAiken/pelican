@@ -6,7 +6,7 @@ export default class AuthService {
     // Initializing important variables
     constructor() { 
         this.domain = window.NODE_ENV == "development" ? 'http://localhost:8080' : 'https://pelican.fittedtech.com'; // API server domain
-        this.fetch = this.fetch.bind(this) // React binding stuff
+        this.fetch = this.fetch.bind(this) 
         this.login = this.login.bind(this)
         this.getProfile = this.getProfile.bind(this)
     }
@@ -71,12 +71,10 @@ export default class AuthService {
         return this.fetch(`${this.domain}/api/v1/user/logout`, {
             method: 'POST'
         }).then(res => { 
-            localStorage.clear();
-            this.props.history.replace('/login');
+            localStorage.clear(); 
             return Promise.resolve(res);
         }).catch(e => {
-            localStorage.clear();
-            this.props.history.replace('/login');
+            localStorage.clear(); 
             return Promise.reject(e);
         })
     }
