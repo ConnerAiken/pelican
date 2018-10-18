@@ -10,8 +10,7 @@ import './privacyPolicy.scss';
 class PrivacyPolicy extends React.Component {
 
   constructor(props) {
-    super(props);    
-    utils.initializeProtectedComponent.call(this, utils); 
+    super(props);     
   }
   
   render() { 
