@@ -8,7 +8,7 @@ import LoadingScreen from "../loadingScreen";
 import utils from "../../assets/utils";
 import { withRouter, Redirect } from 'react-router-dom';
   
-import "./driver.order.scss";
+import "./driver.orders.scss";
 
 const mapStateToProps = state => {
   return { 
