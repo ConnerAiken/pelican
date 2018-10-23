@@ -43,44 +43,25 @@ app.get('*', (req,res) =>{
 
  
 
-if(process.env.NODE_ENV != "development") {  
-    // Certificate
-    const privateKey = fs.readFileSync('/etc/letsencrypt/live/pelican.fittedtech.com/privkey.pem', 'utf8');
-    const certificate = fs.readFileSync('/etc/letsencrypt/live/pelican.fittedtech.com/cert.pem', 'utf8');
-    const ca = fs.readFileSync('/etc/letsencrypt/live/pelican.fittedtech.com/chain.pem', 'utf8');
+// Certificate
+const privateKey = fs.readFileSync('/etc/letsencrypt/live/pelican.fittedtech.com/privkey.pem', 'utf8');
+const certificate = fs.readFileSync('/etc/letsencrypt/live/pelican.fittedtech.com/cert.pem', 'utf8');
+const ca = fs.readFileSync('/etc/letsencrypt/live/pelican.fittedtech.com/chain.pem', 'utf8');
+
+const credentials = {
+    key: privateKey,
+    cert: certificate,
+    ca: ca
+};
     
-    const credentials = {
-        key: privateKey,
-        cert: certificate,
-        ca: ca
-    };
-      
-    const httpsServer = https.createServer(credentials, app).listen(443, '0.0.0.0', () => {
-        utils.log(`Server has started and is listening on port 443!`)
-    });
- 
-    httpApp.get('*', function(req, res) {    
-        res.redirect('https://' + req.headers.host + req.url); 
-    }); 
+const httpsServer = https.createServer(credentials, app).listen(443, '0.0.0.0', () => {
+    utils.log(`Server has started and is listening on port 443!`)
+});
 
-    const httpServer = http.createServer(httpApp).listen(80, '0.0.0.0', () => {
-        utils.log(`Server has started and is listening on port 80!`); 
-    });
+httpApp.get('*', function(req, res) {    
+    res.redirect('https://' + req.headers.host + req.url); 
+}); 
 
-} else {    
-    httpApp.use(express.static(path.resolve(process.cwd(), 'public')))
-    httpApp.use(utils.verifyToken);
-    httpApp.use('/api/v1/upload', uploadRoutes);
-    httpApp.use('/api/v1/user', userRoutes); 
-    httpApp.use('/api/v1/store', storeRoutes);
-    httpApp.use('/api/v1/order', orderRoutes); 
-    httpApp.get('/api/v1/health-check', (req, res) => res.sendStatus(200));  
-    httpApp.get('*', (req,res) =>{
-        res.sendFile(path.join(process.cwd(), 'public', 'index.html'));
-    });
-
-    const httpServer = http.createServer(httpApp).listen(8081, '0.0.0.0', () => {
-        utils.log(`Server has started and is listening on port 8081!`); 
-    }); 
-}
-  
+const httpServer = http.createServer(httpApp).listen(80, '0.0.0.0', () => {
+    utils.log(`Server has started and is listening on port 80!`); 
+});

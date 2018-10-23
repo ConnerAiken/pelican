@@ -9,7 +9,7 @@
   "scripts": {
     "build": "webpack --config webpack.common.js --mode production",
     "dev": "concurrently --kill-others \"NODE_ENV=development babel-node src/server/index.js\" \"webpack-dev-server --config webpack.common.js --mode development --watch\"",
-    "dev:start": "npm run build && NODE_ENV=development babel-node src/server/index.js",
+    "dev:start": "npm run build && NODE_ENV=development babel-node src/server/index.dev.js",
     "deploy": "ansible-galaxy install -r requirements.yml && ansible-playbook playbooks/deploy.yml -i playbooks/inventory.yml",
     "deploy:local": "ansible-galaxy install -r requirements.yml && ansible-playbook playbooks/deploy.yml -i playbooks/local.yml -e ansible_connection=local",
     "test": "echo \"Error: no test specified but lets exit with success so travis builds\" && exit 0",
