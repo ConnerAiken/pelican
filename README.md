@@ -30,32 +30,7 @@ There are a few docker commands to know.
 ### Deploy
 
 The deployment playbook assumes that there is a mysql db already running on the host or on another host and the application environmental variables have been updated to reflect that. This playbook does not set any env variables but can be run against a fresh LAMP stack droplet from DigitalOcean. The playbook does not currently setup SSL certificates so those will need to be manually added as well. See SSL Certificates->Usage above.
-
-## Trulioo API
-
-### Discovery call
-
-1) You guys have a rest api correct? is that the only version offered?
  
-2) Do you offer any NodeJS api libraries or only java/c#?
-
-3) What is the difference between a global gateway and napi account?
--> global gateway: all encompassioning
--> napi: 
-
-4) Are we billed by the number of rates or flat fee?
--> Charge per request
-
-5) Are there any limitations to the file format uploaded to the document verification api?  For example, any specific image formats or caveats of image processing?
--> SDK coming soon /w upload ability
-
-6) Can the picture upload be from a camera or must it be a photo.
--> 
-
-Tasks
-- [ ] We need to setup a privacy policy
- 
-
 ## System Specifics
 
 ### Authentication - JWT
