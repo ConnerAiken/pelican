@@ -15,7 +15,7 @@ const {
   
 const MapWithADirectionsRenderer = compose(
   withProps({
-    googleMapURL: "https://maps.googleapis.com/maps/api/js?key=***REMOVED***-o&v=3.exp&libraries=geometry,drawing,places",
+    googleMapURL: "https://maps.googleapis.com/maps/api/js?key={KEY}-o&v=3.exp&libraries=geometry,drawing,places",
     loadingElement: <div style={{ height: `100%` }} />,
     containerElement: <div id="mapContainer" style={{height: '89%', minHeight: '89% !important', width: '100%'}}/>,
     mapElement: <div style={{ height: `100%` }} />
@@ -32,7 +32,7 @@ const MapWithADirectionsRenderer = compose(
         return;
       } 
 
-      const requestUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${this.props.input}&key=***REMOVED***-o`;
+      const requestUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${this.props.input}&key={KEY}-o`;
       axios.get(requestUrl).then((res) => {  
         const dest = res.data.results[0].geometry.location;
 
