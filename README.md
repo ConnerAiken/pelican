@@ -1,5 +1,10 @@
 # Pelican Delivers
 
+*This application is the sole property of Pelican Delivers (aka Better Buds, OPPCannabis, Dave Comeau). No portions of the code (excluding existing code of Fitted Technology) may be used for any purpose.*
+
+ 
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License</a>.
+
 [![Build Status](https://travis-ci.com/ConnerAiken/pelican.svg?token=pBXBM77UiMSriwAnV8zB&branch=master)](https://travis-ci.com/ConnerAiken/pelican)
 
 Pelican Delivers is a marijuana delivery application for legal state-licensed products. It is a nodejs express web server mixed with a react front-end. The express
